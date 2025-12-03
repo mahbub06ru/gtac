@@ -136,16 +136,11 @@ body {
   display: none;
   background: none;
   border: 0;
+  font-size: 1.5rem;
   cursor: pointer;
+  color: var(--darkblue);
   padding: 0.5rem;
   transition: transform 0.3s;
-}
-
-.nav-icon {
-  width: 28px;
-  height: 28px;
-  display: block;
-  object-fit: contain;
 }
 
 .nav-toggle:hover {
