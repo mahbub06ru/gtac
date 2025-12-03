@@ -1,58 +1,84 @@
-# Digital Business Card - GitHub Pages Setup
+# GTAC - Global Travel And Consultancy
 
-## To Fix the 404 Error and Make Your Site Work at https://mahbub06ru.github.io/
+A professional, responsive website for Global Travel And Consultancy (GTAC), offering comprehensive travel and consultancy services including visa processing, study abroad consultancy, holiday packages, and more.
 
-### Option 1: Rename Repository (Recommended for Root URL)
+## Features
 
-To make your site accessible at `https://mahbub06ru.github.io/` (without the `/portfolio_of_mahbub/` path):
+- **Responsive Design**: Fully responsive layout that works on all devices
+- **Modern UI**: Professional and clean interface
+- **Auto-scrolling Carousels**: Dynamic carousels for services, testimonials, team members, and partners
+- **Interactive Elements**: Chat widget, scroll-to-top button, and smooth navigation
+- **Multiple Pages**: Home, About, Services, Contact, Training/Courses, Career, Privacy Policy, and Terms & Services
 
-1. **Rename your repository** on GitHub:
-   - Go to your repository: `https://github.com/mahbub06ru/portfolio_of_mahbub`
-   - Click on **Settings** tab
-   - Scroll down to **Repository name** section
-   - Rename it to: `mahbub06ru.github.io` (must match your username exactly)
-   - Click **Rename**
+## Services Offered
 
-2. **Enable GitHub Pages**:
-   - In the same Settings page, go to **Pages** section (left sidebar)
-   - Under **Source**, select **Deploy from a branch**
-   - Select branch: `main` (or `master` if that's your default branch)
-   - Select folder: `/ (root)`
-   - Click **Save**
+- Visa Processing (Tourist, Student, Work)
+- Study Abroad Consultancy
+- Holiday Packages
+- Air Ticketing
+- Travel Insurance
+- Student Admission
+- SOP/LOI Writing
+- Embassy Appointment
+- University Application
+- GDS Services
+- Professional Training
 
-3. **Wait 1-2 minutes** for GitHub to build and deploy your site
+## GitHub Pages Deployment
 
-4. **Access your site** at: `https://mahbub06ru.github.io/`
+To deploy this website to GitHub Pages, follow the tutorial video:
 
-### Option 2: Keep Current Repository Name
+📹 **How to Deploy GitHub Pages**: [Watch Tutorial Video](https://www.youtube.com/watch?v=BT4WzyT2g8k)
 
-If you want to keep the repository name as `portfolio_of_mahbub`:
+### Quick Setup Steps
 
 1. **Enable GitHub Pages**:
-   - Go to repository Settings → Pages
+   - Go to your repository Settings → Pages
    - Select branch: `main` (or `master`)
    - Select folder: `/ (root)`
    - Click **Save**
 
-2. **Access your site** at: `https://mahbub06ru.github.io/portfolio_of_mahbub/`
+2. **For Root URL** (e.g., `https://username.github.io/`):
+   - Rename your repository to `username.github.io` (must match your GitHub username exactly)
+   - The site will be available at the root URL
 
-3. **Update the base href** in `index.html` back to:
-   ```html
-   <base href="https://mahbub06ru.github.io/portfolio_of_mahbub/">
-   ```
+3. **For Project URL** (e.g., `https://username.github.io/repository-name/`):
+   - Keep your current repository name
+   - The site will be available at `https://username.github.io/repository-name/`
 
 ## Important Notes
 
 - The repository must be **public** (for free GitHub Pages)
 - After enabling Pages, it may take a few minutes for the site to be available
-- Make sure all your files (including `index.html`, `manifest.json`, icons, etc.) are committed and pushed to the repository
-- The `index.html` file should be in the root of your repository
+- Make sure all your files are committed and pushed to the repository
+- All assets (CSS, images, etc.) use relative paths for proper deployment
 
-## Current Configuration
+## Project Structure
 
-- Base href is set to `/` (works for root URL if repository is named `mahbub06ru.github.io`)
-- All assets and icons are referenced with relative paths
-- The site is fully responsive and mobile-friendly
+```
+gtac/
+├── index.html          # Home page
+├── about.html          # About page
+├── contact.html        # Contact page
+├── service.html        # Services page
+├── courses.html        # Training/Courses page
+├── career.html         # Career page
+├── privacy.html        # Privacy Policy page
+├── terms.html          # Terms & Services page
+├── assets/
+│   ├── css/
+│   │   └── styles.css  # Main stylesheet
+│   └── images/         # Images and logos
+└── README.md           # This file
+```
 
+## Technologies Used
 
+- HTML5
+- CSS3 (with animations and responsive design)
+- JavaScript (for interactive features)
+- No external dependencies (vanilla JS)
 
+## License
+
+This project is created for GTAC - Global Travel And Consultancy.
