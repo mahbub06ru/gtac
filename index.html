@@ -39,6 +39,22 @@
 </div>
 </div>
 <div class="hero-image">
+<div class="hero-carousel">
+<div class="hero-slide active">
+<img src="assets/assets/images/gtac-home.png" alt="GTAC Home">
+</div>
+<div class="hero-slide">
+<img src="assets/assets/images/gta-home2.png" alt="GTAC Home 2">
+</div>
+<div class="hero-slide">
+<img src="assets/assets/images/gta-home3.png" alt="GTAC Home 3">
+</div>
+</div>
+<div class="hero-carousel-dots">
+<span class="dot active" data-slide="0"></span>
+<span class="dot" data-slide="1"></span>
+<span class="dot" data-slide="2"></span>
+</div>
 </div>
 </div>
 </section>
@@ -691,6 +707,62 @@ Hello! 👋 Welcome to GTAC. How can we assist you today?
 </div>
 
 <script>
+// Hero Carousel Functionality
+const heroSlides = document.querySelectorAll('.hero-slide');
+const heroDots = document.querySelectorAll('.hero-carousel-dots .dot');
+let currentSlide = 0;
+let carouselInterval;
+
+function showSlide(index) {
+  // Remove active class from all slides and dots
+  heroSlides.forEach(slide => slide.classList.remove('active'));
+  heroDots.forEach(dot => dot.classList.remove('active'));
+  
+  // Add active class to current slide and dot
+  if (heroSlides[index]) {
+    heroSlides[index].classList.add('active');
+  }
+  if (heroDots[index]) {
+    heroDots[index].classList.add('active');
+  }
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % heroSlides.length;
+  showSlide(currentSlide);
+}
+
+function startCarousel() {
+  carouselInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+}
+
+function stopCarousel() {
+  clearInterval(carouselInterval);
+}
+
+// Initialize carousel
+if (heroSlides.length > 0) {
+  showSlide(0);
+  startCarousel();
+  
+  // Pause on hover
+  const heroImage = document.querySelector('.hero-image');
+  if (heroImage) {
+    heroImage.addEventListener('mouseenter', stopCarousel);
+    heroImage.addEventListener('mouseleave', startCarousel);
+  }
+  
+  // Dot navigation
+  heroDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+      stopCarousel();
+      startCarousel(); // Restart after manual navigation
+    });
+  });
+}
+
 // Chat Widget Functionality
 const chatWidget = document.getElementById('chatWidget');
 const chatButton = document.getElementById('chatButton');
