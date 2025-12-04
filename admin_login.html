@@ -99,19 +99,63 @@
 
     let app, db, storage, auth;
 
-    try {
-      // Initialize Firebase
-      app = firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      storage = firebase.storage();
-      auth = firebase.auth();
-      
-      console.log('Firebase initialized successfully');
-    } catch (error) {
-      console.error('Firebase initialization error:', error);
-      document.getElementById('error-msg').textContent = 
-        'Firebase initialization failed: ' + error.message + '. Please check your configuration and ensure you are using HTTP/HTTPS protocol.';
+    // Wait for Firebase to load
+    function initializeFirebase() {
+      // Check if Firebase is loaded
+      if (typeof firebase === 'undefined') {
+        console.error('Firebase SDK not loaded. Check network connection.');
+        document.getElementById('error-msg').innerHTML = 
+          '<strong style="color: #dc2626;">⚠️ Error: Firebase SDK failed to load.</strong><br>' +
+          'Possible causes:<br>' +
+          '1. Network connection issue<br>' +
+          '2. Ad blocker blocking Firebase scripts<br>' +
+          '3. Firewall blocking CDN requests<br><br>' +
+          'Please check your browser console (F12) for more details.';
+        document.getElementById('error-msg').style.padding = '1rem';
+        document.getElementById('error-msg').style.background = '#fef2f2';
+        document.getElementById('error-msg').style.borderRadius = '4px';
+        return false;
+      }
+
+      try {
+        // Initialize Firebase
+        app = firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        storage = firebase.storage();
+        auth = firebase.auth();
+        
+        console.log('Firebase initialized successfully');
+        return true;
+      } catch (error) {
+        console.error('Firebase initialization error:', error);
+        document.getElementById('error-msg').textContent = 
+          'Firebase initialization failed: ' + error.message + '. Please check your configuration and ensure you are using HTTP/HTTPS protocol.';
+        return false;
+      }
     }
+
+    // Initialize when page loads
+    window.addEventListener('DOMContentLoaded', function() {
+      // Wait a bit for scripts to load
+      setTimeout(function() {
+        if (!initializeFirebase()) {
+          return;
+        }
+        
+        // Check if already logged in
+        if (auth) {
+          auth.onAuthStateChanged((user) => {
+            if (user) {
+              sessionStorage.setItem('adminUser', JSON.stringify({
+                uid: user.uid,
+                email: user.email
+              }));
+              window.location.href = "admin_dashboard.html";
+            }
+          });
+        }
+      }, 100);
+    });
 
     // Login function
     window.login = function () {
@@ -129,8 +173,11 @@
       }
 
       if (!auth) {
-        errorMsg.textContent = 'Firebase is not initialized. Please use HTTP/HTTPS protocol (not file://)';
-        return;
+        // Try to initialize Firebase again
+        if (!initializeFirebase()) {
+          errorMsg.textContent = 'Firebase is not initialized. Please refresh the page and try again.';
+          return;
+        }
       }
 
       // Show loading state
@@ -178,19 +225,6 @@
           errorMsg.textContent = errorMessage;
           console.error('Login error:', error);
         });
-    }
-
-    // Check if already logged in
-    if (auth) {
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          sessionStorage.setItem('adminUser', JSON.stringify({
-            uid: user.uid,
-            email: user.email
-          }));
-          window.location.href = "admin_dashboard.html";
-        }
-      });
     }
   </script>
 </body>

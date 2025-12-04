@@ -261,12 +261,33 @@ scrollToTopBtn.addEventListener('click', () => {
     measurementId: "G-QFDYXLCG11"
   };
 
+  let app, db;
+
   // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+  function initializeFirebase() {
+    if (typeof firebase === 'undefined') {
+      console.error('Firebase SDK not loaded');
+      document.getElementById('careersLoading').textContent = 'Unable to load careers. Please check your network connection.';
+      return false;
+    }
+
+    try {
+      app = firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      return true;
+    } catch (error) {
+      console.error('Firebase initialization error:', error);
+      document.getElementById('careersLoading').textContent = 'Error loading careers. Please refresh the page.';
+      return false;
+    }
+  }
 
   // Load careers from Firestore
   async function loadCareers() {
+    if (!db) {
+      document.getElementById('careersLoading').textContent = 'Firebase not initialized. Please refresh the page.';
+      return;
+    }
     const container = document.getElementById('careersContainer');
     const loadingEl = document.getElementById('careersLoading');
 
@@ -323,8 +344,14 @@ scrollToTopBtn.addEventListener('click', () => {
     }
   }
 
-  // Load careers when page loads
-  loadCareers();
+  // Initialize Firebase and load careers when page loads
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      if (initializeFirebase()) {
+        loadCareers();
+      }
+    }, 100);
+  });
 </script>
 </body>
 </html>
