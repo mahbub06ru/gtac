@@ -75,51 +75,102 @@
         window.location.href = "admin_login.html";
       } else {
         loadCareers();
+        setupForm();
       }
     });
 
-    // Form submission
-    document.getElementById('careerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const msgEl = document.getElementById('careerMsg');
-      
-      const title = document.getElementById('careerTitle').value;
-      const location = document.getElementById('careerLocation').value;
-      const type = document.getElementById('careerType').value;
-      const description = document.getElementById('careerDescription').value;
-      const responsibilities = document.getElementById('careerResponsibilities').value.split('\n').filter(r => r.trim());
-      const requirements = document.getElementById('careerRequirements').value.split('\n').filter(r => r.trim());
-
-      try {
-        await addDoc(collection(db, 'careers'), {
-          title: title,
-          location: location,
-          type: type,
-          description: description,
-          responsibilities: responsibilities,
-          requirements: requirements,
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        });
-
-        msgEl.textContent = 'Career added successfully!';
-        msgEl.style.color = '#16a34a';
-        document.getElementById('careerForm').reset();
-        loadCareers();
-      } catch (error) {
-        msgEl.textContent = 'Error: ' + error.message;
-        msgEl.style.color = '#dc2626';
+    // Setup form submission handler
+    function setupForm() {
+      const form = document.getElementById('careerForm');
+      if (!form) {
+        console.error('Form not found');
+        return;
       }
-    });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const msgEl = document.getElementById('careerMsg');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        
+        // Clear previous messages
+        msgEl.textContent = '';
+        msgEl.style.color = '';
+        
+        // Get form values
+        const title = document.getElementById('careerTitle').value.trim();
+        const location = document.getElementById('careerLocation').value.trim();
+        const type = document.getElementById('careerType').value.trim();
+        const description = document.getElementById('careerDescription').value.trim();
+        const responsibilities = document.getElementById('careerResponsibilities').value.split('\n').filter(r => r.trim());
+        const requirements = document.getElementById('careerRequirements').value.split('\n').filter(r => r.trim());
+
+        // Validate required fields
+        if (!title || !location || !type || !description) {
+          msgEl.textContent = 'Please fill in all required fields (Title, Location, Type, Description)';
+          msgEl.style.color = '#dc2626';
+          return;
+        }
+
+        // Show loading state
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Adding...';
+        submitBtn.disabled = true;
+
+        try {
+          console.log('Adding career to Firestore...');
+          await addDoc(collection(db, 'careers'), {
+            title: title,
+            location: location,
+            type: type,
+            description: description,
+            responsibilities: responsibilities,
+            requirements: requirements,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+
+          console.log('Career added successfully');
+          msgEl.textContent = '✓ Career added successfully!';
+          msgEl.style.color = '#16a34a';
+          form.reset();
+          
+          // Reload careers list
+          await loadCareers();
+          
+          // Clear success message after 3 seconds
+          setTimeout(() => {
+            msgEl.textContent = '';
+          }, 3000);
+        } catch (error) {
+          console.error('Error adding career:', error);
+          msgEl.textContent = 'Error: ' + error.message;
+          msgEl.style.color = '#dc2626';
+        } finally {
+          // Restore button state
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      });
+    }
 
     // Load careers
     async function loadCareers() {
       const listEl = document.getElementById('careerList');
+      if (!listEl) {
+        console.error('Career list element not found');
+        return;
+      }
+      
       listEl.innerHTML = '<p>Loading...</p>';
 
       try {
+        console.log('Loading careers from Firestore...');
         const q = query(collection(db, 'careers'), orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
+        
+        console.log('Careers loaded:', snapshot.size);
         
         if (snapshot.empty) {
           listEl.innerHTML = '<p>No career posts found. Add your first career post above.</p>';
@@ -142,10 +193,10 @@
 
           card.innerHTML = `
             <div class="item-content">
-              <h3>${data.title}</h3>
-              <p><strong>Location:</strong> ${data.location}</p>
-              <p><strong>Type:</strong> ${data.type}</p>
-              <p>${data.description}</p>
+              <h3>${data.title || 'Untitled'}</h3>
+              <p><strong>Location:</strong> ${data.location || 'N/A'}</p>
+              <p><strong>Type:</strong> ${data.type || 'N/A'}</p>
+              <p>${data.description || ''}</p>
               ${responsibilitiesHtml}
               ${requirementsHtml}
             </div>
@@ -156,9 +207,13 @@
           listEl.appendChild(card);
         });
       } catch (error) {
+        console.error('Error loading careers:', error);
         listEl.innerHTML = '<p style="color: #dc2626;">Error loading careers: ' + error.message + '</p>';
       }
     }
+    
+    // Make loadCareers available globally for delete function
+    window.loadCareers = loadCareers;
 
     // Delete career
     window.deleteCareer = async function (id) {
@@ -167,9 +222,12 @@
       }
 
       try {
+        console.log('Deleting career:', id);
         await deleteDoc(doc(db, 'careers', id));
-        loadCareers();
+        console.log('Career deleted successfully');
+        await loadCareers();
       } catch (error) {
+        console.error('Error deleting career:', error);
         alert('Error deleting career: ' + error.message);
       }
     }
