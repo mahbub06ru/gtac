@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holiday Tour Packages — GTAC</title>
+<link rel="icon" type="image/png" href="../../assets/assets/images/fav.png">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<a class="brand" href="#" id="brand-link">
+<img src="#" alt="GTAC Logo" class="brand-logo" id="brand-logo-img">
+<span>GTAC- Global Travel & Consultancy</span>
+</a>
+<nav class="nav" id="main-nav">
+<a href="#" data-page="home" id="nav-home">Home</a>
+<a href="#" data-page="about" id="nav-about">About</a>
+<div class="nav-dropdown">
+<a href="#" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▼</span></a>
+<div class="dropdown-menu">
+<a href="#" id="nav-service-1">Student Consultancy</a>
+<a href="#" id="nav-service-2">Visa Process</a>
+<a href="#" id="nav-service-3">Tour Packages</a>
+<a href="#" id="nav-service-4">Air Ticketing</a>
+<a href="#" id="nav-service-5">Hajj & Umrah</a>
+<a href="#" id="nav-service-6">E-passport, NID, Police Clearance</a>
+<a href="#" id="nav-service-7">Business & Legal Consultancy</a>
+<a href="#" id="nav-service-8">IT Services</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<a href="#" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▼</span></a>
+<div class="dropdown-menu">
+<a href="#" id="nav-training-1">IELTS</a>
+<a href="#" id="nav-training-2">Mobile App Dev</a>
+<a href="#" id="nav-training-3">GDS Ticketing</a>
+<a href="#" id="nav-training-4">Visa Processing</a>
+</div>
+</div>
+<a href="#" data-page="career" id="nav-career">Career</a>
+<a href="#" data-page="success" id="nav-success">Success Story</a>
+<a href="#" data-page="contact" id="nav-contact">Contact</a>
+</nav>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+</div>
+</header>
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
+<section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
+<h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem; line-height: 1.2; text-align: center;">🌴 Holiday Tour Packages</h1>
+<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">Discover amazing destinations with our carefully curated holiday tour packages! Whether you're looking for a relaxing beach vacation, an adventurous mountain trek, a cultural city tour, or an exotic international getaway, we create unforgettable travel experiences tailored to your preferences and budget.</p>
+<p style="color: var(--text-dark); font-size: 1.05rem; margin-bottom: 3rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; font-weight: 500;">From local destinations in Bangladesh to international hotspots, we offer comprehensive tour packages that include flights, accommodation, meals, and guided tours.</p>
+
+<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">🌍 Popular Tour Destinations</h2>
+<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">We offer exciting tour packages to amazing destinations worldwide:</p>
+
+<div style="margin-bottom: 3rem;">
+<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px;">International Destinations</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇹🇭 Thailand</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Bangkok, Phuket, Pattaya, Chiang Mai</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇲🇾 Malaysia</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Kuala Lumpur, Langkawi, Penang</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇸🇬 Singapore</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">City tours, Sentosa Island, Universal Studios</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇮🇳 India</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Delhi, Agra, Mumbai, Goa, Kashmir</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇦🇪 UAE</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Dubai, Abu Dhabi, Desert Safari</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇮🇩 Indonesia</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Bali, Jakarta, Yogyakarta</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇱🇰 Sri Lanka</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Colombo, Kandy, Nuwara Eliya</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇳🇵 Nepal</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Kathmandu, Pokhara, Chitwan</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇹🇷 Turkey</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Istanbul, Cappadocia, Antalya</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇪🇺 Europe</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Switzerland, France, Italy, Spain</p>
+</div>
+</div>
+</div>
+
+<div style="margin-bottom: 3rem;">
+<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px;">Domestic Destinations (Bangladesh)</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🏖️ Cox's Bazar</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Longest sea beach, Inani Beach, Himchari</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🏞️ Saint Martin's Island</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Coral island, crystal clear water</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🌲 Sajek Valley</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Hill station, cloud sea, natural beauty</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🏔️ Bandarban</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Nilgiri, Chimbuk, Meghla</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🌊 Kuakata</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Sunrise & sunset point, beach</p>
+</div>
+<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🏛️ Sundarbans</p>
+<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Mangrove forest, wildlife, boat tour</p>
+</div>
+</div>
+</div>
+
+<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">📌 What's Included in Our Tour Packages</h2>
+<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">Our comprehensive tour packages include:</p>
+
+<div style="margin-bottom: 2rem;">
+<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Travel & Accommodation</h3>
+<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Round-trip flight tickets</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Hotel accommodation (3-star, 4-star, 5-star options)</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Airport transfers</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Local transportation</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Visa processing assistance</li>
+</ul>
+</div>
+
+<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Tour Services</h3>
+<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Professional tour guide</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Sightseeing tours</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Entrance fees to attractions</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Daily breakfast (or full board options)</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Travel insurance</li>
+</ul>
+</div>
+
+<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Package Types</h3>
+<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Family packages</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Honeymoon packages</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Group tour packages</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Adventure tour packages</li>
+<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Customized tour packages</li>
+</ul>
+</div>
+</div>
+
+<div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2.5rem; border-radius: 12px; text-align: center; margin-top: 3rem;">
+<h2 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0 0 1rem;">Ready to Plan Your Dream Vacation?</h2>
+<p style="color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.6;">Contact us today to customize your perfect holiday tour package! Our travel experts will create an unforgettable experience tailored to your preferences.</p>
+<a href="../contact.html" class="btn primary" style="font-size: 1.2rem; padding: 1rem 3rem; display: inline-block; background: #fff; color: var(--primary); border: 2px solid #fff; font-weight: 600;">Book Your Tour Now</a>
+</div>
+</section>
+</main>
+
+<footer class="site-footer">
+<div class="container">
+<div class="footer-inner">
+<div class="footer-section">
+<h3>GTAC</h3>
+<p>Global Travel & Consultancy - Your trusted partner for international travel and education solutions.</p>
+<p style="margin-top: 1rem;">F24005 UKhan, Uttara 1230 Dhaka, Bangladesh</p>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<a href="index.html" id="footer-home">Home</a>
+<a href="pages/about.html" id="footer-about">About Us</a>
+<a href="pages/service.html" id="footer-service">Services</a>
+<a href="pages/courses.html" id="footer-training">Training</a>
+<a href="pages/career.html" id="footer-career">Career</a>
+<a href="pages/success_story.html" id="footer-success">Success Story</a>
+<a href="pages/contact.html" id="footer-contact">Contact</a>
+</div>
+<div class="footer-section">
+<h3>Contact Info</h3>
+<p>Phone: <a href="tel:+8801818120900">+880 1818-120900</a></p>
+<p>Email: <a href="mailto:mahbub360hub@gmail.com">mahbub360hub@gmail.com</a></p>
+<div class="social-icons">
+<a href="https://www.facebook.com/Mahbub360Hub" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+</svg>
+</a>
+<a href="https://www.albarakahinternational.com/" target="_blank" rel="noopener noreferrer" aria-label="Website" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+</svg>
+</a>
+<a href="https://www.linkedin.com/company/mahbub360hub/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+</a>
+<a href="https://www.youtube.com/@mahbub360hub" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg>
+</a>
+</div>
+</div>
+<div class="footer-section">
+<h3>Working Hours</h3>
+<p>Mon – Fri: 9:00 AM – 6:00 PM</p>
+<p>Saturday: 10:00 AM – 4:00 PM</p>
+<p>Sunday: Closed</p>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2025 Global Travel & Consultancy (GTAC). All rights reserved.</p>
+<div class="footer-links">
+<a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
+<span>|</span>
+<a href="pages/terms.html" id="footer-terms">Terms & Services</a>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to GTAC. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email mahbub360hub@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) && 
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+</body>
+</html>
+

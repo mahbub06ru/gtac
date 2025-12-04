@@ -1,81 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contact — GTAC</title>
-<link rel="icon" type="image/png" href="assets/assets/images/fav.png">
-<link rel="stylesheet" href="assets/css/styles.css">
-</head>
-<body>
-<header class="site-header">
-<div class="container header-inner">
-<a class="brand" href="index.html">
-<img src="assets/assets/images/gtac-logo.png" alt="GTAC Logo" class="brand-logo">
-<span>GTAC- Global Travel & Consultancy</span>
-</a>
-<nav class="nav" id="main-nav">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="service.html">Services</a>
-<a href="courses.html">Training</a>
-<a href="career.html">Career</a>
-<a href="success_story.html">Success Story</a>
-<a href="contact.html">Contact</a>
-</nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
-</div>
-</header>
-
-<main class="container contact-page">
-<h1>Contact Us</h1>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem;">We're here to help you with all your travel and education needs. Reach out to us through any of the following channels.</p>
-<div class="contact-grid">
-<div class="contact-info">
-<h3>Get in Touch</h3>
-<p>Have questions about our services? Want to discuss your travel or education plans? We'd love to hear from you!</p>
-<div style="margin-top: 2rem;">
-<p><strong>Phone:</strong><br><a href="tel:+8801818120900">+880 1818-120900</a></p>
-<p style="margin-top: 1rem;"><strong>Email:</strong><br><a href="mailto:mahbub360hub@gmail.com">mahbub360hub@gmail.com</a></p>
-<p style="margin-top: 1rem;"><strong>Address:</strong><br>F24005 UKhan, Uttara 1230 Dhaka, Bangladesh</p>
-</div>
-<div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-light); border-radius: 12px;">
-<h4 style="color: var(--text-dark); margin-bottom: 1rem;">Working Hours</h4>
-<p style="margin-bottom: 0.5rem;">Mon – Fri: 9:00 AM – 6:00 PM</p>
-<p style="margin-bottom: 0.5rem;">Saturday: 10:00 AM – 4:00 PM</p>
-<p>Sunday: Closed</p>
-</div>
-</div>
-<div>
-<form class="contact-form" action="#">
-<label>Name</label>
-<input type="text" name="name" required>
-<label>Email</label>
-<input type="email" name="email" required>
-<label>Service of Interest</label>
-<select name="service">
-<option>Visa Processing</option>
-<option>Tourist Visa</option>
-<option>Student Visa</option>
-<option>Work Visa</option>
-<option>Holiday Packages</option>
-<option>Air Ticketing</option>
-<option>Travel Insurance</option>
-<option>Student Admission</option>
-<option>SOP/LOI Writing</option>
-<option>Embassy Appointment</option>
-<option>University Application</option>
-<option>GDS Services</option>
-<option>General Inquiry</option>
-</select>
-<label>Message</label>
-<textarea name="message" rows="6" placeholder="Tell us about your requirements..."></textarea>
-<button class="btn primary" type="submit" style="width: 100%;">Send Message</button>
-</form>
-</div>
-</div>
-</main>
-
 <footer class="site-footer">
 <div class="container">
 <div class="footer-inner">
@@ -86,13 +8,13 @@
 </div>
 <div class="footer-section">
 <h3>Quick Links</h3>
-<a href="index.html">Home</a>
-<a href="about.html">About Us</a>
-<a href="service.html">Services</a>
-<a href="courses.html">Training</a>
-<a href="career.html">Career</a>
-<a href="success_story.html">Success Story</a>
-<a href="contact.html">Contact</a>
+<a href="index.html" id="footer-home">Home</a>
+<a href="pages/about.html" id="footer-about">About Us</a>
+<a href="pages/service.html" id="footer-service">Services</a>
+<a href="pages/courses.html" id="footer-training">Training</a>
+<a href="pages/career.html" id="footer-career">Career</a>
+<a href="pages/success_story.html" id="footer-success">Success Story</a>
+<a href="pages/contact.html" id="footer-contact">Contact</a>
 </div>
 <div class="footer-section">
 <h3>Contact Info</h3>
@@ -131,28 +53,13 @@
 <div class="footer-bottom">
 <p>&copy; 2025 Global Travel & Consultancy (GTAC). All rights reserved.</p>
 <div class="footer-links">
-<a href="privacy.html">Privacy & Policy</a>
+<a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
 <span>|</span>
-<a href="terms.html">Terms & Services</a>
+<a href="pages/terms.html" id="footer-terms">Terms & Services</a>
 </div>
 </div>
 </div>
 </footer>
-
-<script>
-const navToggle = document.getElementById('nav-toggle');
-const nav = document.getElementById('main-nav');
-if (navToggle && nav) {
-  navToggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-  });
-  document.addEventListener('click', (e) => {
-    if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-      nav.classList.remove('open');
-    }
-  });
-}
-</script>
 
 <!-- Chat Widget -->
 <div class="chat-widget" id="chatWidget">
@@ -176,7 +83,7 @@ Hello! 👋 Welcome to GTAC. How can we assist you today?
 <button type="submit" class="chat-send">Send</button>
 </form>
 <div class="chat-quick-actions">
-<a href="contact.html" class="quick-action-btn">📞 Contact Us</a>
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
 <a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
 </div>
 </div>
@@ -187,6 +94,11 @@ Hello! 👋 Welcome to GTAC. How can we assist you today?
 </button>
 </div>
 
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
 <script>
 // Chat Widget Functionality
 const chatWidget = document.getElementById('chatWidget');
@@ -196,25 +108,30 @@ const chatBody = document.getElementById('chatBody');
 const chatForm = document.getElementById('chatForm');
 const chatInput = document.getElementById('chatInput');
 
-chatButton.addEventListener('click', () => {
-  chatWidget.classList.toggle('active');
-});
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
 
-chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const message = chatInput.value.trim();
-  if (message) {
-    addMessage(message, 'user');
-    chatInput.value = '';
-    
-    // Simulate bot response
-    setTimeout(() => {
-      addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email mahbub360hub@gmail.com', 'bot');
-    }, 1000);
-  }
-});
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email mahbub360hub@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
 
 function addMessage(text, type) {
+  if (!chatBody) return;
   const messageDiv = document.createElement('div');
   messageDiv.className = `chat-message ${type}`;
   const bubble = document.createElement('div');
@@ -227,37 +144,33 @@ function addMessage(text, type) {
 
 // Close chat when clicking outside
 document.addEventListener('click', (e) => {
-  if (chatWidget.classList.contains('active') && 
-      !chatWindow.contains(e.target) && 
-      !chatButton.contains(e.target)) {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) && 
+      chatButton && !chatButton.contains(e.target)) {
     chatWidget.classList.remove('active');
   }
 });
-</script>
 
-<!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
-</button>
-
-<script>
 // Scroll to Top Functionality
 const scrollToTopBtn = document.getElementById('scrollToTop');
 
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    scrollToTopBtn.classList.add('show');
-  } else {
-    scrollToTopBtn.classList.remove('show');
-  }
-});
-
-scrollToTopBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
   });
-});
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
 </script>
-</body>
-</html>
+
+<script src="includes/update-links.js"></script>
+
