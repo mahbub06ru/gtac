@@ -58,8 +58,10 @@
   const navLinks = {
     'nav-home': isRoot ? 'index.html' : (isInTraining || isInService ? '../../index.html' : '../index.html'),
     'nav-about': isRoot ? 'pages/about.html' : (isInTraining || isInService ? '../about.html' : 'about.html'),
-    'nav-service': isRoot ? 'pages/service.html' : (isInTraining || isInService ? '../service.html' : 'service.html'),
-    'nav-training': isRoot ? 'pages/courses.html' : (isInTraining || isInService ? '../courses.html' : 'courses.html'),
+    // Services dropdown toggle - no navigation, just toggles dropdown
+    'nav-service': 'javascript:void(0)',
+    // Training dropdown toggle - no navigation, just toggles dropdown
+    'nav-training': 'javascript:void(0)',
     'nav-career': isRoot ? 'pages/career.html' : (isInTraining || isInService ? '../career.html' : 'career.html'),
     'nav-success': isRoot ? 'pages/success_story.html' : (isInTraining || isInService ? '../success_story.html' : 'success_story.html'),
     'nav-contact': isRoot ? 'pages/contact.html' : (isInTraining || isInService ? '../contact.html' : 'contact.html'),
@@ -90,8 +92,10 @@
   const footerLinks = {
     'footer-home': isRoot ? 'index.html' : (isInTraining || isInService ? '../../index.html' : '../index.html'),
     'footer-about': isRoot ? 'pages/about.html' : (isInTraining || isInService ? '../about.html' : 'about.html'),
-    'footer-service': isRoot ? 'pages/service.html' : (isInTraining || isInService ? '../service.html' : 'service.html'),
-    'footer-training': isRoot ? 'pages/courses.html' : (isInTraining || isInService ? '../courses.html' : 'courses.html'),
+    // Footer Services links to first service page
+    'footer-service': isRoot ? 'pages/service/student_visa_processing.html' : (isInTraining ? '../service/student_visa_processing.html' : (isInService ? 'student_visa_processing.html' : 'service/student_visa_processing.html')),
+    // Footer Training links to first training page
+    'footer-training': isRoot ? 'pages/training/ielts_preparation.html' : (isInTraining ? 'ielts_preparation.html' : (isInService ? '../training/ielts_preparation.html' : 'training/ielts_preparation.html')),
     'footer-career': isRoot ? 'pages/career.html' : (isInTraining || isInService ? '../career.html' : 'career.html'),
     'footer-success': isRoot ? 'pages/success_story.html' : (isInTraining || isInService ? '../success_story.html' : 'success_story.html'),
     'footer-contact': isRoot ? 'pages/contact.html' : (isInTraining || isInService ? '../contact.html' : 'contact.html'),

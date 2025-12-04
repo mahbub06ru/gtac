@@ -75,6 +75,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .brand:hover {
@@ -213,7 +215,8 @@ body {
     width: 100%;
   }
   
-  .dropdown-menu {
+  /* Only apply these styles when nav is NOT open (for desktop hover) */
+  .nav:not(.open) .dropdown-menu {
     position: static;
     opacity: 1;
     visibility: visible;
@@ -225,11 +228,19 @@ body {
     border-radius: 0;
     padding: 0;
     display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
   }
   
-  .nav-dropdown:hover .dropdown-menu,
-  .nav-dropdown.active .dropdown-menu {
+  .nav:not(.open) .nav-dropdown.active .dropdown-menu {
     display: block;
+    max-height: 1000px;
+    transition: max-height 0.3s ease-in;
+  }
+  
+  .nav-dropdown:hover .dropdown-menu {
+    display: none; /* Disable hover on mobile, only use .active class */
   }
   
   .dropdown-menu a {
@@ -243,6 +254,11 @@ body {
   
   .dropdown-arrow {
     margin-left: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
   }
 }
 
@@ -254,11 +270,36 @@ body {
   cursor: pointer;
   color: var(--darkblue);
   padding: 0.5rem;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease, color 0.3s ease;
+  z-index: 1001;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(0deg);
 }
 
 .nav-toggle:hover {
   transform: scale(1.1);
+  color: var(--primary);
+}
+
+.nav-toggle:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Rotation animation when menu is open */
+.nav-toggle[aria-expanded="true"] {
+  transform: rotate(90deg);
+  color: var(--primary);
+}
+
+.nav-toggle[aria-expanded="true"]:hover {
+  transform: rotate(90deg) scale(1.1);
 }
 
 /* Hero Section */
@@ -1561,21 +1602,169 @@ body {
   .nav.open {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 60px;
     left: 0;
     right: 0;
+    bottom: 0;
     background: var(--bg-white);
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     border-radius: 0;
     box-shadow: var(--shadow-lg);
     min-width: 100%;
+    width: 100%;
+    height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 999;
+    gap: 0;
+    align-items: stretch;
+  }
+  
+  .nav.open > a {
+    padding: 1.25rem 1rem;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    display: block;
+    margin: 0;
+    border-radius: 0;
+    text-align: left;
+  }
+  
+  .nav.open > a:hover {
+    background: rgba(37, 99, 235, 0.08);
+  }
+  
+  .nav.open .nav-dropdown {
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .nav.open .dropdown-toggle {
+    width: 100%;
+    padding: 1.25rem 1rem;
+    font-size: 1.1rem;
+    border-bottom: none;
+    justify-content: space-between;
+    text-align: left;
+    border-radius: 0;
+    cursor: pointer;
+    background: transparent;
+    transition: background-color 0.2s;
+  }
+  
+  .nav.open .dropdown-toggle:hover {
+    background: rgba(37, 99, 235, 0.05);
+  }
+  
+  .nav.open .nav-dropdown.active .dropdown-toggle {
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--primary);
+  }
+  
+  .nav.open .dropdown-arrow {
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+  
+  .nav.open .nav-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+  
+  .nav.open .dropdown-menu {
+    position: static !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    box-shadow: none;
+    border: none;
     border-top: 1px solid var(--border);
+    margin-top: 0;
+    border-radius: 0;
+    padding: 0;
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease, visibility 0.2s ease;
+    background: rgba(37, 99, 235, 0.02);
+  }
+  
+  .nav.open .nav-dropdown.active .dropdown-menu {
+    display: block !important;
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: max-height 0.3s ease-in, opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .nav.open .dropdown-menu a {
+    padding: 1rem 1.5rem !important;
+    padding-left: 2.5rem !important;
+    border-bottom: 1px solid var(--border);
+    font-size: 1rem;
+    display: block !important;
+    width: 100%;
+    color: var(--text-dark);
+    text-decoration: none;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .nav.open .dropdown-menu a:hover {
+    background: rgba(37, 99, 235, 0.1);
+    padding-left: 2rem !important;
+  }
+  
+  .nav.open .dropdown-menu a:last-child {
+    border-bottom: none;
+  }
+
+  .header-inner {
+    padding: 1rem;
+    min-height: 60px;
+    height: auto;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+  
+  .brand {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+  
+  .brand span {
+    display: inline-block !important;
+  }
+  
+  .site-header {
+    min-height: 60px;
+    height: auto;
   }
 
   .nav-toggle {
-    display: block;
+    display: flex;
     margin-left: auto;
+    z-index: 1001;
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .header-inner:has(.nav.open) .nav-toggle {
+    color: var(--primary);
+  }
+  
+  /* Ensure rotation works on mobile */
+  .nav-toggle[aria-expanded="true"] {
+    transform: rotate(90deg) !important;
+  }
+  
+  .nav-toggle[aria-expanded="true"]:hover {
+    transform: rotate(90deg) scale(1.1) !important;
   }
 
   .hero-content h1 {
@@ -1589,23 +1778,47 @@ body {
   .brand {
     font-size: 1rem;
     gap: 0.5rem;
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
   
   .brand-logo {
     height: 35px;
+    flex-shrink: 0;
   }
   
   .brand span {
     font-size: 0.9rem;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   @media (max-width: 500px) {
+    .brand {
+      gap: 0.4rem;
+    }
+    
     .brand span {
-      display: none;
+      font-size: 0.75rem;
+      display: inline-block;
+      max-width: 180px;
     }
     
     .brand-logo {
-      height: 40px;
+      height: 35px;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .brand span {
+      font-size: 0.7rem;
+      max-width: 150px;
+    }
+    
+    .brand-logo {
+      height: 32px;
     }
   }
   

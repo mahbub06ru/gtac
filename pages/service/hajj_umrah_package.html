@@ -18,7 +18,7 @@
 <a href="#" data-page="home" id="nav-home">Home</a>
 <a href="#" data-page="about" id="nav-about">About</a>
 <div class="nav-dropdown">
-<a href="#" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▼</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▼</span></a>
 <div class="dropdown-menu">
 <a href="#" id="nav-service-1">Student Consultancy</a>
 <a href="#" id="nav-service-2">Visa Process</a>
@@ -31,7 +31,7 @@
 </div>
 </div>
 <div class="nav-dropdown">
-<a href="#" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▼</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▼</span></a>
 <div class="dropdown-menu">
 <a href="#" id="nav-training-1">IELTS</a>
 <a href="#" id="nav-training-2">Mobile App Dev</a>
@@ -46,6 +46,448 @@
 <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
 </div>
 </header>
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    // Mobile menu toggle button
+    navToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpening = !nav.classList.contains('open');
+      nav.classList.toggle('open');
+      
+      // Collapse all dropdowns when opening menu
+      if (isOpening) {
+        const dropdowns = nav.querySelectorAll('.nav-dropdown');
+        dropdowns.forEach(dropdown => {
+          dropdown.classList.remove('active');
+        });
+      }
+      
+      // Prevent body scroll when menu is open
+      if (nav.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (nav.classList.contains('open') && 
+          !nav.contains(e.target) && 
+          !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking on a nav link (for mobile)
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 700) {
+          nav.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    // Close menu on window resize if it becomes desktop view
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+  
+  // Prevent navigation when clicking Services or Training dropdown toggles
+  const serviceToggle = document.getElementById('nav-service');
+  const trainingToggle = document.getElementById('nav-training');
+  
+  if (serviceToggle) {
+    serviceToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          // Close other dropdowns when opening one
+          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+          allDropdowns.forEach(dd => {
+            if (dd !== dropdown) {
+              dd.classList.remove('active');
+            }
+          });
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  if (trainingToggle) {
+    trainingToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          // Close other dropdowns when opening one
+          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+          allDropdowns.forEach(dd => {
+            if (dd !== dropdown) {
+              dd.classList.remove('active');
+            }
+          });
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    // Mobile menu toggle button
+    navToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpening = !nav.classList.contains('open');
+      nav.classList.toggle('open');
+      
+      // Collapse all dropdowns when opening menu
+      if (isOpening) {
+        const dropdowns = nav.querySelectorAll('.nav-dropdown');
+        dropdowns.forEach(dropdown => {
+          dropdown.classList.remove('active');
+        });
+      }
+      
+      // Prevent body scroll when menu is open
+      if (nav.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (nav.classList.contains('open') && 
+          !nav.contains(e.target) && 
+          !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking on a nav link (for mobile)
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 700) {
+          nav.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    // Close menu on window resize if it becomes desktop view
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+  
+  // Prevent navigation when clicking Services or Training dropdown toggles
+  const serviceToggle = document.getElementById('nav-service');
+  const trainingToggle = document.getElementById('nav-training');
+  
+  if (serviceToggle) {
+    serviceToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          // Close other dropdowns when opening one
+          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+          allDropdowns.forEach(dd => {
+            if (dd !== dropdown) {
+              dd.classList.remove('active');
+            }
+          });
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  if (trainingToggle) {
+    trainingToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          // Close other dropdowns when opening one
+          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+          allDropdowns.forEach(dd => {
+            if (dd !== dropdown) {
+              dd.classList.remove('active');
+            }
+          });
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    // Mobile menu toggle button
+    navToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      nav.classList.toggle('open');
+      // Prevent body scroll when menu is open
+      if (nav.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (nav.classList.contains('open') && 
+          !nav.contains(e.target) && 
+          !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking on a nav link (for mobile)
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 700) {
+          nav.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    // Close menu on window resize if it becomes desktop view
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+  
+  // Prevent navigation when clicking Services or Training dropdown toggles
+  const serviceToggle = document.getElementById('nav-service');
+  const trainingToggle = document.getElementById('nav-training');
+  
+  if (serviceToggle) {
+    serviceToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  if (trainingToggle) {
+    trainingToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  }
+  
+  // Prevent navigation when clicking Services or Training dropdown toggles
+  const serviceToggle = document.getElementById('nav-service');
+  const trainingToggle = document.getElementById('nav-training');
+  
+  if (serviceToggle) {
+    serviceToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  if (trainingToggle) {
+    trainingToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Just toggle dropdown on mobile, hover works on desktop
+      if (window.innerWidth <= 768) {
+        const dropdown = this.closest('.nav-dropdown');
+        if (dropdown) {
+          dropdown.classList.toggle('active');
+        }
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
+
+<script>
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('main-nav');
+  
+  if (navToggle && nav) {
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+      }
+    });
+  }
+  
+  // Update active navigation based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav a[data-page]');
+  
+  navLinks.forEach(link => {
+    const linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) || 
+        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+
 
 <script>
 // Navigation toggle functionality
@@ -235,8 +677,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3>Quick Links</h3>
 <a href="index.html" id="footer-home">Home</a>
 <a href="pages/about.html" id="footer-about">About Us</a>
-<a href="pages/service.html" id="footer-service">Services</a>
-<a href="pages/courses.html" id="footer-training">Training</a>
 <a href="pages/career.html" id="footer-career">Career</a>
 <a href="pages/success_story.html" id="footer-success">Success Story</a>
 <a href="pages/contact.html" id="footer-contact">Contact</a>

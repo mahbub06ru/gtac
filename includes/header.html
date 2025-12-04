@@ -8,7 +8,7 @@
 <a href="#" data-page="home" id="nav-home">Home</a>
 <a href="#" data-page="about" id="nav-about">About</a>
 <div class="nav-dropdown">
-<a href="#" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▼</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▼</span></a>
 <div class="dropdown-menu">
 <a href="#" id="nav-service-1">Student Consultancy</a>
 <a href="#" id="nav-service-2">Visa Process</a>
@@ -21,7 +21,7 @@
 </div>
 </div>
 <div class="nav-dropdown">
-<a href="#" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▼</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▼</span></a>
 <div class="dropdown-menu">
 <a href="#" id="nav-training-1">IELTS</a>
 <a href="#" id="nav-training-2">Mobile App Dev</a>
@@ -33,27 +33,230 @@
 <a href="#" data-page="success" id="nav-success">Success Story</a>
 <a href="#" data-page="contact" id="nav-contact">Contact</a>
 </nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">☰</button>
 </div>
 </header>
 
 <script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
+// Navigation toggle functionality - runs immediately and on DOMContentLoaded
+(function initNavigation() {
   const navToggle = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
   
   if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
+    // Function to update nav position based on header height
+    function updateNavPosition() {
+      if (window.innerWidth <= 700 && nav.classList.contains('open')) {
+        const header = document.querySelector('.site-header');
+        if (header) {
+          const headerHeight = header.offsetHeight;
+          nav.style.top = headerHeight + 'px';
+          nav.style.height = 'calc(100vh - ' + headerHeight + 'px)';
+          nav.style.maxHeight = 'calc(100vh - ' + headerHeight + 'px)';
+        }
+      }
+    }
+    
+    // Mobile menu toggle button
+    navToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpening = !nav.classList.contains('open');
       nav.classList.toggle('open');
+      
+      // Toggle aria-expanded for accessibility
+      const isOpen = nav.classList.contains('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+      
+      // Update position when opening
+      if (isOpen) {
+        updateNavPosition();
+      }
+      
+      // Collapse all dropdowns when opening/closing menu
+      const dropdowns = nav.querySelectorAll('.nav-dropdown');
+      dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+      
+      // Prevent body scroll when menu is open
+      if (nav.classList.contains('open')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
+      }
     });
     
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+    // Update position on resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
         nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
+      } else if (window.innerWidth <= 700) {
+        updateNavPosition();
+      }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (nav.classList.contains('open') && 
+          !nav.contains(e.target) && 
+          !navToggle.contains(e.target)) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Close menu when clicking on a nav link (for mobile)
+    // Use event delegation on document to handle all clicks
+    // This runs AFTER the dropdown handler (bubble phase)
+    if (!window._navLinkCloseHandler) {
+      window._navLinkCloseHandler = function(e) {
+        // Only handle on mobile
+        if (window.innerWidth > 700) return;
+        
+        const nav = document.getElementById('main-nav');
+        if (!nav || !nav.classList.contains('open')) return;
+        
+        // Don't close if clicking on dropdown toggle or inside dropdown menu
+        if (e.target.closest('.dropdown-toggle') || e.target.closest('.dropdown-menu')) {
+          return;
+        }
+        
+        // Only close if clicking on a regular nav link (not dropdown related)
+        const clickedLink = e.target.closest('a');
+        if (clickedLink && 
+            !clickedLink.classList.contains('dropdown-toggle') && 
+            !clickedLink.closest('.dropdown-menu') &&
+            clickedLink.closest('.nav')) {
+          nav.classList.remove('open');
+          const navToggle = document.getElementById('nav-toggle');
+          if (navToggle) {
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
+          document.body.style.overflow = '';
+          nav.style.top = '';
+          nav.style.height = '';
+          nav.style.maxHeight = '';
+        }
+      };
+      
+      // Use bubble phase so it runs AFTER dropdown handler (capture phase)
+      document.addEventListener('click', window._navLinkCloseHandler, false);
+    }
+    
+    // Close menu on window resize if it becomes desktop view
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        document.body.style.overflow = '';
       }
     });
   }
+  
+  // Simple, robust dropdown toggle handler
+  // Use a single global handler that works on all pages
+  // Create handler function if it doesn't exist
+  if (!window._dropdownToggleHandler) {
+    window._dropdownToggleHandler = function(e) {
+      // Only handle on mobile
+      if (window.innerWidth > 700) return;
+      
+      const nav = document.getElementById('main-nav');
+      if (!nav || !nav.classList.contains('open')) return;
+      
+      // Find if click is on a dropdown toggle or inside one
+      const dropdownToggle = e.target.closest('.dropdown-toggle');
+      if (!dropdownToggle) return;
+      
+      // Find the parent dropdown container
+      const dropdown = dropdownToggle.closest('.nav-dropdown');
+      if (!dropdown) return;
+      
+      // Prevent default and stop ALL propagation immediately
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      
+      // Get current state BEFORE closing others
+      const isActive = dropdown.classList.contains('active');
+      
+      // Close all dropdowns first
+      const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+      allDropdowns.forEach(dd => {
+        if (dd !== dropdown) {
+          dd.classList.remove('active');
+        }
+      });
+      
+      // Toggle the clicked dropdown
+      if (!isActive) {
+        dropdown.classList.add('active');
+      } else {
+        dropdown.classList.remove('active');
+      }
+      
+      // Force a reflow to ensure CSS transition works
+      void dropdown.offsetHeight;
+      
+      return false;
+    };
+  }
+  
+  // Always ensure event listener is attached (even if handler already exists)
+  // Remove first to avoid duplicates, then add
+  document.removeEventListener('click', window._dropdownToggleHandler, true);
+  document.addEventListener('click', window._dropdownToggleHandler, true);
+  
+  
+  // Close menu when clicking on dropdown menu items (submenu links)
+  window.setupDropdownMenuLinks = function setupDropdownMenuLinks() {
+    const navElement = document.getElementById('main-nav');
+    if (!navElement) return;
+    
+    const dropdownMenuLinks = navElement.querySelectorAll('.dropdown-menu a');
+    dropdownMenuLinks.forEach(link => {
+      // Remove existing listener if any
+      const newLink = link.cloneNode(true);
+      link.parentNode.replaceChild(newLink, link);
+    });
+    
+    // Re-query after cloning
+    const newDropdownMenuLinks = navElement.querySelectorAll('.dropdown-menu a');
+    newDropdownMenuLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 700) {
+          const nav = document.getElementById('main-nav');
+          const navToggle = document.getElementById('nav-toggle');
+          if (nav) {
+            nav.classList.remove('open');
+            if (navToggle) {
+              navToggle.setAttribute('aria-expanded', 'false');
+            }
+            document.body.style.overflow = '';
+            nav.style.top = '';
+            nav.style.height = '';
+            nav.style.maxHeight = '';
+          }
+        }
+      });
+    });
+  }
+  
+  setupDropdownMenuLinks();
+  
+  // Re-setup dropdown menu links on load
+  window.addEventListener('load', function() {
+    setTimeout(setupDropdownMenuLinks, 100);
+  });
+  
   
   // Update active navigation based on current page
   const currentPath = window.location.pathname;
@@ -66,6 +269,25 @@ document.addEventListener('DOMContentLoaded', function() {
       link.classList.add('active');
     }
   });
-});
+})();
+
+// Also run on DOMContentLoaded if not already executed
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Re-initialize navigation if elements exist
+    const navToggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if (navToggle && nav && !navToggle.hasAttribute('data-initialized')) {
+      navToggle.setAttribute('data-initialized', 'true');
+      // Re-run setup functions
+      if (typeof setupDropdownToggles === 'function') {
+        setupDropdownToggles();
+      }
+      if (typeof setupDropdownMenuLinks === 'function') {
+        setupDropdownMenuLinks();
+      }
+    }
+  });
+}
 </script>
 
