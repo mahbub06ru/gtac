@@ -148,7 +148,15 @@
 
         try {
           console.log('Adding career to Firestore...');
-          const docRef = await addDoc(collection(db, 'careers'), {
+          console.log('Database object:', db);
+          console.log('Collection path: careers');
+          
+          // Check if db is initialized
+          if (!db) {
+            throw new Error('Firestore database not initialized');
+          }
+          
+          const careerData = {
             title: title,
             location: location,
             type: type,
@@ -157,16 +165,32 @@
             requirements: requirements,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
+          };
+          
+          console.log('Career data to save:', careerData);
+          
+          // Add timeout to detect if operation hangs
+          const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Operation timed out after 10 seconds. Check Firestore rules and network connection.')), 10000);
           });
+          
+          const addPromise = addDoc(collection(db, 'careers'), careerData);
+          const docRef = await Promise.race([addPromise, timeoutPromise]);
 
           console.log('Career added successfully with ID:', docRef.id);
-          msgEl.textContent = '✓ Career added successfully!';
+          msgEl.textContent = '✓ Career added successfully! Refreshing list...';
           msgEl.style.color = '#16a34a';
           msgEl.style.backgroundColor = '#f0fdf4';
           formToUse.reset();
           
           // Reload careers list
-          await loadCareers();
+          try {
+            await loadCareers();
+            console.log('Careers list reloaded');
+          } catch (loadError) {
+            console.error('Error reloading careers:', loadError);
+            msgEl.textContent = '✓ Career added, but error loading list: ' + loadError.message;
+          }
           
           // Clear success message after 5 seconds
           setTimeout(() => {
@@ -175,14 +199,38 @@
           }, 5000);
         } catch (error) {
           console.error('Error adding career:', error);
-          msgEl.textContent = 'Error: ' + error.message + ' (Check console for details)';
+          console.error('Error code:', error.code);
+          console.error('Error details:', error);
+          
+          let errorMessage = 'Error: ';
+          if (error.code === 'permission-denied') {
+            errorMessage += 'Permission denied. Please check Firestore security rules. They should allow write access.';
+          } else if (error.code === 'unavailable') {
+            errorMessage += 'Firestore is unavailable. Check your internet connection.';
+          } else if (error.message) {
+            errorMessage += error.message;
+          } else {
+            errorMessage += 'Unknown error occurred. Check browser console (F12) for details.';
+          }
+          
+          msgEl.textContent = errorMessage;
           msgEl.style.color = '#dc2626';
           msgEl.style.backgroundColor = '#fef2f2';
-          alert('Error adding career: ' + error.message + '\n\nCheck browser console (F12) for more details.');
+          msgEl.style.display = 'block';
+          msgEl.style.padding = '0.75rem';
+          msgEl.style.borderRadius = '4px';
+          
+          // Also show alert for critical errors
+          if (error.code === 'permission-denied') {
+            alert('PERMISSION DENIED ERROR\n\nYour Firestore security rules are blocking write access.\n\nGo to Firebase Console → Firestore → Rules and set:\n\nrules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read, write: if true;\n    }\n  }\n}\n\n(This is for development only!)');
+          } else {
+            alert('Error adding career:\n\n' + errorMessage + '\n\nCheck browser console (F12) for more details.');
+          }
         } finally {
           // Restore button state
           submitBtn.textContent = originalBtnText;
           submitBtn.disabled = false;
+          console.log('Form submission completed');
         }
       });
       
