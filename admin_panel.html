@@ -1,0 +1,570 @@
+<!-- GTAC Admin Panel - Login Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTAC Admin Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>GTAC Admin Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p id="error-msg"></p>
+  </div>
+
+  <script type="module" src="firebase-auth.js"></script>
+  <script type="module">
+    // Firebase Authentication Setup
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // TODO: Replace this with your Firebase project credentials
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.login = function () {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('error-msg');
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "dashboard.html"; // redirect after login
+        })
+        .catch((error) => {
+          errorMsg.textContent = error.message;
+        });
+    }
+  </script>
+</body>
+</html>
+
+<!-- GTAC Admin Panel - Dashboard Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTAC Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>GTAC Admin</h2>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="packages.html">Holiday Packages</a></li>
+      <li><a href="visa.html">Visa Processing</a></li>
+      <li><a href="study.html">Study Abroad</a></li>
+      <li><a href="inquiries.html">Inquiries</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>Dashboard Overview</h1>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <h3 id="totalPackages">0</h3>
+        <p>Total Holiday Packages</p>
+      </div>
+      <div class="stat-box">
+        <h3 id="totalVisa">0</h3>
+        <p>Total Visa Entries</p>
+      </div>
+      <div class="stat-box">
+        <h3 id="totalStudy">0</h3>
+        <p>Study Abroad Entries</p>
+      </div>
+      <div class="stat-box">
+        <h3 id="totalInquiries">0</h3>
+        <p>Total Inquiries</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // TODO: Replace with actual Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html"; // redirect to login if not logged in
+      }
+    });
+
+    window.logout = function () {
+      signOut(auth);
+    }
+  </script>
+</body>
+</html>
+
+<!-- GTAC Admin Panel - Holiday Packages Management -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Holiday Packages</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>GTAC Admin</h2>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="packages.html" class="active">Holiday Packages</a></li>
+      <li><a href="visa.html">Visa Processing</a></li>
+      <li><a href="study.html">Study Abroad</a></li>
+      <li><a href="inquiries.html">Inquiries</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>Holiday Packages</h1>
+
+    <div class="form-card">
+      <h2>Add New Package</h2>
+      <input type="text" id="pkgTitle" placeholder="Package Title" />
+      <input type="text" id="pkgPrice" placeholder="Price" />
+      <textarea id="pkgDetails" placeholder="Package Details"></textarea>
+      <input type="file" id="pkgImage" />
+      <button onclick="addPackage()">Add Package</button>
+      <p id="pkgMsg"></p>
+    </div>
+
+    <h2>All Packages</h2>
+    <div id="packageList" class="list-grid"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    // TODO: Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_BUCKET",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) window.location.href = "index.html";
+      loadPackages();
+    });
+
+    window.logout = function () {
+      signOut(auth);
+    }
+
+    // Add Package
+    window.addPackage = async function () {
+      const title = pkgTitle.value;
+      const price = pkgPrice.value;
+      const details = pkgDetails.value;
+      const file = pkgImage.files[0];
+
+      if (!file) {
+        pkgMsg.textContent = "Please upload an image.";
+        return;
+      }
+
+      const imgRef = ref(storage, `packages/${Date.now()}_${file.name}`);
+      await uploadBytes(imgRef, file);
+      const imageUrl = await getDownloadURL(imgRef);
+
+      await addDoc(collection(db, "packages"), {
+        title,
+        price,
+        details,
+        image: imageUrl,
+      });
+
+      pkgMsg.textContent = "Package Added Successfully!";
+      loadPackages();
+    }
+
+    // Load Packages
+    async function loadPackages() {
+      const list = document.getElementById("packageList");
+      list.innerHTML = "Loading...";
+
+      const snap = await getDocs(collection(db, "packages"));
+      list.innerHTML = "";
+
+      snap.forEach((docData) => {
+        const p = docData.data();
+        list.innerHTML += `
+          <div class="item-box">
+            <img src="${p.image}" />
+            <h3>${p.title}</h3>
+            <p>${p.price}</p>
+            <button onclick="deletePackage('${docData.id}')">Delete</button>
+          </div>
+        `;
+      });
+    }
+
+    // Delete Package
+    window.deletePackage = async function (id) {
+      await deleteDoc(doc(db, "packages", id));
+      loadPackages();
+    }
+  </script>
+</body>
+</html>
+
+<!-- GTAC Admin Panel - Success Story Manager -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Success Stories</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>GTAC Admin</h2>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="packages.html">Holiday Packages</a></li>
+      <li><a href="visa.html">Visa Processing</a></li>
+      <li><a href="study.html">Study Abroad</a></li>
+      <li><a href="success.html" class="active">Success Stories</a></li>
+      <li><a href="inquiries.html">Inquiries</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <h1>Success Stories</h1>
+
+    <div class="form-card">
+      <h2>Add New Success Story</h2>
+      <input type="text" id="ssName" placeholder="Client Name" />
+      <input type="text" id="ssCountry" placeholder="Country (e.g., Canada, UK)" />
+      <textarea id="ssStory" placeholder="Success Story Description"></textarea>
+      <input type="file" id="ssImage" />
+      <button onclick="addSuccessStory()">Add Story</button>
+      <p id="ssMsg"></p>
+    </div>
+
+    <h2>All Success Stories</h2>
+    <div id="successList" class="list-grid"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_BUCKET",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) window.location.href = "index.html";
+      loadSuccessStories();
+    });
+
+    window.logout = function () {
+      signOut(auth);
+    }
+
+    // Add Success Story
+    window.addSuccessStory = async function () {
+      const name = ssName.value;
+      const country = ssCountry.value;
+      const story = ssStory.value;
+      const file = ssImage.files[0];
+
+      if (!file) {
+        ssMsg.textContent = "Please upload an image.";
+        return;
+      }
+
+      const imgRef = ref(storage, `success/${Date.now()}_${file.name}`);
+      await uploadBytes(imgRef, file);
+      const imageUrl = await getDownloadURL(imgRef);
+
+      await addDoc(collection(db, "successStories"), {
+        name,
+        country,
+        story,
+        image: imageUrl,
+      });
+
+      ssMsg.textContent = "Success Story Added!";
+      loadSuccessStories();
+    }
+
+    // Load Success Stories
+    async function loadSuccessStories() {
+      const list = document.getElementById("successList");
+      list.innerHTML = "Loading...";
+
+      const snap = await getDocs(collection(db, "successStories"));
+      list.innerHTML = "";
+
+      snap.forEach((docData) => {
+        const s = docData.data();
+        list.innerHTML += `
+          <div class="item-box">
+            <img src="${s.image}" />
+            <h3>${s.name}</h3>
+            <p>${s.country}</p>
+            <button onclick="deleteSuccessStory('${docData.id}')">Delete</button>
+          </div>
+        `;
+      });
+    }
+
+    // Delete Story
+    window.deleteSuccessStory = async function (id) {
+      await deleteDoc(doc(db, "successStories", id));
+      loadSuccessStories();
+    }
+  </script>
+</body>
+</html>
+
+<!-- Pagination for Success Stories Start -->
+<section id="pagination-success-stories" class="bg-white p-6 rounded-xl shadow-md mt-6">
+  <h2 class="text-2xl font-semibold mb-4">Pagination Support for Success Stories</h2>
+  <pre class="bg-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
+// Firestore Pagination Logic
+let lastVisible = null;
+let successStories = [];
+const limitCount = 10; // Items per page
+async function loadStories(pageDirection = 'next') {
+  let queryRef = firebase.firestore().collection('success_stories').orderBy('created_at', 'desc').limit(limitCount);
+  if (pageDirection === 'next' && lastVisible) queryRef = queryRef.startAfter(lastVisible);
+  const snapshot = await queryRef.get();
+  successStories = snapshot.docs;
+  lastVisible = snapshot.docs[snapshot.docs.length - 1];
+  renderSuccessStories(snapshot.docs);
+}
+function renderSuccessStories(docs) {
+  const container = document.getElementById('successList');
+  docs.forEach((doc) => { /* UI rendering */ });
+}
+loadStories();
+function nextPage() { loadStories('next'); }
+function prevPage() { loadStories('prev'); }
+  </pre>
+  <div class="flex justify-between mt-4">
+    <button onclick="prevPage()" class="bg-gray-500 text-white px-4 py-2 rounded">Previous</button>
+    <button onclick="nextPage()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+  </div>
+</section>
+<!-- Pagination for Success Stories End -->
+
+<!-- Training Courses Manager Start -->
+<section id="training-courses" class="bg-white p-6 rounded-xl shadow-md mt-10">
+  <h2 class="text-3xl font-semibold mb-4">Training Courses Manager (Add / Edit / Delete)</h2>
+
+  <!-- Add Course Form -->
+  <form id="addCourseForm" class="space-y-4">
+    <input id="courseTitle" type="text" placeholder="Course Title" class="w-full p-3 border rounded" required />
+    <textarea id="courseDescription" placeholder="Course Description" class="w-full p-3 border rounded" required></textarea>
+    <input id="courseDuration" type="text" placeholder="Duration (e.g., 3 Months)" class="w-full p-3 border rounded" required />
+    <input id="coursePrice" type="number" placeholder="Course Price" class="w-full p-3 border rounded" required />
+    <input id="courseImage" type="file" accept="image/*" class="w-full" required />
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Add Course</button>
+  </form>
+
+  <!-- Course List -->
+  <div id="courseList" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6"></div>
+
+  <!-- Pagination Buttons -->
+  <div class="flex justify-between mt-4">
+    <button onclick="prevCoursePage()" class="bg-gray-600 text-white px-4 py-2 rounded">Previous</button>
+    <button onclick="nextCoursePage()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+  </div>
+</section>
+
+<script>
+// ======================= FIRESTORE PAGINATION FOR COURSES =======================
+let lastCourse = null;
+let firstCourse = null;
+let courseDocs = [];
+const courseLimit = 9;
+
+async function loadCourses(direction = 'next') {
+  let queryRef = firebase.firestore().collection('training_courses').orderBy('created_at', 'desc').limit(courseLimit);
+
+  if (direction === 'next' && lastCourse) queryRef = queryRef.startAfter(lastCourse);
+  if (direction === 'prev' && firstCourse) queryRef = queryRef.endBefore(firstCourse);
+
+  const snap = await queryRef.get();
+  if (!snap.empty) {
+    courseDocs = snap.docs;
+    firstCourse = snap.docs[0];
+    lastCourse = snap.docs[snap.docs.length - 1];
+    renderCourses(snap.docs);
+  }
+}
+
+function renderCourses(docs) {
+  const container = document.getElementById('courseList');
+  container.innerHTML = '';
+
+  docs.forEach((doc) => {
+    const d = doc.data();
+    const card = document.createElement('div');
+    card.classList = 'bg-gray-200 p-4 rounded-lg shadow';
+
+    card.innerHTML = `
+      <img src="${d.imageUrl}" class="w-full h-40 object-cover rounded mb-3" />
+      <h3 class="text-lg font-semibold">${d.title}</h3>
+      <p class="text-sm">${d.description}</p>
+      <p class="font-semibold mt-1">Duration: ${d.duration}</p>
+      <p class="font-semibold">Price: ${d.price} BDT</p>
+      <div class="flex gap-2 mt-3">
+        <button onclick="deleteCourse('${doc.id}')" class="bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function nextCoursePage() { loadCourses('next'); }
+function prevCoursePage() { loadCourses('prev'); }
+
+// ============ ADD NEW COURSE ============
+document.getElementById('addCourseForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById('courseTitle').value;
+  const description = document.getElementById('courseDescription').value;
+  const duration = document.getElementById('courseDuration').value;
+  const price = document.getElementById('coursePrice').value;
+  const imageFile = document.getElementById('courseImage').files[0];
+
+  const storageRef = firebase.storage().ref('courses/' + Date.now() + '_' + imageFile.name);
+  await storageRef.put(imageFile);
+  const imageUrl = await storageRef.getDownloadURL();
+
+  await firebase.firestore().collection('training_courses').add({
+    title,
+    description,
+    duration,
+    price,
+    imageUrl,
+    created_at: firebase.firestore.FieldValue.serverTimestamp(),
+  });
+
+  e.target.reset();
+  loadCourses();
+});
+
+// ============ DELETE COURSE ============
+async function deleteCourse(id) {
+  await firebase.firestore().collection('training_courses').doc(id).delete();
+  loadCourses();
+}
+
+// INITIAL LOAD
+loadCourses();
+</script>
+<!-- Training Courses Manager End -->
+
+<!-- Services Manager Start -->
+<section id="services-manager" class="bg-white p-6 rounded-xl shadow-md mt-10">
+  <h2 class="text-3xl font-semibold mb-4">Services Manager (Add / Edit / Delete)</h2>
+  <form id="addServiceForm" class="space-y-4">
+    <input id="serviceTitle" type="text" placeholder="Service Title" class="w-full p-3 border rounded" required />
+    <textarea id="serviceDescription" placeholder="Service Description" class="w-full p-3 border rounded" required></textarea>
+    <input id="serviceIcon" type="text" placeholder="Icon (optional)" class="w-full p-3 border rounded" />
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Add Service</button>
+  </form>
+  <div id="serviceList" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6"></div>
+  <div class="flex justify-between mt-4">
+    <button onclick="prevServicePage()" class="bg-gray-600 text-white px-4 py-2 rounded">Previous</button>
+    <button onclick="nextServicePage()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+  </div>
+</section>
+<script>
+let lastService=null, firstService=null, serviceDocs=[];
+const serviceLimit=9;
+async function loadServices(dir='next'){ let ref=firebase.firestore().collection('services').orderBy('created_at','desc').limit(serviceLimit);
+  if(dir==='next'&&lastService) ref=ref.startAfter(lastService);
+  if(dir==='prev'&&firstService) ref=ref.endBefore(firstService);
+  const snap=await ref.get(); if(!snap.empty){ serviceDocs=snap.docs; firstService=snap.docs[0]; lastService=snap.docs[snap.docs.length-1]; renderServices(snap.docs);} }
+function renderServices(docs){ const c=document.getElementById('serviceList'); c.innerHTML=''; docs.forEach(doc=>{ const d=doc.data(); const card=document.createElement('div'); card.classList='bg-gray-200 p-4 rounded-lg shadow'; card.innerHTML=`<h3 class='text-xl font-semibold mb-1'>${d.title}</h3><p>${d.description}</p><button onclick="deleteService('${doc.id}')" class='bg-red-600 text-white px-3 py-1 rounded mt-3'>Delete</button>`; c.appendChild(card);}); }
+function nextServicePage(){loadServices('next');} function prevServicePage(){loadServices('prev');}
+document.getElementById('addServiceForm').addEventListener('submit',async(e)=>{ e.preventDefault(); await firebase.firestore().collection('services').add({ title:serviceTitle.value, description:serviceDescription.value, icon:serviceIcon.value, created_at:firebase.firestore.FieldValue.serverTimestamp()}); e.target.reset(); loadServices(); });
+async function deleteService(id){ await firebase.firestore().collection('services').doc(id).delete(); loadServices(); }
+loadServices();
+</script>
+<!-- Services Manager End -->
+
+<!-- Career Opportunities Manager Start -->
+<section id="career-manager" class="bg-white p-6 rounded-xl shadow-md mt-10">
+  <h2 class="text-3xl font-semibold mb-4">Career Opportunities (Add / Edit / Delete)</h2>
+  <form id="addCareerForm" class="space-y-4">
+    <input id="careerTitle" type="text" placeholder="Job Title" class="w-full p-3 border rounded" required />
+    <input id="careerLocation" type="text" placeholder="Location" class="w-full p-3 border rounded" required />
+    <textarea id="careerDescription" placeholder="Job Description" class="w-full p-3 border rounded" required></textarea>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Add Job</button>
+  </form>
+  <div id="careerList" class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6"></div>
+  <div class="flex justify-between mt-4">
+    <button onclick="prevCareerPage()" class="bg-gray-600 text-white px-4 py-2 rounded">Previous</button>
+    <button onclick="nextCareerPage()" class="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+  </div>
+</section>
+<script>
+let lastCareer=null, firstCareer=null, careerDocs=[];
+const careerLimit=6;
+async function loadCareers(dir='next'){ let ref=firebase.firestore().collection('careers').orderBy('created_at','desc').limit(careerLimit);
+  if(dir==='next'&&lastCareer) ref=ref.startAfter(lastCareer);
+  if(dir==='prev'&&firstCareer) ref=endBefore(firstCareer);
+  const snap=await ref.get(); if(!snap.empty){ careerDocs=snap.docs; firstCareer=snap.docs[0]; lastCareer=snap.docs[snap.docs.length-1]; renderCareers(snap.docs);} }
+function renderCareers(docs){ const c=document.getElementById('careerList'); c.innerHTML=''; docs.forEach(doc=>{ const d=doc.data(); const card=document.createElement('div'); card.classList='bg-gray-200 p-4 rounded-lg shadow'; card.innerHTML=`<h3 class='text-xl font-semibold'>${d.title}</h3><p><strong>Location:</strong> ${d.location}</p><p class='text-sm'>${d.description}</p><button onclick="deleteCareer('${doc.id}')" class='bg-red-600 text-white px-3 py-1 rounded mt-3'>Delete</button>`; c.appendChild(card);}); }
+function nextCareerPage(){loadCareers('next');} function prevCareerPage(){loadCareers('prev');}
+document.getElementById('addCareerForm').addEventListener('submit',async(e)=>{ e.preventDefault(); await firebase.firestore().collection('careers').add({ title:careerTitle.value, location:careerLocation.value, description:careerDescription.value, created_at:firebase.firestore.FieldValue.serverTimestamp()}); e.target.reset(); loadCareers(); });
+async function deleteCareer(id){ await firebase.firestore().collection('careers').doc(id).delete(); loadCareers(); }
+loadCareers();
+</script>
+<!-- Career Opportunities Manager End -->

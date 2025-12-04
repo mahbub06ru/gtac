@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Courses - GTAC Admin</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="admin_styles.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <h2>GTAC Admin</h2>
+      <ul class="admin-nav">
+        <li><a href="admin_dashboard.html">Dashboard</a></li>
+        <li><a href="admin_careers.html">Careers</a></li>
+        <li><a href="admin_services.html">Services</a></li>
+        <li><a href="admin_courses.html" class="active">Courses</a></li>
+        <li><a href="admin_success_stories.html">Success Stories</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+
+    <div class="admin-main-content">
+      <h1>Courses Management</h1>
+      <p>Courses management will be implemented here. Coming soon!</p>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDOz_CM0eYBrMJhZj0qbm-FQ11P5Wgs9mM",
+      authDomain: "gtac-a9db5.firebaseapp.com",
+      projectId: "gtac-a9db5",
+      storageBucket: "gtac-a9db5.firebasestorage.app",
+      messagingSenderId: "826319153432",
+      appId: "1:826319153432:web:54b8c12c85b9d951fad66d",
+      measurementId: "G-QFDYXLCG11"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "admin_login.html";
+      }
+    });
+
+    window.logout = function () {
+      auth.signOut()
+        .then(() => {
+          sessionStorage.removeItem('adminUser');
+          window.location.href = "admin_login.html";
+        });
+    }
+  </script>
+</body>
+</html>
+

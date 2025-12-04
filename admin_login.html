@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTAC Admin Login</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 2rem;
+      background: var(--bg-white);
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-dark);
+    }
+    .login-container input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .login-container button:hover {
+      background: var(--primary-dark);
+    }
+    .login-container #error-msg {
+      color: #dc2626;
+      text-align: center;
+      margin-top: 1rem;
+      min-height: 1.5rem;
+    }
+    .login-container #success-msg {
+      color: #16a34a;
+      text-align: center;
+      margin-top: 1rem;
+      min-height: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>GTAC Admin Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p id="error-msg"></p>
+    <p id="success-msg"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+  <script>
+    // Check if running on file:// protocol
+    if (window.location.protocol === 'file:') {
+      document.getElementById('error-msg').innerHTML = 
+        '<strong style="color: #dc2626;">⚠️ Error: Firebase requires HTTP/HTTPS protocol.</strong><br>' +
+        'Please use a local server. Options:<br>' +
+        '1. Python: <code>python -m http.server 8000</code><br>' +
+        '2. Node.js: <code>npx http-server</code><br>' +
+        '3. VS Code: Install "Live Server" extension<br>' +
+        'Then access: <code>http://localhost:8000/admin_login.html</code>';
+      document.getElementById('error-msg').style.padding = '1rem';
+      document.getElementById('error-msg').style.background = '#fef2f2';
+      document.getElementById('error-msg').style.borderRadius = '4px';
+    }
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDOz_CM0eYBrMJhZj0qbm-FQ11P5Wgs9mM",
+      authDomain: "gtac-a9db5.firebaseapp.com",
+      projectId: "gtac-a9db5",
+      storageBucket: "gtac-a9db5.firebasestorage.app",
+      messagingSenderId: "826319153432",
+      appId: "1:826319153432:web:54b8c12c85b9d951fad66d",
+      measurementId: "G-QFDYXLCG11"
+    };
+
+    let app, db, storage, auth;
+
+    try {
+      // Initialize Firebase
+      app = firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      storage = firebase.storage();
+      auth = firebase.auth();
+      
+      console.log('Firebase initialized successfully');
+    } catch (error) {
+      console.error('Firebase initialization error:', error);
+      document.getElementById('error-msg').textContent = 
+        'Firebase initialization failed: ' + error.message + '. Please check your configuration and ensure you are using HTTP/HTTPS protocol.';
+    }
+
+    // Login function
+    window.login = function () {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('error-msg');
+      const successMsg = document.getElementById('success-msg');
+
+      errorMsg.textContent = '';
+      successMsg.textContent = '';
+
+      if (!email || !password) {
+        errorMsg.textContent = 'Please enter both email and password';
+        return;
+      }
+
+      if (!auth) {
+        errorMsg.textContent = 'Firebase is not initialized. Please use HTTP/HTTPS protocol (not file://)';
+        return;
+      }
+
+      // Show loading state
+      const loginBtn = document.querySelector('button');
+      const originalText = loginBtn.textContent;
+      loginBtn.textContent = 'Logging in...';
+      loginBtn.disabled = true;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Store user info in sessionStorage
+          sessionStorage.setItem('adminUser', JSON.stringify({
+            uid: userCredential.user.uid,
+            email: userCredential.user.email
+          }));
+          successMsg.textContent = 'Login successful! Redirecting...';
+          setTimeout(() => {
+            window.location.href = "admin_dashboard.html";
+          }, 500);
+        })
+        .catch((error) => {
+          loginBtn.textContent = originalText;
+          loginBtn.disabled = false;
+          
+          let errorMessage = 'Login failed. ';
+          switch (error.code) {
+            case 'auth/user-not-found':
+              errorMessage += 'User not found.';
+              break;
+            case 'auth/wrong-password':
+              errorMessage += 'Incorrect password.';
+              break;
+            case 'auth/invalid-email':
+              errorMessage += 'Invalid email address.';
+              break;
+            case 'auth/user-disabled':
+              errorMessage += 'User account has been disabled.';
+              break;
+            case 'auth/network-request-failed':
+              errorMessage += 'Network error. Please check your internet connection.';
+              break;
+            default:
+              errorMessage += error.message;
+          }
+          errorMsg.textContent = errorMessage;
+          console.error('Login error:', error);
+        });
+    }
+
+    // Check if already logged in
+    if (auth) {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          sessionStorage.setItem('adminUser', JSON.stringify({
+            uid: user.uid,
+            email: user.email
+          }));
+          window.location.href = "admin_dashboard.html";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+

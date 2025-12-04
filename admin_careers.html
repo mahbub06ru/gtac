@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Careers - GTAC Admin</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="admin_styles.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <h2>GTAC Admin</h2>
+      <ul class="admin-nav">
+        <li><a href="admin_dashboard.html">Dashboard</a></li>
+        <li><a href="admin_careers.html" class="active">Careers</a></li>
+        <li><a href="admin_services.html">Services</a></li>
+        <li><a href="admin_courses.html">Courses</a></li>
+        <li><a href="admin_success_stories.html">Success Stories</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+
+    <div class="admin-main-content">
+      <h1>Career Opportunities Management</h1>
+
+      <div class="form-card">
+        <h2>Add New Career</h2>
+        <form id="careerForm">
+          <input type="text" id="careerTitle" placeholder="Job Title" required />
+          <input type="text" id="careerLocation" placeholder="Location (e.g., Dhaka, Bangladesh)" required />
+          <input type="text" id="careerType" placeholder="Job Type (e.g., Full-time, Part-time)" required />
+          <textarea id="careerDescription" placeholder="Job Description" rows="5" required></textarea>
+          <textarea id="careerResponsibilities" placeholder="Key Responsibilities (one per line)" rows="5"></textarea>
+          <textarea id="careerRequirements" placeholder="Requirements (one per line)" rows="5"></textarea>
+          <button type="submit">Add Career</button>
+        </form>
+        <p id="careerMsg"></p>
+      </div>
+
+      <h2 style="margin-top: 2rem;">All Career Posts</h2>
+      <div id="careerList" class="list-grid"></div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDOz_CM0eYBrMJhZj0qbm-FQ11P5Wgs9mM",
+      authDomain: "gtac-a9db5.firebaseapp.com",
+      projectId: "gtac-a9db5",
+      storageBucket: "gtac-a9db5.firebasestorage.app",
+      messagingSenderId: "826319153432",
+      appId: "1:826319153432:web:54b8c12c85b9d951fad66d",
+      measurementId: "G-QFDYXLCG11"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+    const auth = firebase.auth();
+
+    // Check authentication
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = "admin_login.html";
+      } else {
+        loadCareers();
+      }
+    });
+
+    // Form submission
+    document.getElementById('careerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msgEl = document.getElementById('careerMsg');
+      
+      const title = document.getElementById('careerTitle').value;
+      const location = document.getElementById('careerLocation').value;
+      const type = document.getElementById('careerType').value;
+      const description = document.getElementById('careerDescription').value;
+      const responsibilities = document.getElementById('careerResponsibilities').value.split('\n').filter(r => r.trim());
+      const requirements = document.getElementById('careerRequirements').value.split('\n').filter(r => r.trim());
+
+      try {
+        await db.collection('careers').add({
+          title: title,
+          location: location,
+          type: type,
+          description: description,
+          responsibilities: responsibilities,
+          requirements: requirements,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        msgEl.textContent = 'Career added successfully!';
+        msgEl.style.color = '#16a34a';
+        document.getElementById('careerForm').reset();
+        loadCareers();
+      } catch (error) {
+        msgEl.textContent = 'Error: ' + error.message;
+        msgEl.style.color = '#dc2626';
+      }
+    });
+
+    // Load careers
+    async function loadCareers() {
+      const listEl = document.getElementById('careerList');
+      listEl.innerHTML = '<p>Loading...</p>';
+
+      try {
+        const snapshot = await db.collection('careers').orderBy('createdAt', 'desc').get();
+        
+        if (snapshot.empty) {
+          listEl.innerHTML = '<p>No career posts found. Add your first career post above.</p>';
+          return;
+        }
+
+        listEl.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const card = document.createElement('div');
+          card.className = 'item-box';
+          
+          const responsibilitiesHtml = data.responsibilities && data.responsibilities.length > 0
+            ? '<h4>Key Responsibilities:</h4><ul>' + data.responsibilities.map(r => `<li>${r}</li>`).join('') + '</ul>'
+            : '';
+          
+          const requirementsHtml = data.requirements && data.requirements.length > 0
+            ? '<h4>Requirements:</h4><ul>' + data.requirements.map(r => `<li>${r}</li>`).join('') + '</ul>'
+            : '';
+
+          card.innerHTML = `
+            <div class="item-content">
+              <h3>${data.title}</h3>
+              <p><strong>Location:</strong> ${data.location}</p>
+              <p><strong>Type:</strong> ${data.type}</p>
+              <p>${data.description}</p>
+              ${responsibilitiesHtml}
+              ${requirementsHtml}
+            </div>
+            <div class="item-actions">
+              <button onclick="deleteCareer('${doc.id}')" class="btn-delete">Delete</button>
+            </div>
+          `;
+          listEl.appendChild(card);
+        });
+      } catch (error) {
+        listEl.innerHTML = '<p style="color: #dc2626;">Error loading careers: ' + error.message + '</p>';
+      }
+    }
+
+    // Delete career
+    window.deleteCareer = async function (id) {
+      if (!confirm('Are you sure you want to delete this career post?')) {
+        return;
+      }
+
+      try {
+        await db.collection('careers').doc(id).delete();
+        loadCareers();
+      } catch (error) {
+        alert('Error deleting career: ' + error.message);
+      }
+    }
+
+    // Logout function
+    window.logout = function () {
+      auth.signOut()
+        .then(() => {
+          sessionStorage.removeItem('adminUser');
+          window.location.href = "admin_login.html";
+        })
+        .catch((error) => {
+          console.error('Logout error:', error);
+        });
+    }
+  </script>
+</body>
+</html>
+
