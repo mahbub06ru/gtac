@@ -243,13 +243,11 @@ scrollToTopBtn.addEventListener('click', () => {
 });
 </script>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+<!-- Firebase SDK v10.7.1 with ES Modules -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-<script>
   // Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDOz_CM0eYBrMJhZj0qbm-FQ11P5Wgs9mM",
@@ -261,38 +259,20 @@ scrollToTopBtn.addEventListener('click', () => {
     measurementId: "G-QFDYXLCG11"
   };
 
-  let app, db;
-
   // Initialize Firebase
-  function initializeFirebase() {
-    if (typeof firebase === 'undefined') {
-      console.error('Firebase SDK not loaded');
-      document.getElementById('careersLoading').textContent = 'Unable to load careers. Please check your network connection.';
-      return false;
-    }
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    try {
-      app = firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      return true;
-    } catch (error) {
-      console.error('Firebase initialization error:', error);
-      document.getElementById('careersLoading').textContent = 'Error loading careers. Please refresh the page.';
-      return false;
-    }
-  }
+  console.log('Firebase initialized successfully');
 
   // Load careers from Firestore
   async function loadCareers() {
-    if (!db) {
-      document.getElementById('careersLoading').textContent = 'Firebase not initialized. Please refresh the page.';
-      return;
-    }
     const container = document.getElementById('careersContainer');
     const loadingEl = document.getElementById('careersLoading');
 
     try {
-      const snapshot = await db.collection('careers').orderBy('createdAt', 'desc').get();
+      const q = query(collection(db, 'careers'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
       
       if (snapshot.empty) {
         loadingEl.textContent = 'No career opportunities available at the moment. Please check back later.';
@@ -302,8 +282,8 @@ scrollToTopBtn.addEventListener('click', () => {
       loadingEl.style.display = 'none';
       container.innerHTML = '';
 
-      snapshot.forEach((doc) => {
-        const data = doc.data();
+      snapshot.forEach((docData) => {
+        const data = docData.data();
         const article = document.createElement('article');
         article.className = 'career-post';
 
@@ -344,14 +324,8 @@ scrollToTopBtn.addEventListener('click', () => {
     }
   }
 
-  // Initialize Firebase and load careers when page loads
-  window.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-      if (initializeFirebase()) {
-        loadCareers();
-      }
-    }, 100);
-  });
+  // Load careers when page loads
+  loadCareers();
 </script>
 </body>
 </html>

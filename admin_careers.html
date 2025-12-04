@@ -43,13 +43,13 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <!-- Firebase SDK v10.7.1 with ES Modules -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  <script>
     // Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDOz_CM0eYBrMJhZj0qbm-FQ11P5Wgs9mM",
@@ -61,44 +61,21 @@
       measurementId: "G-QFDYXLCG11"
     };
 
-    let app, db, storage, auth;
-
     // Initialize Firebase
-    function initializeFirebase() {
-      if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK not loaded');
-        document.body.innerHTML = '<div style="padding: 2rem; text-align: center;"><h2>Error: Firebase SDK failed to load</h2><p>Please check your network connection and refresh the page.</p></div>';
-        return false;
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
+
+    console.log('Firebase initialized successfully');
+
+    // Check authentication
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "admin_login.html";
+      } else {
+        loadCareers();
       }
-
-      try {
-        app = firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-        storage = firebase.storage();
-        auth = firebase.auth();
-        return true;
-      } catch (error) {
-        console.error('Firebase initialization error:', error);
-        return false;
-      }
-    }
-
-    // Initialize when page loads
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        if (!initializeFirebase()) {
-          return;
-        }
-
-        // Check authentication
-        auth.onAuthStateChanged((user) => {
-          if (!user) {
-            window.location.href = "admin_login.html";
-          } else {
-            loadCareers();
-          }
-        });
-      }, 100);
     });
 
     // Form submission
@@ -114,15 +91,15 @@
       const requirements = document.getElementById('careerRequirements').value.split('\n').filter(r => r.trim());
 
       try {
-        await db.collection('careers').add({
+        await addDoc(collection(db, 'careers'), {
           title: title,
           location: location,
           type: type,
           description: description,
           responsibilities: responsibilities,
           requirements: requirements,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
         });
 
         msgEl.textContent = 'Career added successfully!';
@@ -141,7 +118,8 @@
       listEl.innerHTML = '<p>Loading...</p>';
 
       try {
-        const snapshot = await db.collection('careers').orderBy('createdAt', 'desc').get();
+        const q = query(collection(db, 'careers'), orderBy('createdAt', 'desc'));
+        const snapshot = await getDocs(q);
         
         if (snapshot.empty) {
           listEl.innerHTML = '<p>No career posts found. Add your first career post above.</p>';
@@ -149,8 +127,8 @@
         }
 
         listEl.innerHTML = '';
-        snapshot.forEach((doc) => {
-          const data = doc.data();
+        snapshot.forEach((docData) => {
+          const data = docData.data();
           const card = document.createElement('div');
           card.className = 'item-box';
           
@@ -172,7 +150,7 @@
               ${requirementsHtml}
             </div>
             <div class="item-actions">
-              <button onclick="deleteCareer('${doc.id}')" class="btn-delete">Delete</button>
+              <button onclick="deleteCareer('${docData.id}')" class="btn-delete">Delete</button>
             </div>
           `;
           listEl.appendChild(card);
@@ -189,7 +167,7 @@
       }
 
       try {
-        await db.collection('careers').doc(id).delete();
+        await deleteDoc(doc(db, 'careers', id));
         loadCareers();
       } catch (error) {
         alert('Error deleting career: ' + error.message);
@@ -198,7 +176,7 @@
 
     // Logout function
     window.logout = function () {
-      auth.signOut()
+      signOut(auth)
         .then(() => {
           sessionStorage.removeItem('adminUser');
           window.location.href = "admin_login.html";

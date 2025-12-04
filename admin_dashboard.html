@@ -44,13 +44,13 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+  <!-- Firebase SDK v10.7.1 with ES Modules -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  <script>
     // Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDOz_CM0eYBrMJhZj0qbm-FQ11P5Wgs9mM",
@@ -62,63 +62,40 @@
       measurementId: "G-QFDYXLCG11"
     };
 
-    let app, db, storage, auth;
-
     // Initialize Firebase
-    function initializeFirebase() {
-      if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK not loaded');
-        document.body.innerHTML = '<div style="padding: 2rem; text-align: center;"><h2>Error: Firebase SDK failed to load</h2><p>Please check your network connection and refresh the page.</p></div>';
-        return false;
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
+
+    console.log('Firebase initialized successfully');
+
+    // Check authentication
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "admin_login.html";
+      } else {
+        loadDashboardStats();
       }
-
-      try {
-        app = firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-        storage = firebase.storage();
-        auth = firebase.auth();
-        return true;
-      } catch (error) {
-        console.error('Firebase initialization error:', error);
-        return false;
-      }
-    }
-
-    // Initialize when page loads
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        if (!initializeFirebase()) {
-          return;
-        }
-
-        // Check authentication
-        auth.onAuthStateChanged((user) => {
-          if (!user) {
-            window.location.href = "admin_login.html";
-          } else {
-            loadDashboardStats();
-          }
-        });
-      }, 100);
     });
 
     // Load dashboard statistics
     async function loadDashboardStats() {
       try {
         // Count careers
-        const careersSnapshot = await db.collection('careers').get();
+        const careersSnapshot = await getDocs(collection(db, 'careers'));
         document.getElementById('totalCareers').textContent = careersSnapshot.size;
 
         // Count services
-        const servicesSnapshot = await db.collection('services').get();
+        const servicesSnapshot = await getDocs(collection(db, 'services'));
         document.getElementById('totalServices').textContent = servicesSnapshot.size;
 
         // Count courses
-        const coursesSnapshot = await db.collection('courses').get();
+        const coursesSnapshot = await getDocs(collection(db, 'courses'));
         document.getElementById('totalCourses').textContent = coursesSnapshot.size;
 
         // Count success stories
-        const storiesSnapshot = await db.collection('successStories').get();
+        const storiesSnapshot = await getDocs(collection(db, 'successStories'));
         document.getElementById('totalSuccessStories').textContent = storiesSnapshot.size;
       } catch (error) {
         console.error('Error loading dashboard stats:', error);
@@ -127,7 +104,7 @@
 
     // Logout function
     window.logout = function () {
-      auth.signOut()
+      signOut(auth)
         .then(() => {
           sessionStorage.removeItem('adminUser');
           window.location.href = "admin_login.html";
