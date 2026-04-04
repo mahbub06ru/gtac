@@ -1,6 +1,6 @@
-# GTAC - Global Travel And Consultancy
+# MyVisa-Education & Travel Solution
 
-A professional, responsive website for Global Travel And Consultancy (GTAC), offering comprehensive travel and consultancy services including visa processing, study abroad consultancy, holiday packages, and more.
+A professional, responsive website for MyVisa-Education & Travel Solution, offering comprehensive travel and consultancy services including visa processing, study abroad consultancy, holiday packages, and more.
 
 ## Features
 
@@ -81,4 +81,4 @@ gtac/
 
 ## License
 
-This project is created for GTAC - Global Travel And Consultancy.
+This project is created for MyVisa-Education & Travel Solution.

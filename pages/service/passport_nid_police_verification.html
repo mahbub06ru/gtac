@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Passport, NID & Police Verification — GTAC</title>
+<title>Passport, NID & Police Verification — MyVisa</title>
 <link rel="icon" type="image/png" href="../../assets/assets/images/fav.png">
 <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
@@ -11,8 +11,8 @@
 <header class="site-header">
 <div class="container header-inner">
 <a class="brand" href="#" id="brand-link">
-<img src="#" alt="GTAC Logo" class="brand-logo" id="brand-logo-img">
-<span>GTAC- Global Travel & Consultancy</span>
+<img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
+<span>MyVisa-Education & Travel Solution</span>
 </a>
 <nav class="nav" id="main-nav">
 <a href="#" data-page="home" id="nav-home">Home</a>
@@ -43,7 +43,7 @@
 <a href="#" data-page="success" id="nav-success">Success Story</a>
 <a href="#" data-page="contact" id="nav-contact">Contact</a>
 </nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">☰</button>
 </div>
 </header>
 
@@ -54,6 +54,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const nav = document.getElementById('main-nav');
   
   if (navToggle && nav) {
+    // Function to update nav position based on header height
+    function updateNavPosition() {
+      if (window.innerWidth <= 700 && nav.classList.contains('open')) {
+        const header = document.querySelector('.site-header');
+        if (header) {
+          const headerHeight = header.offsetHeight;
+          nav.style.top = headerHeight + 'px';
+          nav.style.height = 'calc(100vh - ' + headerHeight + 'px)';
+          nav.style.maxHeight = 'calc(100vh - ' + headerHeight + 'px)';
+        }
+      }
+    }
+
     // Mobile menu toggle button
     navToggle.addEventListener('click', function(e) {
       e.preventDefault();
@@ -61,19 +74,43 @@ document.addEventListener('DOMContentLoaded', function() {
       const isOpening = !nav.classList.contains('open');
       nav.classList.toggle('open');
       
-      // Collapse all dropdowns when opening menu
-      if (isOpening) {
-        const dropdowns = nav.querySelectorAll('.nav-dropdown');
-        dropdowns.forEach(dropdown => {
-          dropdown.classList.remove('active');
-        });
+      // Toggle aria-expanded for accessibility
+      const isOpen = nav.classList.contains('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+
+      // Update position when opening
+      if (isOpen) {
+        updateNavPosition();
       }
-      
+
+      // Collapse all dropdowns when opening/closing menu
+      const dropdowns = nav.querySelectorAll('.nav-dropdown');
+      dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+
       // Prevent body scroll when menu is open
       if (nav.classList.contains('open')) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
+      }
+    });
+    
+    // Update position on resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
+      } else if (window.innerWidth <= 700) {
+        updateNavPosition();
       }
     });
     
@@ -83,198 +120,120 @@ document.addEventListener('DOMContentLoaded', function() {
           !nav.contains(e.target) && 
           !navToggle.contains(e.target)) {
         nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
     });
     
     // Close menu when clicking on a nav link (for mobile)
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 700) {
+    // Use event delegation on document to handle all clicks
+    // This runs AFTER the dropdown handler (bubble phase)
+    if (!window._navLinkCloseHandler) {
+      window._navLinkCloseHandler = function(e) {
+        // Only handle on mobile
+        if (window.innerWidth > 700) return;
+
+        const nav = document.getElementById('main-nav');
+        if (!nav || !nav.classList.contains('open')) return;
+
+        // Don't close if clicking on dropdown toggle or inside dropdown menu
+        if (e.target.closest('.dropdown-toggle') || e.target.closest('.dropdown-menu')) {
+          return;
+        }
+
+        // Only close if clicking on a regular nav link (not dropdown related)
+        const clickedLink = e.target.closest('a');
+        if (clickedLink &&
+            !clickedLink.classList.contains('dropdown-toggle') &&
+            !clickedLink.closest('.dropdown-menu') &&
+            clickedLink.closest('.nav')) {
           nav.classList.remove('open');
+          const navToggle = document.getElementById('nav-toggle');
+          if (navToggle) {
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
           document.body.style.overflow = '';
+          nav.style.top = '';
+          nav.style.height = '';
+          nav.style.maxHeight = '';
+        }
+      };
+
+      // Use bubble phase so it runs AFTER dropdown handler (capture phase)
+      document.addEventListener('click', window._navLinkCloseHandler, false);
+    }
+
+  }
+  
+  // Simple, robust dropdown toggle handler
+  // Use a single global handler that works on all pages
+  // Create handler function if it doesn't exist
+  if (!window._dropdownToggleHandler) {
+    window._dropdownToggleHandler = function(e) {
+      // Only handle on mobile
+      if (window.innerWidth > 700) return;
+
+      const nav = document.getElementById('main-nav');
+      if (!nav || !nav.classList.contains('open')) return;
+
+      // Find if click is on a dropdown toggle or inside one
+      const dropdownToggle = e.target.closest('.dropdown-toggle');
+      if (!dropdownToggle) return;
+
+      // Find the parent dropdown container
+      const dropdown = dropdownToggle.closest('.nav-dropdown');
+      if (!dropdown) return;
+
+      // Prevent default and stop ALL propagation immediately
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      // Get current state BEFORE closing others
+      const isActive = dropdown.classList.contains('active');
+
+      // Close all dropdowns first
+      const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+      allDropdowns.forEach(dd => {
+        if (dd !== dropdown) {
+          dd.classList.remove('active');
         }
       });
-    });
-    
-    // Close menu on window resize if it becomes desktop view
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
 
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    // Mobile menu toggle button
-    navToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpening = !nav.classList.contains('open');
-      nav.classList.toggle('open');
-      
-      // Collapse all dropdowns when opening menu
-      if (isOpening) {
-        const dropdowns = nav.querySelectorAll('.nav-dropdown');
-        dropdowns.forEach(dropdown => {
-          dropdown.classList.remove('active');
-        });
-      }
-      
-      // Prevent body scroll when menu is open
-      if (nav.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
+      // Toggle the clicked dropdown
+      if (!isActive) {
+        dropdown.classList.add('active');
       } else {
+        dropdown.classList.remove('active');
+      }
+
+      // Force a reflow to ensure CSS transition works
+      void dropdown.offsetHeight;
+
+      return false;
+    };
+  }
+
+  // Always ensure event listener is attached (even if handler already exists)
+  // Remove first to avoid duplicates, then add
+  document.removeEventListener('click', window._dropdownToggleHandler, true);
+  document.addEventListener('click', window._dropdownToggleHandler, true);
+  
+  // Close menu when clicking on dropdown menu items (submenu links)
+  const dropdownMenuLinks = nav.querySelectorAll('.dropdown-menu a');
+  dropdownMenuLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 700) {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
       }
     });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (nav.classList.contains('open') && 
-          !nav.contains(e.target) && 
-          !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking on a nav link (for mobile)
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 700) {
-          nav.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      });
-    });
-    
-    // Close menu on window resize if it becomes desktop view
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
+  });
+
   // Update active navigation based on current page
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll('.nav a[data-page]');
@@ -288,308 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    // Mobile menu toggle button
-    navToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      nav.classList.toggle('open');
-      // Prevent body scroll when menu is open
-      if (nav.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (nav.classList.contains('open') && 
-          !nav.contains(e.target) && 
-          !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking on a nav link (for mobile)
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 700) {
-          nav.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      });
-    });
-    
-    // Close menu on window resize if it becomes desktop view
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
 
 <main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
 <section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
@@ -688,8 +345,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="container">
 <div class="footer-inner">
 <div class="footer-section">
-<h3>GTAC</h3>
-<p>Global Travel & Consultancy - Your trusted partner for international travel and education solutions.</p>
+<h3>MyVisa</h3>
+<p>Education & Travel Solution - Your trusted partner for international travel and education solutions.</p>
 <p style="margin-top: 1rem;">F24005 UKhan, Uttara 1230 Dhaka, Bangladesh</p>
 </div>
 <div class="footer-section">
@@ -735,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <div class="footer-bottom">
-<p>&copy; 2025 Global Travel & Consultancy (GTAC). All rights reserved.</p>
+<p>&copy; 2025 Education & Travel Solution (MyVisa). All rights reserved.</p>
 <div class="footer-links">
 <a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
 <span>|</span>
@@ -757,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="chat-body" id="chatBody">
 <div class="chat-message bot">
 <div class="message-bubble">
-Hello! 👋 Welcome to GTAC. How can we assist you today?
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
 </div>
 </div>
 </div>
@@ -854,10 +511,73 @@ if (scrollToTopBtn) {
     });
   });
 }
+
+// Hero Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-carousel-dots .dot');
+  let currentSlide = 0;
+  let carouselInterval;
+
+  // Function to show a specific slide
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    // Add active class to current slide and dot
+    if (slides[index]) {
+      slides[index].classList.add('active');
+    }
+    if (dots[index]) {
+      dots[index].classList.add('active');
+    }
+  }
+
+  // Function to go to next slide
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  // Function to start auto-rotation
+  function startCarousel() {
+    carouselInterval = setInterval(nextSlide, 3000); // 3 seconds
+  }
+
+  // Function to stop auto-rotation
+  function stopCarousel() {
+    if (carouselInterval) {
+      clearInterval(carouselInterval);
+    }
+  }
+
+  // Add click event listeners to dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+      // Restart carousel after manual navigation
+      stopCarousel();
+      startCarousel();
+    });
+  });
+
+  // Pause carousel on hover (optional)
+  const heroCarousel = document.querySelector('.hero-carousel');
+  if (heroCarousel) {
+    heroCarousel.addEventListener('mouseenter', stopCarousel);
+    heroCarousel.addEventListener('mouseleave', startCarousel);
+  }
+
+  // Start the carousel
+  if (slides.length > 0) {
+    startCarousel();
+  }
+});
 </script>
 
 <script src="../../includes/update-links.js"></script>
 
 </body>
 </html>
-

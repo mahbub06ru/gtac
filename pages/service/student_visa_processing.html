@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Student Visa Processing — GTAC</title>
+<title>Student Visa Processing — MyVisa</title>
 <link rel="icon" type="image/png" href="../../assets/assets/images/fav.png">
 <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
@@ -11,8 +11,8 @@
 <header class="site-header">
 <div class="container header-inner">
 <a class="brand" href="#" id="brand-link">
-<img src="#" alt="GTAC Logo" class="brand-logo" id="brand-logo-img">
-<span>GTAC- Global Travel & Consultancy</span>
+<img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
+<span>MyVisa-Education & Travel Solution</span>
 </a>
 <nav class="nav" id="main-nav">
 <a href="#" data-page="home" id="nav-home">Home</a>
@@ -43,7 +43,7 @@
 <a href="#" data-page="success" id="nav-success">Success Story</a>
 <a href="#" data-page="contact" id="nav-contact">Contact</a>
 </nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">☰</button>
 </div>
 </header>
 
@@ -54,6 +54,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const nav = document.getElementById('main-nav');
   
   if (navToggle && nav) {
+    // Function to update nav position based on header height
+    function updateNavPosition() {
+      if (window.innerWidth <= 700 && nav.classList.contains('open')) {
+        const header = document.querySelector('.site-header');
+        if (header) {
+          const headerHeight = header.offsetHeight;
+          nav.style.top = headerHeight + 'px';
+          nav.style.height = 'calc(100vh - ' + headerHeight + 'px)';
+          nav.style.maxHeight = 'calc(100vh - ' + headerHeight + 'px)';
+        }
+      }
+    }
+
     // Mobile menu toggle button
     navToggle.addEventListener('click', function(e) {
       e.preventDefault();
@@ -61,19 +74,43 @@ document.addEventListener('DOMContentLoaded', function() {
       const isOpening = !nav.classList.contains('open');
       nav.classList.toggle('open');
       
-      // Collapse all dropdowns when opening menu
-      if (isOpening) {
-        const dropdowns = nav.querySelectorAll('.nav-dropdown');
-        dropdowns.forEach(dropdown => {
-          dropdown.classList.remove('active');
-        });
+      // Toggle aria-expanded for accessibility
+      const isOpen = nav.classList.contains('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+
+      // Update position when opening
+      if (isOpen) {
+        updateNavPosition();
       }
-      
+
+      // Collapse all dropdowns when opening/closing menu
+      const dropdowns = nav.querySelectorAll('.nav-dropdown');
+      dropdowns.forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+
       // Prevent body scroll when menu is open
       if (nav.classList.contains('open')) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
+      }
+    });
+    
+    // Update position on resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
+      } else if (window.innerWidth <= 700) {
+        updateNavPosition();
       }
     });
     
@@ -83,198 +120,120 @@ document.addEventListener('DOMContentLoaded', function() {
           !nav.contains(e.target) && 
           !navToggle.contains(e.target)) {
         nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
       }
     });
     
     // Close menu when clicking on a nav link (for mobile)
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 700) {
+    // Use event delegation on document to handle all clicks
+    // This runs AFTER the dropdown handler (bubble phase)
+    if (!window._navLinkCloseHandler) {
+      window._navLinkCloseHandler = function(e) {
+        // Only handle on mobile
+        if (window.innerWidth > 700) return;
+
+        const nav = document.getElementById('main-nav');
+        if (!nav || !nav.classList.contains('open')) return;
+
+        // Don't close if clicking on dropdown toggle or inside dropdown menu
+        if (e.target.closest('.dropdown-toggle') || e.target.closest('.dropdown-menu')) {
+          return;
+        }
+
+        // Only close if clicking on a regular nav link (not dropdown related)
+        const clickedLink = e.target.closest('a');
+        if (clickedLink &&
+            !clickedLink.classList.contains('dropdown-toggle') &&
+            !clickedLink.closest('.dropdown-menu') &&
+            clickedLink.closest('.nav')) {
           nav.classList.remove('open');
+          const navToggle = document.getElementById('nav-toggle');
+          if (navToggle) {
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
           document.body.style.overflow = '';
+          nav.style.top = '';
+          nav.style.height = '';
+          nav.style.maxHeight = '';
+        }
+      };
+
+      // Use bubble phase so it runs AFTER dropdown handler (capture phase)
+      document.addEventListener('click', window._navLinkCloseHandler, false);
+    }
+
+  }
+  
+  // Simple, robust dropdown toggle handler
+  // Use a single global handler that works on all pages
+  // Create handler function if it doesn't exist
+  if (!window._dropdownToggleHandler) {
+    window._dropdownToggleHandler = function(e) {
+      // Only handle on mobile
+      if (window.innerWidth > 700) return;
+
+      const nav = document.getElementById('main-nav');
+      if (!nav || !nav.classList.contains('open')) return;
+
+      // Find if click is on a dropdown toggle or inside one
+      const dropdownToggle = e.target.closest('.dropdown-toggle');
+      if (!dropdownToggle) return;
+
+      // Find the parent dropdown container
+      const dropdown = dropdownToggle.closest('.nav-dropdown');
+      if (!dropdown) return;
+
+      // Prevent default and stop ALL propagation immediately
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      // Get current state BEFORE closing others
+      const isActive = dropdown.classList.contains('active');
+
+      // Close all dropdowns first
+      const allDropdowns = nav.querySelectorAll('.nav-dropdown');
+      allDropdowns.forEach(dd => {
+        if (dd !== dropdown) {
+          dd.classList.remove('active');
         }
       });
-    });
-    
-    // Close menu on window resize if it becomes desktop view
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
 
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    // Mobile menu toggle button
-    navToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpening = !nav.classList.contains('open');
-      nav.classList.toggle('open');
-      
-      // Collapse all dropdowns when opening menu
-      if (isOpening) {
-        const dropdowns = nav.querySelectorAll('.nav-dropdown');
-        dropdowns.forEach(dropdown => {
-          dropdown.classList.remove('active');
-        });
-      }
-      
-      // Prevent body scroll when menu is open
-      if (nav.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
+      // Toggle the clicked dropdown
+      if (!isActive) {
+        dropdown.classList.add('active');
       } else {
+        dropdown.classList.remove('active');
+      }
+
+      // Force a reflow to ensure CSS transition works
+      void dropdown.offsetHeight;
+
+      return false;
+    };
+  }
+
+  // Always ensure event listener is attached (even if handler already exists)
+  // Remove first to avoid duplicates, then add
+  document.removeEventListener('click', window._dropdownToggleHandler, true);
+  document.addEventListener('click', window._dropdownToggleHandler, true);
+  
+  // Close menu when clicking on dropdown menu items (submenu links)
+  const dropdownMenuLinks = nav.querySelectorAll('.dropdown-menu a');
+  dropdownMenuLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 700) {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
+        nav.style.top = '';
+        nav.style.height = '';
+        nav.style.maxHeight = '';
       }
     });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (nav.classList.contains('open') && 
-          !nav.contains(e.target) && 
-          !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking on a nav link (for mobile)
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 700) {
-          nav.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      });
-    });
-    
-    // Close menu on window resize if it becomes desktop view
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          // Close other dropdowns when opening one
-          const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-          allDropdowns.forEach(dd => {
-            if (dd !== dropdown) {
-              dd.classList.remove('active');
-            }
-          });
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
+  });
+
   // Update active navigation based on current page
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll('.nav a[data-page]');
@@ -288,954 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    // Mobile menu toggle button
-    navToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      nav.classList.toggle('open');
-      // Prevent body scroll when menu is open
-      if (nav.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (nav.classList.contains('open') && 
-          !nav.contains(e.target) && 
-          !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-    
-    // Close menu when clicking on a nav link (for mobile)
-    const navLinks = nav.querySelectorAll('a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 700) {
-          nav.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      });
-    });
-    
-    // Close menu on window resize if it becomes desktop view
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Prevent navigation when clicking Services or Training dropdown toggles
-  const serviceToggle = document.getElementById('nav-service');
-  const trainingToggle = document.getElementById('nav-training');
-  
-  if (serviceToggle) {
-    serviceToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  if (trainingToggle) {
-    trainingToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      // Just toggle dropdown on mobile, hover works on desktop
-      if (window.innerWidth <= 768) {
-        const dropdown = this.closest('.nav-dropdown');
-        if (dropdown) {
-          dropdown.classList.toggle('active');
-        }
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
-
-<script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
-  
-  if (navToggle && nav) {
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-    
-    document.addEventListener('click', (e) => {
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-      }
-    });
-  }
-  
-  // Update active navigation based on current page
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
-      link.classList.add('active');
-    }
-  });
-});
-</script>
-
-
 
 <main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
 <section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
@@ -1402,376 +413,13 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 </main>
 
-<!-- Instructor Modal Popup -->
-<div id="instructorModal" class="instructor-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center; padding: 2rem; touch-action: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">
-<div class="modal-content" style="background: #fff; border-radius: 20px; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: var(--shadow-xl); touch-action: pan-y; user-select: text; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text;">
-<div class="modal-header" style="padding: 2rem 2rem 1rem; border-bottom: 2px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 10;">
-<h2 style="font-size: 1.8rem; font-weight: 700; color: var(--text-dark); margin: 0;">Instructor Details</h2>
-<button class="modal-close" style="background: none; border: none; font-size: 2rem; color: var(--text-light); cursor: pointer; padding: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.3s;" aria-label="Close modal">&times;</button>
-</div>
-<div class="modal-body" style="padding: 2rem;">
-<div style="text-align: center; margin-bottom: 2rem;">
-<img src="../../assets/assets/images/mahbub.png" alt="Md. Mahbubur Rahman" class="protected-image" style="width: 150px; height: 150px; margin: 0 auto 1.5rem; border-radius: 50%; object-fit: cover; box-shadow: var(--shadow-lg); border: 4px solid var(--primary); pointer-events: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; user-drag: none; draggable: false;">
-<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-dark); margin: 0 0 0.5rem;">Md. Mahbubur Rahman</h3>
-<p style="font-size: 1.1rem; font-weight: 600; color: var(--primary); margin: 0;">INSTRUCTOR</p>
-</div>
-
-<div style="margin-bottom: 2rem;">
-<h4 style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin: 0 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary);">Name</h4>
-<p style="color: var(--text-dark); font-size: 1.1rem; margin: 0;">Md. Mahbubur Rahman</p>
-</div>
-
-<div style="margin-bottom: 2rem;">
-<h4 style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin: 0 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary);">Designation</h4>
-<p style="color: var(--text-dark); font-size: 1.1rem; margin: 0;">INSTRUCTOR</p>
-</div>
-
-<div style="margin-bottom: 2rem;">
-<h4 style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin: 0 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary);">Summary</h4>
-<div style="color: var(--text-dark); line-height: 1.8;">
-<p style="margin-bottom: 1rem;">Md. Mahbubur Rahman is a highly experienced Mobile App Developer and IT Trainer with <strong>10+ years</strong> of professional expertise in the software industry. He has deep technical experience in <strong>Native Android (4+ years)</strong> and <strong>Flutter (6+ years)</strong>, delivering scalable, high-performance, and real-time mobile applications for global clients.</p>
-
-<p style="margin-bottom: 1rem;">He has successfully developed, deployed, and maintained numerous mobile applications across major platforms — <strong>Google Play Store, Apple App Store, Amazon AppStore, and Huawei AppGallery</strong> — serving thousands of active users worldwide.</p>
-
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); margin: 1.5rem 0;">
-<h5 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">IT Training Experience</h5>
-<p style="margin-bottom: 0.75rem;"><strong>20+ Years</strong> – ICT Trainer, LICT Project<br><span style="color: var(--text-light); font-size: 0.9rem;">(World Bank–funded, implemented by Bangladesh Computer Council)</span></p>
-<p style="margin-bottom: 0.75rem;"><strong>1 Year</strong> – Mobile App Development Trainer, SEIP Project<br><span style="color: var(--text-light); font-size: 0.9rem;">(Skill Development for Mobile Application)</span></p>
-<p style="margin: 0;"><strong>5 Years</strong> – Guest Trainer, eShikhon.com<br><span style="color: var(--text-light); font-size: 0.9rem;">(Bangladesh's largest online training platform)</span></p>
-</div>
-
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0;">
-<h5 style="font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin: 0 0 1rem;">Current Role & Specializations</h5>
-<p style="margin-bottom: 1rem;">He is currently working as a <strong>Senior Mobile App Engineer</strong> at a USA-based technology company, specializing in:</p>
-<ul style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• Flutter (Bloc, GetX)</li>
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• Native Android (Java/Kotlin)</li>
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• FastAPI & REST APIs</li>
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• WebSockets & Real-Time Apps</li>
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• Firebase Ecosystem</li>
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• Full-Stack (Laravel, ASP.NET)</li>
-<li style="padding: 0.5rem; background: #fff; border-radius: 6px; border-left: 3px solid var(--primary);">• Unity Game Development</li>
-</ul>
-</div>
-
-<p style="margin-top: 1.5rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px; border-left: 4px solid var(--primary); margin: 0;"><strong>Committed to excellence</strong> in both development and education, he continues to build impactful software solutions while empowering the next generation of IT professionals.</p>
-</div>
-
-<div style="margin-top: 2rem;">
-<h4 style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin: 0 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary);">Certifications</h4>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--border); text-align: center; transition: all 0.3s; overflow: hidden;">
-<img src="../../assets/assets/images/eshikhon.jpg" alt="eShikhon.com Guest Trainer Certificate" class="protected-image" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; pointer-events: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; user-drag: none; draggable: false;">
-<h5 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin: 0 0 0.5rem;">eShikhon.com Guest Trainer</h5>
-<p style="font-size: 0.85rem; color: var(--text-light); margin: 0;">2019-2023 | Native Android & Flutter</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--border); text-align: center; transition: all 0.3s; overflow: hidden;">
-<img src="../../assets/assets/images/lict.jpg" alt="LICT Project Certificate" class="protected-image" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; pointer-events: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; user-drag: none; draggable: false;">
-<h5 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin: 0 0 0.5rem;">LICT Project Certificate</h5>
-<p style="font-size: 0.85rem; color: var(--text-light); margin: 0;">Android Trainer | BCC, ICT Division</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--border); text-align: center; transition: all 0.3s; overflow: hidden;">
-<img src="../../assets/assets/images/csharp_leads.jpg" alt="LEADS Technology C#.Net Certificate" class="protected-image" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; pointer-events: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; user-drag: none; draggable: false;">
-<h5 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin: 0 0 0.5rem;">LEADS Technology Certificate</h5>
-<p style="font-size: 0.85rem; color: var(--text-light); margin: 0;">C#.Net Training | 144 Hours</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--border); text-align: center; transition: all 0.3s; overflow: hidden;">
-<img src="../../assets/assets/images/csharp_bitm.jpg" alt="BITM Web Application Development Certificate" class="protected-image" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; pointer-events: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; user-drag: none; draggable: false;">
-<h5 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin: 0 0 0.5rem;">BITM Certificate</h5>
-<p style="font-size: 0.85rem; color: var(--text-light); margin: 0;">Web Application Development - .NET</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--border); text-align: center; transition: all 0.3s; overflow: hidden;">
-<img src="../../assets/assets/images/airticket.jpg" alt="Air Ticketing Certification" class="protected-image" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 0.75rem; pointer-events: none; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -webkit-touch-callout: none; -webkit-user-drag: none; -khtml-user-drag: none; -moz-user-drag: none; -o-user-drag: none; user-drag: none; draggable: false;">
-<h5 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin: 0 0 0.5rem;">Air Ticketing Certification</h5>
-<p style="font-size: 0.85rem; color: var(--text-light); margin: 0;">GDS & Travel Industry</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<script>
-const navToggle = document.getElementById('nav-toggle');
-const nav = document.getElementById('main-nav');
-if (navToggle && nav) {
-  navToggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-  });
-  document.addEventListener('click', (e) => {
-    if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-      nav.classList.remove('open');
-    }
-  });
-}
-
-// Tab Functionality
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
-
-tabButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const targetTab = button.getAttribute('data-tab');
-    
-    // Remove active class from all buttons and contents
-    tabButtons.forEach(btn => {
-      btn.classList.remove('active');
-      btn.style.color = 'var(--text-light)';
-      btn.style.borderBottomColor = 'transparent';
-    });
-    tabContents.forEach(content => {
-      content.style.display = 'none';
-    });
-    
-    // Add active class to clicked button and corresponding content
-    button.classList.add('active');
-    button.style.color = 'var(--primary)';
-    button.style.borderBottomColor = 'var(--primary)';
-    
-    const targetContent = document.getElementById(targetTab);
-    if (targetContent) {
-      targetContent.style.display = 'block';
-    }
-  });
-});
-
-// Set initial active tab styles
-const activeButton = document.querySelector('.tab-button.active');
-if (activeButton) {
-  activeButton.style.color = 'var(--primary)';
-  activeButton.style.borderBottomColor = 'var(--primary)';
-}
-
-// Instructor Modal Functionality
-const instructorCard = document.querySelector('.instructor-card');
-const instructorModal = document.getElementById('instructorModal');
-const modalClose = document.querySelector('.modal-close');
-
-if (instructorCard && instructorModal) {
-  instructorCard.addEventListener('click', () => {
-    instructorModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-  });
-}
-
-if (modalClose && instructorModal) {
-  modalClose.addEventListener('click', () => {
-    instructorModal.style.display = 'none';
-    document.body.style.overflow = ''; // Restore scrolling
-  });
-}
-
-// Close modal when clicking outside
-if (instructorModal) {
-  instructorModal.addEventListener('click', (e) => {
-    if (e.target === instructorModal) {
-      instructorModal.style.display = 'none';
-      document.body.style.overflow = ''; // Restore scrolling
-    }
-  });
-}
-
-// Close modal with Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && instructorModal && instructorModal.style.display === 'flex') {
-    instructorModal.style.display = 'none';
-    document.body.style.overflow = ''; // Restore scrolling
-  }
-});
-
-// Image Protection - Prevent right-click, drag, and save
-const protectedImages = document.querySelectorAll('.protected-image');
-
-protectedImages.forEach(img => {
-  // Prevent right-click context menu
-  img.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    return false;
-  });
-  
-  // Prevent drag
-  img.addEventListener('dragstart', (e) => {
-    e.preventDefault();
-    return false;
-  });
-  
-  // Prevent image selection
-  img.addEventListener('selectstart', (e) => {
-    e.preventDefault();
-    return false;
-  });
-  
-  // Prevent touch callout on mobile
-  img.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-  }, { passive: false });
-});
-
-// Prevent keyboard shortcuts (Ctrl+S, Ctrl+C, etc.)
-document.addEventListener('keydown', (e) => {
-  // Prevent Ctrl+S (Save)
-  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-    e.preventDefault();
-    return false;
-  }
-  // Prevent Ctrl+C (Copy) when modal is open
-  if ((e.ctrlKey || e.metaKey) && e.key === 'c' && instructorModal && instructorModal.style.display === 'flex') {
-    e.preventDefault();
-    return false;
-  }
-  // Prevent Ctrl+A (Select All) when modal is open
-  if ((e.ctrlKey || e.metaKey) && e.key === 'a' && instructorModal && instructorModal.style.display === 'flex') {
-    e.preventDefault();
-    return false;
-  }
-  // Prevent F12 (Developer Tools)
-  if (e.key === 'F12') {
-    e.preventDefault();
-    return false;
-  }
-});
-
-// Prevent zooming in modal
-if (instructorModal) {
-  instructorModal.addEventListener('wheel', (e) => {
-    if (e.ctrlKey) {
-      e.preventDefault();
-      return false;
-    }
-  }, { passive: false });
-  
-  // Prevent pinch zoom on touch devices
-  let lastTouchEnd = 0;
-  instructorModal.addEventListener('touchend', (e) => {
-    const now = Date.now();
-    if (now - lastTouchEnd <= 300) {
-      e.preventDefault();
-    }
-    lastTouchEnd = now;
-  }, { passive: false });
-}
-
-// Disable text selection on images
-document.addEventListener('selectstart', (e) => {
-  if (e.target.classList.contains('protected-image') || e.target.closest('.protected-image')) {
-    e.preventDefault();
-    return false;
-  }
-});
-</script>
-
-<!-- Chat Widget -->
-<div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div>
-<h3>Chat with Us</h3>
-<div class="chat-status">We're online. How can we help?</div>
-</div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot">
-<div class="message-bubble">
-Hello! 👋 Welcome to GTAC. How can we assist you today?
-</div>
-</div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-<div class="chat-quick-actions">
-<a href="../contact.html" class="quick-action-btn">📞 Contact Us</a>
-<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
-</div>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">
-<span class="chat-icon">💬</span>
-<span class="close-icon">✕</span>
-</button>
-</div>
-
-<script>
-// Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-
-chatButton.addEventListener('click', () => {
-  chatWidget.classList.toggle('active');
-});
-
-chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const message = chatInput.value.trim();
-  if (message) {
-    addMessage(message, 'user');
-    chatInput.value = '';
-    
-    // Simulate bot response
-    setTimeout(() => {
-      addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email mahbub360hub@gmail.com', 'bot');
-    }, 1000);
-  }
-});
-
-function addMessage(text, type) {
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget.classList.contains('active') && 
-      !chatWindow.contains(e.target) && 
-      !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
-  }
-});
-</script>
-
-<!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
-</button>
-
-<script>
-// Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    scrollToTopBtn.classList.add('show');
-  } else {
-    scrollToTopBtn.classList.remove('show');
-  }
-});
-
-scrollToTopBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-});
-</script>
+<!-- Footer will be loaded here -->
 <footer class="site-footer">
 <div class="container">
 <div class="footer-inner">
 <div class="footer-section">
-<h3>GTAC</h3>
-<p>Global Travel & Consultancy - Your trusted partner for international travel and education solutions.</p>
+<h3>MyVisa</h3>
+<p>Education & Travel Solution - Your trusted partner for international travel and education solutions.</p>
 <p style="margin-top: 1rem;">F24005 UKhan, Uttara 1230 Dhaka, Bangladesh</p>
 </div>
 <div class="footer-section">
@@ -1817,7 +465,7 @@ scrollToTopBtn.addEventListener('click', () => {
 </div>
 </div>
 <div class="footer-bottom">
-<p>&copy; 2025 Global Travel & Consultancy (GTAC). All rights reserved.</p>
+<p>&copy; 2025 Education & Travel Solution (MyVisa). All rights reserved.</p>
 <div class="footer-links">
 <a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
 <span>|</span>
@@ -1839,7 +487,7 @@ scrollToTopBtn.addEventListener('click', () => {
 <div class="chat-body" id="chatBody">
 <div class="chat-message bot">
 <div class="message-bubble">
-Hello! 👋 Welcome to GTAC. How can we assist you today?
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
 </div>
 </div>
 </div>
@@ -1936,11 +584,73 @@ if (scrollToTopBtn) {
     });
   });
 }
+
+// Hero Carousel Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-carousel-dots .dot');
+  let currentSlide = 0;
+  let carouselInterval;
+
+  // Function to show a specific slide
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    // Add active class to current slide and dot
+    if (slides[index]) {
+      slides[index].classList.add('active');
+    }
+    if (dots[index]) {
+      dots[index].classList.add('active');
+    }
+  }
+
+  // Function to go to next slide
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  // Function to start auto-rotation
+  function startCarousel() {
+    carouselInterval = setInterval(nextSlide, 3000); // 3 seconds
+  }
+
+  // Function to stop auto-rotation
+  function stopCarousel() {
+    if (carouselInterval) {
+      clearInterval(carouselInterval);
+    }
+  }
+
+  // Add click event listeners to dots
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentSlide = index;
+      showSlide(currentSlide);
+      // Restart carousel after manual navigation
+      stopCarousel();
+      startCarousel();
+    });
+  });
+
+  // Pause carousel on hover (optional)
+  const heroCarousel = document.querySelector('.hero-carousel');
+  if (heroCarousel) {
+    heroCarousel.addEventListener('mouseenter', stopCarousel);
+    heroCarousel.addEventListener('mouseleave', startCarousel);
+  }
+
+  // Start the carousel
+  if (slides.length > 0) {
+    startCarousel();
+  }
+});
 </script>
 
 <script src="../../includes/update-links.js"></script>
 
 </body>
 </html>
-
-
