@@ -13,240 +13,141 @@
 <div class="container header-inner">
 <a class="brand" href="#" id="brand-link">
 <img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
-<span>MyVisa-Education & Travel Solution</span>
+<span>MyVisa — Education &amp; Travel</span>
 </a>
 <nav class="nav" id="main-nav">
 <a href="#" data-page="home" id="nav-home">Home</a>
 <a href="#" data-page="about" id="nav-about">About</a>
 <div class="nav-dropdown">
-<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▼</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▾</span></a>
 <div class="dropdown-menu">
-<a href="#" id="nav-service-1">Student Consultancy</a>
-<a href="#" id="nav-service-2">Visa Process</a>
-<a href="#" id="nav-service-3">Tour Packages</a>
-<a href="#" id="nav-service-4">Air Ticketing</a>
-<a href="#" id="nav-service-5">Hajj & Umrah</a>
-<a href="#" id="nav-service-6">E-passport, NID, Police Clearance</a>
-<a href="#" id="nav-service-7">Business & Legal Consultancy</a>
-<a href="#" id="nav-service-8">IT Services</a>
+<a href="#" id="nav-service-1"><span class="menu-icon">🎓</span>Student Consultancy</a>
+<a href="#" id="nav-service-2"><span class="menu-icon">🌍</span>Visa Process</a>
+<a href="#" id="nav-service-3"><span class="menu-icon">✈️</span>Tour Packages</a>
+<a href="#" id="nav-service-4"><span class="menu-icon">🎫</span>Air Ticketing</a>
+<a href="#" id="nav-service-5"><span class="menu-icon">🕌</span>Hajj &amp; Umrah</a>
+<a href="#" id="nav-service-6"><span class="menu-icon">📄</span>E-passport &amp; NID</a>
+<a href="#" id="nav-service-7"><span class="menu-icon">💼</span>Business Consultancy</a>
+<a href="#" id="nav-service-8"><span class="menu-icon">💻</span>IT Services</a>
 </div>
 </div>
 <div class="nav-dropdown">
-<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▼</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▾</span></a>
 <div class="dropdown-menu">
-<a href="#" id="nav-training-1">IELTS</a>
-<a href="#" id="nav-training-2">Mobile App Dev</a>
-<a href="#" id="nav-training-3">GDS Ticketing</a>
-<a href="#" id="nav-training-4">Visa Processing</a>
+<a href="#" id="nav-training-1"><span class="menu-icon">📝</span>IELTS Preparation</a>
+<a href="#" id="nav-training-2"><span class="menu-icon">📱</span>Mobile App Dev</a>
+<a href="#" id="nav-training-3"><span class="menu-icon">🖥️</span>GDS Ticketing</a>
+<a href="#" id="nav-training-4"><span class="menu-icon">📋</span>Visa Processing</a>
 </div>
 </div>
 <a href="#" data-page="career" id="nav-career">Career</a>
-<a href="#" data-page="success" id="nav-success">Success Story</a>
-<a href="#" data-page="contact" id="nav-contact">Contact</a>
+<a href="#" data-page="success" id="nav-success">Success</a>
+<a href="#" data-page="contact" id="nav-contact" class="nav-cta">Contact Us</a>
 </nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">☰</button>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
+  <span class="hamburger-bar"></span>
+  <span class="hamburger-bar"></span>
+  <span class="hamburger-bar"></span>
+</button>
 </div>
 </header>
 
 <script>
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
+(function initNavigation() {
   const navToggle = document.getElementById('nav-toggle');
   const nav = document.getElementById('main-nav');
-  
+
   if (navToggle && nav) {
-    // Function to update nav position based on header height
-    function updateNavPosition() {
-      if (window.innerWidth <= 700 && nav.classList.contains('open')) {
-        const header = document.querySelector('.site-header');
-        if (header) {
-          const headerHeight = header.offsetHeight;
-          nav.style.top = headerHeight + 'px';
-          nav.style.height = 'calc(100vh - ' + headerHeight + 'px)';
-          nav.style.maxHeight = 'calc(100vh - ' + headerHeight + 'px)';
-        }
-      }
-    }
-    
-    // Mobile menu toggle button
     navToggle.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      const isOpening = !nav.classList.contains('open');
-      nav.classList.toggle('open');
-      
-      // Toggle aria-expanded for accessibility
-      const isOpen = nav.classList.contains('open');
+      const isOpen = nav.classList.toggle('open');
       navToggle.setAttribute('aria-expanded', isOpen);
-      
-      // Update position when opening
+      nav.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('active'));
       if (isOpen) {
-        updateNavPosition();
-      }
-      
-      // Collapse all dropdowns when opening/closing menu
-      const dropdowns = nav.querySelectorAll('.nav-dropdown');
-      dropdowns.forEach(dropdown => {
-        dropdown.classList.remove('active');
-      });
-      
-      // Prevent body scroll when menu is open
-      if (nav.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('nav-open');
       } else {
-        document.body.style.overflow = '';
-        nav.style.top = '';
-        nav.style.height = '';
-        nav.style.maxHeight = '';
+        document.body.classList.remove('nav-open');
       }
     });
-    
-    // Update position on resize
+
     window.addEventListener('resize', function() {
-      if (window.innerWidth > 700 && nav.classList.contains('open')) {
+      if (window.innerWidth > 768 && nav.classList.contains('open')) {
         nav.classList.remove('open');
         navToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-        nav.style.top = '';
-        nav.style.height = '';
-        nav.style.maxHeight = '';
-      } else if (window.innerWidth <= 700) {
-        updateNavPosition();
+        document.body.classList.remove('nav-open');
       }
     });
-    
-    // Close menu when clicking outside
+
     document.addEventListener('click', function(e) {
-      if (nav.classList.contains('open') && 
-          !nav.contains(e.target) && 
-          !navToggle.contains(e.target)) {
+      if (!nav.classList.contains('open')) return;
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
         nav.classList.remove('open');
         navToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+        document.body.classList.remove('nav-open');
       }
     });
-    
-    // Close menu when clicking on a nav link (for mobile)
-    // Use event delegation on document to handle all clicks
-    // This runs AFTER the dropdown handler (bubble phase)
+
     if (!window._navLinkCloseHandler) {
       window._navLinkCloseHandler = function(e) {
-        // Only handle on mobile
-        if (window.innerWidth > 700) return;
-        
+        if (window.innerWidth > 768) return;
         const nav = document.getElementById('main-nav');
         if (!nav || !nav.classList.contains('open')) return;
-        
-        // Don't close if clicking on dropdown toggle or inside dropdown menu
-        if (e.target.closest('.dropdown-toggle') || e.target.closest('.dropdown-menu')) {
-          return;
-        }
-        
-        // Only close if clicking on a regular nav link (not dropdown related)
+        if (e.target.closest('.dropdown-toggle') || e.target.closest('.dropdown-menu')) return;
         const clickedLink = e.target.closest('a');
-        if (clickedLink && 
-            !clickedLink.classList.contains('dropdown-toggle') && 
-            !clickedLink.closest('.dropdown-menu') &&
-            clickedLink.closest('.nav')) {
+        if (clickedLink && !clickedLink.classList.contains('dropdown-toggle') && clickedLink.closest('.nav')) {
           nav.classList.remove('open');
-          const navToggle = document.getElementById('nav-toggle');
-          if (navToggle) {
-            navToggle.setAttribute('aria-expanded', 'false');
-          }
-          document.body.style.overflow = '';
-          nav.style.top = '';
-          nav.style.height = '';
-          nav.style.maxHeight = '';
+          const toggle = document.getElementById('nav-toggle');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('nav-open');
         }
       };
-      
-      // Use bubble phase so it runs AFTER dropdown handler (capture phase)
       document.addEventListener('click', window._navLinkCloseHandler, false);
     }
-    
   }
-  
-  // Simple, robust dropdown toggle handler
-  // Use a single global handler that works on all pages
-  // Create handler function if it doesn't exist
+
   if (!window._dropdownToggleHandler) {
     window._dropdownToggleHandler = function(e) {
-      // Only handle on mobile
-      if (window.innerWidth > 700) return;
-      
+      if (window.innerWidth > 768) return;
       const nav = document.getElementById('main-nav');
       if (!nav || !nav.classList.contains('open')) return;
-      
-      // Find if click is on a dropdown toggle or inside one
       const dropdownToggle = e.target.closest('.dropdown-toggle');
       if (!dropdownToggle) return;
-      
-      // Find the parent dropdown container
       const dropdown = dropdownToggle.closest('.nav-dropdown');
       if (!dropdown) return;
-      
-      // Prevent default and stop ALL propagation immediately
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      
-      // Get current state BEFORE closing others
       const isActive = dropdown.classList.contains('active');
-      
-      // Close all dropdowns first
-      const allDropdowns = nav.querySelectorAll('.nav-dropdown');
-      allDropdowns.forEach(dd => {
-        if (dd !== dropdown) {
-          dd.classList.remove('active');
-        }
-      });
-      
-      // Toggle the clicked dropdown
-      if (!isActive) {
-        dropdown.classList.add('active');
-      } else {
-        dropdown.classList.remove('active');
-      }
-      
-      // Force a reflow to ensure CSS transition works
-      void dropdown.offsetHeight;
-      
+      nav.querySelectorAll('.nav-dropdown').forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+      dropdown.classList.toggle('active', !isActive);
       return false;
     };
   }
-  
-  // Always ensure event listener is attached (even if handler already exists)
-  // Remove first to avoid duplicates, then add
+
   document.removeEventListener('click', window._dropdownToggleHandler, true);
   document.addEventListener('click', window._dropdownToggleHandler, true);
-  
-  // Close menu when clicking on dropdown menu items (submenu links)
-  const dropdownMenuLinks = nav.querySelectorAll('.dropdown-menu a');
-  dropdownMenuLinks.forEach(link => {
+
+  nav && nav.querySelectorAll('.dropdown-menu a').forEach(link => {
     link.addEventListener('click', function() {
-      if (window.innerWidth <= 700) {
-        nav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-        nav.style.top = '';
-        nav.style.height = '';
-        nav.style.maxHeight = '';
+      if (window.innerWidth <= 768) {
+        const n = document.getElementById('main-nav');
+        const t = document.getElementById('nav-toggle');
+        if (n) { n.classList.remove('open'); if (t) t.setAttribute('aria-expanded', 'false'); }
+        document.body.classList.remove('nav-open');
       }
     });
   });
-  
-  // Update active navigation based on current page
+
   const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav a[data-page]');
-  
-  navLinks.forEach(link => {
+  document.querySelectorAll('.nav a[data-page]').forEach(link => {
     const linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || 
-        (link.getAttribute('data-page') === 'home' && currentPath === '/' || currentPath.endsWith('index.html'))) {
+    if (currentPath.includes(linkPath) ||
+        (link.getAttribute('data-page') === 'home' && (currentPath === '/' || currentPath.endsWith('index.html')))) {
       link.classList.add('active');
     }
   });
-});
+})();
 </script>
 
 <main>
@@ -370,45 +271,56 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </section>
 
-<section class="packages container">
+<section class="packages-grid-section">
+<div class="container">
 <div class="section-header">
 <h2>Our Service Packages</h2>
 <p>Comprehensive solutions tailored to your needs</p>
 </div>
-<div class="carousel-wrapper">
-<div class="carousel-container">
-<div class="carousel-track">
-<div class="card">
+<div class="packages-grid">
+<div class="package-card">
+<div class="package-icon">🌍</div>
 <h3>Visa Processing</h3>
 <p>End-to-end visa application handling: document check, appointment booking, submission, and tracking. We ensure a smooth and stress-free visa application process.</p>
+<a href="pages/service/country_visa_processing.html" class="feature-link">Learn More →</a>
 </div>
-<div class="card">
+<div class="package-card">
+<div class="package-icon">🎓</div>
 <h3>Study Abroad Consultancy</h3>
 <p>University shortlisting, application management, SOP/LOI writing, scholarship searches and pre-departure briefings. Your complete study abroad solution.</p>
+<a href="pages/service/student_visa_processing.html" class="feature-link">Learn More →</a>
 </div>
-<div class="card">
+<div class="package-card">
+<div class="package-icon">✈️</div>
 <h3>Holiday Packages</h3>
 <p>Custom itineraries, flight + hotel + tours, group and private packages. Create unforgettable memories with our expertly crafted travel experiences.</p>
+<a href="pages/service/holiday_tour_packages.html" class="feature-link">Learn More →</a>
 </div>
-<!-- Duplicate cards for seamless loop -->
-<div class="card">
-<h3>Visa Processing</h3>
-<p>End-to-end visa application handling: document check, appointment booking, submission, and tracking. We ensure a smooth and stress-free visa application process.</p>
+<div class="package-card">
+<div class="package-icon">🎫</div>
+<h3>Air Ticketing</h3>
+<p>Domestic and international air ticket booking at competitive rates. Flexible options with real-time seat availability and instant confirmation for your journey.</p>
+<a href="pages/service/airticket_domestic_international.html" class="feature-link">Learn More →</a>
 </div>
-<div class="card">
-<h3>Study Abroad Consultancy</h3>
-<p>University shortlisting, application management, SOP/LOI writing, scholarship searches and pre-departure briefings. Your complete study abroad solution.</p>
+<div class="package-card">
+<div class="package-icon">🕌</div>
+<h3>Hajj &amp; Umrah</h3>
+<p>Complete Hajj and Umrah packages with accommodation, transport, and guidance. We handle every detail so you can focus on your spiritual journey.</p>
+<a href="pages/service/hajj_umrah_package.html" class="feature-link">Learn More →</a>
 </div>
-<div class="card">
-<h3>Holiday Packages</h3>
-<p>Custom itineraries, flight + hotel + tours, group and private packages. Create unforgettable memories with our expertly crafted travel experiences.</p>
-</div>
+<div class="package-card">
+<div class="package-icon">💼</div>
+<h3>Business Consultancy</h3>
+<p>Professional business and legal consultancy services including trade license, company registration, and compliance guidance for your business success.</p>
+<a href="pages/service/business_legal_consultancy.html" class="feature-link">Learn More →</a>
 </div>
 </div>
 </div>
 </section>
 
-<section class="why-us container">
+<section class="why-us-section">
+<div class="container">
+<div class="why-us">
 <h2>Why Choose MyVisa?</h2>
 <div class="two-col">
 <div>
@@ -430,22 +342,23 @@ document.addEventListener('DOMContentLoaded', function() {
 </ul>
 </div>
 </div>
+</div>
+</div>
 </section>
 
-<section class="team-section container">
+<section class="team-grid-section">
+<div class="container">
 <div class="section-header">
 <h2>Our Team Members</h2>
 <p>Meet with our experts</p>
 </div>
-<div class="carousel-wrapper team-carousel">
-<div class="carousel-container">
-<div class="carousel-track team-track">
+<div class="team-grid">
 <div class="team-member">
 <div class="team-avatar">
-<img src="assets/assets/images/mahbub.png" alt="Md. Mahbubur Rahman" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+<img src="assets/assets/images/mahbub.png" alt="Md. Mahbubur Rahman" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
 </div>
 <h3>Md. Mahbubur Rahman</h3>
-<p class="team-role">CEO & Founder</p>
+<p class="team-role">CEO &amp; Founder</p>
 <p class="team-bio">With over 15 years of experience in travel and education consultancy, Mahbub leads MyVisa with a vision to make international opportunities accessible to everyone.</p>
 </div>
 <div class="team-member">
@@ -487,97 +400,98 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3>Nazia Zaman</h3>
 <p class="team-role">Customer Support Manager</p>
 <p class="team-bio">Ensures exceptional customer service and support throughout your journey. Nazia is dedicated to making every client's experience smooth and stress-free.</p>
-</div>
-<!-- Duplicate team members for seamless loop -->
-<div class="team-member">
-<div class="team-avatar">
-<img src="assets/assets/images/mahbub.png" alt="Md. Mahbubur Rahman" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-</div>
-<h3>Md. Mahbubur Rahman</h3>
-<p class="team-role">CEO & Founder</p>
-<p class="team-bio">With over 15 years of experience in travel and education consultancy, Mahbub leads MyVisa with a vision to make international opportunities accessible to everyone.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">SK</div>
-</div>
-<h3>Sarah Khan</h3>
-<p class="team-role">Visa Specialist</p>
-<p class="team-bio">Expert in visa processing with extensive knowledge of international visa requirements. Sarah has helped hundreds of clients successfully obtain their visas.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">AR</div>
-</div>
-<h3>Ahmed Rahman</h3>
-<p class="team-role">Education Consultant</p>
-<p class="team-bio">Specialized in study abroad programs and university applications. Ahmed guides students to find the perfect academic programs worldwide.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">FI</div>
-</div>
-<h3>Fatima Islam</h3>
-<p class="team-role">Travel Coordinator</p>
-<p class="team-bio">Creates unforgettable travel experiences with customized holiday packages. Fatima ensures every trip is perfectly planned and executed.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">MH</div>
-</div>
-<h3>Mohammad Hasan</h3>
-<p class="team-role">SOP Writer</p>
-<p class="team-bio">Professional writer specializing in SOP and LOI documents. Mohammad crafts compelling narratives that help students stand out in applications.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">NZ</div>
-</div>
-<h3>Nazia Zaman</h3>
-<p class="team-role">Customer Support Manager</p>
-<p class="team-bio">Ensures exceptional customer service and support throughout your journey. Nazia is dedicated to making every client's experience smooth and stress-free.</p>
-</div>
 </div>
 </div>
 </div>
 </section>
 
-<section class="testimonials container">
+<section class="testimonials-section">
+<div class="container">
 <h2>What Our Clients Say</h2>
-<div class="carousel-wrapper testimonials-carousel">
-<div class="carousel-container">
-<div class="carousel-track testimonials-track">
-<blockquote>
+<div class="testimonials-slider">
+<button class="slider-btn slider-prev" aria-label="Previous testimonial">
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<div class="slider-track-wrapper">
+<div class="slider-track" id="testimonials-track">
+<blockquote class="testimonial-slide">
+<div class="quote-icon">"</div>
 <p>MyVisa helped me get my student visa quickly and supported my university application every step of the way. Their team was professional, responsive, and always available to answer my questions.</p>
 <cite>— Tania A., Student</cite>
 </blockquote>
-<blockquote>
+<blockquote class="testimonial-slide">
+<div class="quote-icon">"</div>
 <p>Excellent travel package and friendly service. Highly recommended! They took care of everything from flights to hotels, making our vacation stress-free and enjoyable.</p>
 <cite>— Rashed M., Traveler</cite>
 </blockquote>
-<blockquote>
-<p>The visa processing was smooth and efficient. MyVisa's expertise and attention to detail made all the difference. I couldn't have done it without their help.</p>
-<cite>— Ahmed K., Professional</cite>
-</blockquote>
-<!-- Duplicate testimonials for seamless loop -->
-<blockquote>
-<p>MyVisa helped me get my student visa quickly and supported my university application every step of the way. Their team was professional, responsive, and always available to answer my questions.</p>
-<cite>— Tania A., Student</cite>
-</blockquote>
-<blockquote>
-<p>Excellent travel package and friendly service. Highly recommended! They took care of everything from flights to hotels, making our vacation stress-free and enjoyable.</p>
-<cite>— Rashed M., Traveler</cite>
-</blockquote>
-<blockquote>
+<blockquote class="testimonial-slide">
+<div class="quote-icon">"</div>
 <p>The visa processing was smooth and efficient. MyVisa's expertise and attention to detail made all the difference. I couldn't have done it without their help.</p>
 <cite>— Ahmed K., Professional</cite>
 </blockquote>
 </div>
+</div>
+<button class="slider-btn slider-next" aria-label="Next testimonial">
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+</button>
+</div>
+<div class="slider-dots" id="testimonials-dots">
+<button class="slider-dot active" data-index="0" aria-label="Testimonial 1"></button>
+<button class="slider-dot" data-index="1" aria-label="Testimonial 2"></button>
+<button class="slider-dot" data-index="2" aria-label="Testimonial 3"></button>
 </div>
 </div>
 </section>
+<script>
+(function() {
+  var track = document.getElementById('testimonials-track');
+  var dots = document.querySelectorAll('#testimonials-dots .slider-dot');
+  var slides = track ? track.querySelectorAll('.testimonial-slide') : [];
+  var current = 0;
+  var total = slides.length;
+  var autoTimer;
 
-<section class="partners-section container">
+  function goTo(index) {
+    current = (index + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(function() { goTo(current + 1); }, 5000);
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    startAuto();
+  }
+
+  var prevBtn = document.querySelector('.slider-prev');
+  var nextBtn = document.querySelector('.slider-next');
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); resetAuto(); });
+  });
+
+  // Touch/swipe support
+  var startX = 0;
+  if (track) {
+    track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); resetAuto(); }
+    }, { passive: true });
+  }
+
+  startAuto();
+})();
+</script>
+
+<section class="partners-section">
+<div class="container">
 <div class="section-header">
 <h2>Our Partners</h2>
 <p>We work with trusted organizations worldwide</p>
@@ -789,9 +703,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 </div>
+</div>
 </section>
 
-<section class="newsletter container">
+<section class="newsletter">
+<div class="container">
 <h2>Request a Free Consultation</h2>
 <p>Get expert advice on your travel or education journey. Fill out the form below and we'll get back to you within 24 hours.</p>
 <form action="#" class="form-inline">
@@ -813,6 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </select>
 <button class="btn primary" type="submit">Request Consultation</button>
 </form>
+</div>
 </section>
 </main>
 
@@ -823,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="footer-section">
 <h3>MyVisa</h3>
 <p>Education & Travel Solution - Your trusted partner for international travel and education solutions.</p>
-<p style="margin-top: 1rem;">F24005 UKhan, Uttara 1230 Dhaka, Bangladesh</p>
+<p style="margin-top: 1rem;"><strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br><strong>B2B office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka<br><strong>IT office:</strong> House# 74 Road# 7, Block# H, Banani, Dhaka-1213<br><strong>Training:</strong> Plot-9, Road-4, Section-7, Mirpur-11, Dhaka-1216</p>
 </div>
 <div class="footer-section">
 <h3>Quick Links</h3>
