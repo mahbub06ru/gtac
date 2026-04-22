@@ -43,17 +43,15 @@
 <div style="margin-top: 1.5rem;">
 <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
 <a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-<path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.31-.732V2.546c0-.272.11-.533.31-.732zM14.735 12.943L18.422 16.63l-1.353 1.353-2.334-2.333V12.943zm.001-1.887l2.333-2.333 1.353 1.353-3.687 3.687V11.056zM4.653 2.546l8.093 8.092h2.246L5.733 1.378a.996.996 0 0 0-1.08.168.996.996 0 0 0-.25.545v.455zm0 18.908v.455a.996.996 0 0 0 .25.545.996.996 0 0 0 1.08.168l9.259-9.26h-2.246l-8.093 8.092z"/>
-</svg>
+<img src="assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
 </a>
 </div>
 </div>
 <div class="footer-section">
 <h3>Working Hours</h3>
-<p>Mon – Fri: 9:00 AM – 6:00 PM</p>
-<p>Saturday: 10:00 AM – 4:00 PM</p>
-<p>Sunday: Closed</p>
+<p>Sat, Sun, Mon, Tue, Wed, Thus: 9:00 AM – 6:00 PM</p>
+<p>Friday: 10:00 AM – 10:00 PM</p>
+
 </div>
 </div>
 <div class="footer-bottom">
@@ -157,7 +155,7 @@ function addMessage(text, type) {
 // Close chat when clicking outside
 document.addEventListener('click', (e) => {
   if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !chatWindow.contains(e.target) && 
+      chatWindow && !nav.contains(e.target) &&
       chatButton && !chatButton.contains(e.target)) {
     chatWidget.classList.remove('active');
   }
