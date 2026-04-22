@@ -3,7 +3,7 @@ import os, re
 NEW_ADDR_BLOCK = (
     '<p style="margin-top: 1rem;">\n'
     '  <strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br>\n'
-    '  <strong>B2B office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka<br>\n'
+    '  <strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka<br>\n'
     '  <strong>IT office:</strong> House# 74 Road# 7, Block# H, Banani, Dhaka-1213<br>\n'
     '  <strong>Training:</strong> Plot-9, Road-4, Section-7, Mirpur-11, Dhaka-1216\n'
     '</p>'
