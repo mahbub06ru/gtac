@@ -505,10 +505,37 @@
 </main>
 
 <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5VqvP918a73ab-p5aZ85V2vZ9pO7LHrzGqLhiuebbp8UTe8MrL-ToFvYDIT56gT40pQ/exec";
+
   document.getElementById('flightBookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    alert('Thank you! Your flight ticket inquiry has been received. Our travel experts will contact you shortly with the best available fares.');
-    this.reset();
+
+    const form = e.target;
+    const data = {
+      name:         form.name.value,
+      email:        form.email.value,
+      phone:        form.phone.value,
+      travelers:    form.travelers.value,
+      origin:       form.origin.value,
+      destination:  form.destination.value,
+      journey_date: form.journey_date.value,
+      return_date:  form.return_date.value,
+      flight_class: form.flight_class.value,
+      trip_type:    form.trip_type.value,
+      message:      form.message.value
+    };
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    }).then(() => {
+      alert('Thank you! Your flight ticket inquiry has been received. Our travel experts will contact you shortly with the best available fares.');
+      form.reset();
+    }).catch(() => {
+      alert('Something went wrong. Please try again or contact us directly.');
+    });
   });
 </script>
 
