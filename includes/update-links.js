@@ -71,9 +71,8 @@
     'nav-service-3': isRoot ? 'pages/service/holiday_tour_packages.html' : (isInTraining ? '../service/holiday_tour_packages.html' : (isInService ? 'holiday_tour_packages.html' : 'service/holiday_tour_packages.html')),
     'nav-service-4': isRoot ? 'pages/service/airticket_domestic_international.html' : (isInTraining ? '../service/airticket_domestic_international.html' : (isInService ? 'airticket_domestic_international.html' : 'service/airticket_domestic_international.html')),
     'nav-service-5': isRoot ? 'pages/service/hajj_umrah_package.html' : (isInTraining ? '../service/hajj_umrah_package.html' : (isInService ? 'hajj_umrah_package.html' : 'service/hajj_umrah_package.html')),
-    'nav-service-6': isRoot ? 'pages/service/passport_nid_police_verification.html' : (isInTraining ? '../service/passport_nid_police_verification.html' : (isInService ? 'passport_nid_police_verification.html' : 'service/passport_nid_police_verification.html')),
-    'nav-service-7': isRoot ? 'pages/service/hotel_booking.html' : (isInTraining ? '../service/hotel_booking.html' : (isInService ? 'hotel_booking.html' : 'service/hotel_booking.html')),
-    'nav-service-8': isRoot ? 'pages/service/it_software_service.html' : (isInTraining ? '../service/it_software_service.html' : (isInService ? 'it_software_service.html' : 'service/it_software_service.html')),
+    'nav-service-6': isRoot ? 'pages/service/hotel_booking.html' : (isInTraining ? '../service/hotel_booking.html' : (isInService ? 'hotel_booking.html' : 'service/hotel_booking.html')),
+    'nav-service-7': isRoot ? 'pages/service/it_software_service.html' : (isInTraining ? '../service/it_software_service.html' : (isInService ? 'it_software_service.html' : 'service/it_software_service.html')),
     // Training dropdown items
     'nav-training-1': isRoot ? 'pages/training/ielts_preparation.html' : (isInTraining ? 'ielts_preparation.html' : (isInService ? '../training/ielts_preparation.html' : 'training/ielts_preparation.html')),
     'nav-training-2': isRoot ? 'pages/training/flutter_development.html' : (isInTraining ? 'flutter_development.html' : (isInService ? '../training/flutter_development.html' : 'training/flutter_development.html')),
@@ -85,10 +84,14 @@
     const link = document.getElementById(id);
     if (link) {
       link.href = navLinks[id];
-      // Update text and icon for Hotel Booking (was Business Consultancy)
-      if (id === 'nav-service-7') {
-        link.innerHTML = '<span class="menu-icon">🏨</span>Hotel Booking';
-      }
+      // Force update labels to match user request and include icons
+      if (id === 'nav-service-1') link.innerHTML = '<span class="menu-icon">🎓</span>Study Abroad';
+      if (id === 'nav-service-2') link.innerHTML = '<span class="menu-icon">🌍</span>Visa Process';
+      if (id === 'nav-service-3') link.innerHTML = '<span class="menu-icon">✈️</span>Tour Packages';
+      if (id === 'nav-service-4') link.innerHTML = '<span class="menu-icon">🎫</span>Air Ticket';
+      if (id === 'nav-service-5') link.innerHTML = '<span class="menu-icon">🕌</span>Hajj & Umrah';
+      if (id === 'nav-service-6') link.innerHTML = '<span class="menu-icon">🏨</span>Hotel Book';
+      if (id === 'nav-service-7') link.innerHTML = '<span class="menu-icon">💻</span>IT Services';
     }
   });
   

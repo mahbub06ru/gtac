@@ -63,7 +63,7 @@ const files = [
   { path: 'pages/service/airticket_domestic_international.html', depth: 2 },
   { path: 'pages/service/hajj_umrah_package.html', depth: 2 },
   { path: 'pages/service/passport_nid_police_verification.html', depth: 2 },
-  { path: 'pages/service/business_legal_consultancy.html', depth: 2 },
+  { path: 'pages/service/hotel_booking.html', depth: 2 },
   { path: 'pages/service/it_software_service.html', depth: 2 }
 ];
 
