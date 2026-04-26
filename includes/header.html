@@ -2,31 +2,31 @@
 <div class="container header-inner">
 <a class="brand" href="#" id="brand-link">
 <img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
-<span>MyVisa — Education &amp; Travel</span>
+<span>MyVisa &mdash; Education &amp; Travel</span>
 </a>
 <nav class="nav" id="main-nav">
 <a href="#" data-page="home" id="nav-home">Home</a>
 <a href="#" data-page="about" id="nav-about">About</a>
 <div class="nav-dropdown">
-<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">▾</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">&#9662;</span></a>
 <div class="dropdown-menu">
-<a href="#" id="nav-service-1"><span class="menu-icon">🎓</span>Student Consultancy</a>
-<a href="#" id="nav-service-2"><span class="menu-icon">🌍</span>Visa Process</a>
-<a href="#" id="nav-service-3"><span class="menu-icon">✈️</span>Tour Packages</a>
-<a href="#" id="nav-service-4"><span class="menu-icon">🎫</span>Air Ticketing</a>
-<a href="#" id="nav-service-5"><span class="menu-icon">🕌</span>Hajj &amp; Umrah</a>
-<a href="#" id="nav-service-6"><span class="menu-icon">📄</span>E-passport &amp; NID</a>
-<a href="#" id="nav-service-7"><span class="menu-icon">🏨</span>Hotel Booking</a>
-<a href="#" id="nav-service-8"><span class="menu-icon">💻</span>IT Services</a>
+<a href="#" id="nav-service-1">Study Abroad</a>
+<a href="#" id="nav-service-2">Visa Process</a>
+<a href="#" id="nav-service-3">Tour Packages</a>
+<a href="#" id="nav-service-4">Air Ticketing</a>
+<a href="#" id="nav-service-5">Hajj &amp; Umrah</a>
+<a href="#" id="nav-service-6">E-passport &amp; NID</a>
+<a href="#" id="nav-service-7">Hotel Booking</a>
+<a href="#" id="nav-service-8">IT Services</a>
 </div>
 </div>
 <div class="nav-dropdown">
-<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">▾</span></a>
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">&#9662;</span></a>
 <div class="dropdown-menu">
-<a href="#" id="nav-training-1"><span class="menu-icon">📝</span>IELTS Preparation</a>
-<a href="#" id="nav-training-2"><span class="menu-icon">📱</span>Mobile App Dev</a>
-<a href="#" id="nav-training-3"><span class="menu-icon">🖥️</span>GDS Ticketing</a>
-<a href="#" id="nav-training-4"><span class="menu-icon">📋</span>Visa Processing</a>
+<a href="#" id="nav-training-1">IELTS Preparation</a>
+<a href="#" id="nav-training-2">Mobile App Dev</a>
+<a href="#" id="nav-training-3">GDS Ticketing</a>
+<a href="#" id="nav-training-4">Visa Processing</a>
 </div>
 </div>
 <a href="#" data-page="career" id="nav-career">Career</a>
@@ -43,137 +43,100 @@
 
 <script>
 (function initNavigation() {
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('main-nav');
+  var navToggle = document.getElementById("nav-toggle");
+  var nav = document.getElementById("main-nav");
 
   if (navToggle && nav) {
-    // Mobile menu toggle
-    navToggle.addEventListener('click', function(e) {
+    navToggle.addEventListener("click", function(e) {
       e.preventDefault();
       e.stopPropagation();
-      const isOpen = nav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen);
-
-      // Close all dropdowns when toggling menu
-      nav.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('active'));
-
+      var isOpen = nav.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen);
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
       if (isOpen) {
-        document.body.classList.add('nav-open');
+        document.body.classList.add("nav-open");
       } else {
-        document.body.classList.remove('nav-open');
+        document.body.classList.remove("nav-open");
       }
     });
 
-    // Close menu on resize to desktop
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768 && nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('nav-open');
+    window.addEventListener("resize", function() {
+      if (window.innerWidth > 768 && nav.classList.contains("open")) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
       }
     });
 
-    // Close menu when clicking outside (on overlay)
-    document.addEventListener('click', function(e) {
-      if (!nav.classList.contains('open')) return;
+    document.addEventListener("click", function(e) {
+      if (!nav.classList.contains("open")) return;
       if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('nav-open');
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
       }
     });
 
-    // Close menu when clicking a plain nav link (not dropdown toggle)
     if (!window._navLinkCloseHandler) {
       window._navLinkCloseHandler = function(e) {
         if (window.innerWidth > 768) return;
-        const nav = document.getElementById('main-nav');
-        if (!nav || !nav.classList.contains('open')) return;
-        if (e.target.closest('.dropdown-toggle') || e.target.closest('.dropdown-menu')) return;
-        const clickedLink = e.target.closest('a');
-        if (clickedLink && !clickedLink.classList.contains('dropdown-toggle') && clickedLink.closest('.nav')) {
-          nav.classList.remove('open');
-          const toggle = document.getElementById('nav-toggle');
-          if (toggle) toggle.setAttribute('aria-expanded', 'false');
-          document.body.classList.remove('nav-open');
+        var nav = document.getElementById("main-nav");
+        if (!nav || !nav.classList.contains("open")) return;
+        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
+        var clickedLink = e.target.closest("a");
+        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
+          nav.classList.remove("open");
+          var toggle = document.getElementById("nav-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("nav-open");
         }
       };
-      document.addEventListener('click', window._navLinkCloseHandler, false);
+      document.addEventListener("click", window._navLinkCloseHandler, false);
     }
   }
 
-  // Dropdown toggle handler (mobile only)
   if (!window._dropdownToggleHandler) {
     window._dropdownToggleHandler = function(e) {
       if (window.innerWidth > 768) return;
-      const nav = document.getElementById('main-nav');
-      if (!nav || !nav.classList.contains('open')) return;
-
-      const dropdownToggle = e.target.closest('.dropdown-toggle');
+      var nav = document.getElementById("main-nav");
+      if (!nav || !nav.classList.contains("open")) return;
+      var dropdownToggle = e.target.closest(".dropdown-toggle");
       if (!dropdownToggle) return;
-      const dropdown = dropdownToggle.closest('.nav-dropdown');
+      var dropdown = dropdownToggle.closest(".nav-dropdown");
       if (!dropdown) return;
-
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-
-      const isActive = dropdown.classList.contains('active');
-      nav.querySelectorAll('.nav-dropdown').forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
-
-      if (!isActive) {
-        dropdown.classList.add('active');
-      } else {
-        dropdown.classList.remove('active');
-      }
-
+      var isActive = dropdown.classList.contains("active");
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
+      dropdown.classList.toggle("active", !isActive);
       return false;
     };
   }
 
-  document.removeEventListener('click', window._dropdownToggleHandler, true);
-  document.addEventListener('click', window._dropdownToggleHandler, true);
+  document.removeEventListener("click", window._dropdownToggleHandler, true);
+  document.addEventListener("click", window._dropdownToggleHandler, true);
 
-  // Close sidebar when clicking a submenu link on mobile
-  window.setupDropdownMenuLinks = function() {
-    const navEl = document.getElementById('main-nav');
-    if (!navEl) return;
-    navEl.querySelectorAll('.dropdown-menu a').forEach(link => {
-      const newLink = link.cloneNode(true);
-      link.parentNode.replaceChild(newLink, link);
-    });
-    navEl.querySelectorAll('.dropdown-menu a').forEach(link => {
-      link.addEventListener('click', function() {
+  if (nav) {
+    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
+      link.addEventListener("click", function() {
         if (window.innerWidth <= 768) {
-          const nav = document.getElementById('main-nav');
-          const toggle = document.getElementById('nav-toggle');
-          if (nav) {
-            nav.classList.remove('open');
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            document.body.classList.remove('nav-open');
-          }
+          var n = document.getElementById("main-nav");
+          var t = document.getElementById("nav-toggle");
+          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
+          document.body.classList.remove("nav-open");
         }
       });
     });
-  };
+  }
 
-  setupDropdownMenuLinks();
-  window.addEventListener('load', function() { setTimeout(setupDropdownMenuLinks, 100); });
-
-  // Active link highlighting
-  const currentPath = window.location.pathname;
-  document.querySelectorAll('.nav a[data-page]').forEach(link => {
-    const linkPath = new URL(link.href, window.location.origin).pathname;
+  var currentPath = window.location.pathname;
+  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
+    var linkPath = new URL(link.href, window.location.origin).pathname;
     if (currentPath.includes(linkPath) ||
         (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
       link.classList.add("active");
     }
   });
 })();
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof setupDropdownMenuLinks === 'function') setupDropdownMenuLinks();
-  });
-}
 </script>
