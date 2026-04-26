@@ -16,56 +16,6 @@
     box-shadow: var(--shadow-lg);
   }
 
-  .content-section {
-    margin-bottom: 3rem;
-  }
-
-  .content-section h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--text-dark);
-    margin-bottom: 1.5rem;
-  }
-
-  .content-section h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-    border-left: 5px solid var(--primary);
-    padding-left: 1rem;
-  }
-
-  .content-section p {
-    color: var(--text-dark);
-    line-height: 1.8;
-    text-align: justify;
-    margin-bottom: 1.5rem;
-  }
-
-  .service-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 3rem;
-  }
-
-  .service-list li {
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-    display: flex;
-    align-items: start;
-    gap: 0.75rem;
-    font-size: 1.05rem;
-  }
-
-  .service-list li::before {
-    content: "⚫";
-    color: var(--primary);
-    font-size: 1.2rem;
-    flex-shrink: 0;
-  }
-
-  /* Booking Form Card */
   .booking-card {
     background: #fff;
     padding: 3rem;
@@ -158,113 +108,143 @@
 <div id="header-placeholder"></div>
 
 <main class="container" style="max-width: 1100px; margin: 3rem auto; padding: 0 1rem;">
-  <!-- Banner -->
-  <img src="https://nexttripbd.com/wp-content/uploads/2022/04/banner-5.jpg" alt="Hotel Booking Banner" class="hero-banner">
+  <section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
+    <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem; line-height: 1.2; text-align: center;">🏨 Hotel Booking Services</h1>
+    <p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">Find the perfect stay with MyVisa! Whether you're traveling for business or leisure, we provide the best accommodation options tailored to your needs. From luxury 5-star resorts to budget-friendly apartments, our extensive network ensures comfort and value for every traveler.</p>
 
-  <section class="content-section">
-    <h1>Hotel Booking</h1>
-    <ul class="service-list">
-      <li>Over 200,000 hotels and apartments worldwide.</li>
-      <li>Instant confirmations for your peace of mind.</li>
-      <li>Last minute availability and exclusive deals directly from hotels.</li>
-      <li>Flexible booking conditions and easy modifications.</li>
-      <li>Round the clock service by our experienced travel professionals.</li>
-      <li>Easy and efficient booking engine for a seamless experience.</li>
-      <li>We offer complete white label solutions with customized back office.</li>
-    </ul>
-  </section>
+    <!-- Banner -->
+    <img src="https://nexttripbd.com/wp-content/uploads/2022/04/banner-5.jpg" alt="Hotel Booking Banner" class="hero-banner">
 
-  <section class="content-section">
-    <h2>Domestic & International</h2>
-    <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; margin-top: 2rem;">
-      <div style="flex: 1; min-width: 300px;">
-        <img src="https://nexttripbd.com/wp-content/uploads/2022/04/Booking-A-Hotel-Room.jpg" alt="Hotel Room Booking" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg);">
+    <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">🌍 Why Book With Us?</h2>
+
+    <div style="margin-bottom: 3rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--primary); transition: transform 0.3s;">
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Global Network</h3>
+          <p style="color: var(--text-dark); line-height: 1.6; margin: 0;">Over 200,000 hotels and apartments worldwide, from budget stays to luxury resorts.</p>
+        </div>
+        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Instant Confirmation</h3>
+          <p style="color: var(--text-dark); line-height: 1.6; margin: 0;">Real-time availability and instant booking confirmations for your peace of mind.</p>
+        </div>
+        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Best Rates</h3>
+          <p style="color: var(--text-dark); line-height: 1.6; margin: 0;">Exclusive deals and last-minute availability directly from our hotel partners.</p>
+        </div>
+        <div style="background: #f8fafc; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--primary);">
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ 24/7 Support</h3>
+          <p style="color: var(--text-dark); line-height: 1.6; margin: 0;">Dedicated travel professionals available round the clock to assist you.</p>
+        </div>
       </div>
-      <div style="flex: 1.5; min-width: 300px;">
-        <p>Whether you're traveling for business or leisure, we provide the best accommodation options tailored to your needs. From luxury 5-star resorts to budget-friendly apartments, our extensive network ensures comfort and value for every traveler.</p>
-        <p>Our dedicated support team is available 24/7 to assist with changes, cancellations, or special requests, ensuring a seamless experience from check-in to check-out.</p>
+    </div>
+
+    <!-- Features List -->
+    <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%); padding: 2.5rem; border-radius: 16px; margin-bottom: 3rem;">
+      <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-dark); margin-bottom: 1.5rem; text-align: center;">📌 Our Service Features</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-dark); font-weight: 500;">
+          <span style="color: var(--primary); font-size: 1.2rem;">✓</span> Flexible booking and easy modifications
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-dark); font-weight: 500;">
+          <span style="color: var(--primary); font-size: 1.2rem;">✓</span> Efficient booking engine for seamless experience
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-dark); font-weight: 500;">
+          <span style="color: var(--primary); font-size: 1.2rem;">✓</span> Customized back-office solutions
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-dark); font-weight: 500;">
+          <span style="color: var(--primary); font-size: 1.2rem;">✓</span> Special requests and amenities management
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Form Card -->
+    <div class="booking-card">
+      <div class="form-header">
+        <h2>Hotel Booking Inquiry</h2>
+        <p>Please provide your stay details for the best customized rates.</p>
+      </div>
+
+      <form id="hotelBookingForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Full Name*</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address*</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number*</label>
+            <input type="tel" name="phone" placeholder="e.g. 01700000000" required>
+          </div>
+          <div class="form-group">
+            <label>Destination Country*</label>
+            <input type="text" name="country" placeholder="e.g. Thailand, UAE" required>
+          </div>
+          <div class="form-group">
+            <label>City*</label>
+            <input type="text" name="city" placeholder="Destination City" required>
+          </div>
+          <div class="form-group">
+            <label>Hotel Category</label>
+            <select name="hotel_type">
+              <option value="">Please select</option>
+              <option value="3 Star">3 Star Hotel</option>
+              <option value="4 Star">4 Star Hotel</option>
+              <option value="5 Star">5 Star Hotel</option>
+              <option value="Apartment">Apartment / Resort</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Check In Date*</label>
+            <input type="date" name="check_in" required>
+          </div>
+          <div class="form-group">
+            <label>Check Out Date*</label>
+            <input type="date" name="check_out" required>
+          </div>
+          <div class="form-group">
+            <label>Room Type*</label>
+            <select name="room_type" required>
+              <option value="">Please select</option>
+              <option value="Single">Single Room</option>
+              <option value="Double">Double Room</option>
+              <option value="Triple">Triple Room</option>
+              <option value="Quad">Quad Room</option>
+              <option value="King Bed">King Bed Suite</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>No. of Rooms*</label>
+            <input type="number" name="rooms" min="1" value="1" required>
+          </div>
+          <div class="form-group">
+            <label>Adults*</label>
+            <input type="number" name="adults" min="1" value="1" required>
+          </div>
+          <div class="form-group">
+            <label>Children (0-12 yrs)</label>
+            <input type="number" name="children" min="0" value="0">
+          </div>
+          <div class="form-group full-width">
+            <label>Additional Description / Special Requests</label>
+            <textarea name="message" rows="4" placeholder="Share any specific preferences or requirements..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn primary booking-btn">Submit Booking Request</button>
+      </form>
+    </div>
+
+    <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2.5rem; border-radius: 12px; text-align: center; margin-top: 3rem;">
+      <h2 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0 0 1rem;">Need Instant Help?</h2>
+      <p style="color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.6;">Contact our travel desk for immediate assistance with your booking.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="../contact.html" class="btn primary" style="background: #fff; color: var(--primary); padding: 0.8rem 2rem; font-weight: 600;">Contact Us</a>
+        <a href="tel:+8801818120900" class="btn outline" style="border-color: #fff; color: #fff; padding: 0.8rem 2rem; font-weight: 600;">Call +880 1818-120900</a>
       </div>
     </div>
   </section>
-
-  <!-- Hotel Booking Form -->
-  <div class="booking-card">
-    <div class="form-header">
-      <h2>Hotel Booking Information</h2>
-      <p>Please provide your stay details for the best customized rates.</p>
-    </div>
-
-    <form id="hotelBookingForm">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Full Name*</label>
-          <input type="text" name="name" placeholder="Enter your name" required>
-        </div>
-        <div class="form-group">
-          <label>Email Address*</label>
-          <input type="email" name="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-          <label>Phone Number*</label>
-          <input type="tel" name="phone" placeholder="e.g. 01700000000" required>
-        </div>
-        <div class="form-group">
-          <label>Country*</label>
-          <input type="text" name="country" placeholder="Destination Country" required>
-        </div>
-        <div class="form-group">
-          <label>City*</label>
-          <input type="text" name="city" placeholder="Destination City" required>
-        </div>
-        <div class="form-group">
-          <label>Hotel Type</label>
-          <select name="hotel_type">
-            <option value="">Please select</option>
-            <option value="3 Star">3 Star Hotel</option>
-            <option value="4 Star">4 Star Hotel</option>
-            <option value="5 Star">5 Star Hotel</option>
-            <option value="Apartment">Apartment / Resort</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Check In Date*</label>
-          <input type="date" name="check_in" required>
-        </div>
-        <div class="form-group">
-          <label>Check Out Date*</label>
-          <input type="date" name="check_out" required>
-        </div>
-        <div class="form-group">
-          <label>Room Type*</label>
-          <select name="room_type" required>
-            <option value="">Please select</option>
-            <option value="Single">Single Room</option>
-            <option value="Double">Double Room</option>
-            <option value="Triple">Triple Room</option>
-            <option value="Quad">Quad Room</option>
-            <option value="King Bed">King Bed Suite</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>No. of Rooms*</label>
-          <input type="number" name="rooms" min="1" value="1" required>
-        </div>
-        <div class="form-group">
-          <label>Adults*</label>
-          <input type="number" name="adults" min="1" value="1" required>
-        </div>
-        <div class="form-group">
-          <label>Children (0-12 yrs)</label>
-          <input type="number" name="children" min="0" value="0">
-        </div>
-        <div class="form-group full-width">
-          <label>Additional Description / Special Requests</label>
-          <textarea name="message" rows="4" placeholder="Share any specific preferences..."></textarea>
-        </div>
-      </div>
-      <button type="submit" class="btn primary booking-btn">Submit Booking Request</button>
-    </form>
-  </div>
 </main>
 
 <script>
