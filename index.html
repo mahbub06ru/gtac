@@ -27,7 +27,7 @@
 <a href="#" id="nav-service-4"><span class="menu-icon">🎫</span>Air Ticketing</a>
 <a href="#" id="nav-service-5"><span class="menu-icon">🕌</span>Hajj &amp; Umrah</a>
 <a href="#" id="nav-service-6"><span class="menu-icon">📄</span>E-passport &amp; NID</a>
-<a href="#" id="nav-service-7"><span class="menu-icon">💼</span>Business Consultancy</a>
+<a href="#" id="nav-service-7"><span class="menu-icon">🏨</span>Hotel Booking</a>
 <a href="#" id="nav-service-8"><span class="menu-icon">💻</span>IT Services</a>
 </div>
 </div>
@@ -143,7 +143,7 @@
   document.querySelectorAll('.nav a[data-page]').forEach(link => {
     const linkPath = new URL(link.href, window.location.origin).pathname;
     if (currentPath.includes(linkPath) ||
-        (link.getAttribute('data-page') === 'home' && (currentPath === '/' || currentPath.endsWith('index.html')))) {
+        (link.getAttribute("data-page") === "home" && (currentPath === '/' || currentPath.endsWith('index.html')))) {
       link.classList.add('active');
     }
   });
@@ -194,7 +194,7 @@
 <div class="feature-icon">✈️</div>
 <h3>Visa Processing</h3>
 <p>Complete visa application support including Tourist Visa, Student Visa, and Work Visa. Document verification, embassy appointment booking, submission, and tracking services.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Get Started →</a>
+<a href="pages/service/country_visa_processing.html" class="feature-link">Get Started →</a>
 </div>
 <div class="feature">
 <div class="feature-icon">🎓</div>
@@ -212,7 +212,7 @@
 <div class="feature-icon">🏛️</div>
 <h3>Embassy Appointment</h3>
 <p>Expert assistance with embassy appointment booking and scheduling. We ensure you get the best available slots and prepare you thoroughly for your visa interview.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Get Started →</a>
+<a href="pages/service/country_visa_processing.html" class="feature-link">Get Started →</a>
 </div>
 <div class="feature">
 <div class="feature-icon">🎓</div>
@@ -224,25 +224,25 @@
 <div class="feature-icon">🌴</div>
 <h3>Holiday Packages</h3>
 <p>Customized holiday packages with flight, hotel, and tour arrangements. Whether you're planning a family vacation or a solo adventure, we create memorable experiences.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Get Started →</a>
+<a href="pages/service/holiday_tour_packages.html" class="feature-link">Get Started →</a>
 </div>
 <div class="feature">
 <div class="feature-icon">🎫</div>
 <h3>Air Ticketing</h3>
 <p>Expert air ticket booking with competitive rates and flexible options. We offer the best deals on domestic and international flights for all your travel needs.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Get Started →</a>
+<a href="pages/service/airticket_domestic_international.html" class="feature-link">Get Started →</a>
 </div>
 <div class="feature">
-<div class="feature-icon">🛡️</div>
-<h3>Travel Insurance</h3>
-<p>Comprehensive travel insurance coverage for your peace of mind. We offer various insurance plans to protect you during your travels abroad.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Get Started →</a>
+<div class="feature-icon">🏨</div>
+<h3>Hotel Booking</h3>
+<p>Over 200,000 hotels worldwide with instant confirmation. We provide budget-friendly to luxury options for both domestic and international stays.</p>
+<a href="pages/service/hotel_booking.html" class="feature-link">Get Started →</a>
 </div>
 <div class="feature">
 <div class="feature-icon">💻</div>
 <h3>GDS Services</h3>
 <p>Professional GDS (Amadeus, Sabre, Travelport) services for travel agents and businesses. Direct access to airline inventory with competitive rates and real-time availability.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Get Started →</a>
+<a href="pages/service/it_software_service.html" class="feature-link">Get Started →</a>
 </div>
 </div>
 </div>
@@ -309,10 +309,10 @@
 <a href="pages/service/hajj_umrah_package.html" class="feature-link">Learn More →</a>
 </div>
 <div class="package-card">
-<div class="package-icon">💼</div>
-<h3>Business Consultancy</h3>
-<p>Professional business and legal consultancy services including trade license, company registration, and compliance guidance for your business architecture.</p>
-<a href="pages/service/business_legal_consultancy.html" class="feature-link">Learn More →</a>
+<div class="package-icon">🏨</div>
+<h3>Hotel Booking</h3>
+<p>Find the perfect stay from over 200,000 options worldwide. We offer real-time availability and competitive rates for all your accommodation needs.</p>
+<a href="pages/service/hotel_booking.html" class="feature-link">Learn More →</a>
 </div>
 </div>
 </div>
@@ -699,7 +699,6 @@
 <div class="partner-item">
 <img src="assets/assets/images/gtac-logo.png" alt="TOEFL" class="partner-logo-img">
 <div class="partner-logo">TOEFL</div>
-</div>
 </div>
 </div>
 </div>

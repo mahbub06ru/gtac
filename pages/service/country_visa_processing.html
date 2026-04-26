@@ -3,9 +3,210 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Country Visa Processing — MyVisa</title>
+<title>Visa Service — Country Visa Processing — MyVisa</title>
 <link rel="icon" type="image/png" href="../../assets/assets/images/fav.png">
 <link rel="stylesheet" href="../../assets/css/styles.css">
+<style>
+  .search-container {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 4rem 1rem;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 3rem;
+    border-radius: 0 0 40px 40px;
+  }
+  .search-box {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    position: relative;
+  }
+  .search-input {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    padding-right: 4rem;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    outline: none;
+    color: var(--text-dark);
+  }
+  .search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-size: 1.5rem;
+  }
+  .filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+  }
+  .filter-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    border: 2px solid var(--border);
+    background: #fff;
+    color: var(--text-dark);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+    padding: 0 1rem;
+  }
+  .country-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .country-item.active {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+  }
+  .country-header {
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #fff;
+    transition: background 0.3s;
+    user-select: none;
+  }
+  .country-header:hover {
+    background: #f8fafc;
+  }
+  .country-flag {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    width: 40px;
+    text-align: center;
+  }
+  .country-info {
+    flex: 1;
+  }
+  .country-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+  }
+  .visa-types {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+  }
+  .expand-icon {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    transition: transform 0.3s;
+  }
+  .country-item.active .expand-icon {
+    transform: rotate(180deg);
+    color: var(--primary);
+  }
+
+  /* Content Styles */
+  .country-content {
+    display: none;
+    padding: 2rem;
+    border-top: 1px solid #f1f5f9;
+    background: #fff;
+  }
+  .country-item.active .country-content {
+    display: block;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f1f5f9;
+  }
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .req-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0.75rem 2rem;
+  }
+  .req-item {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+  }
+  .req-icon {
+    color: var(--primary);
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .info-item label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  .info-item span {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    display: none;
+  }
+</style>
 </head>
 <body>
 <!-- Header will be loaded here -->
@@ -152,139 +353,327 @@
 })();
 </script>
 
-<main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
-<section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
-<h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem; line-height: 1.2; text-align: center;">🌍 Country Visa Processing Services</h1>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">Your trusted partner for visa processing to countries worldwide. Whether you're traveling for tourism, business, family visits, or medical treatment, we provide comprehensive visa application support to ensure a smooth and successful process.</p>
-<p style="color: var(--text-dark); font-size: 1.05rem; margin-bottom: 3rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; font-weight: 500;">From tourist visas to business visas, work permits to family visit visas, we handle all types of visa applications with expertise and attention to detail.</p>
+<main>
+  <div class="search-container">
+    <div class="container">
+      <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Visa Service</h1>
+      <p style="font-size: 1.25rem; opacity: 0.9; max-width: 700px; margin: 0 auto;">Search your desired country for visa information, requirements, and professional processing services.</p>
+      <div class="search-box">
+        <input type="text" id="countrySearch" class="search-input" placeholder="Search your country (e.g. USA, UK, Canada, Thailand...)" onkeyup="handleSearch()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+  </div>
 
-<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">🌍 Countries We Process Visas For</h2>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">We provide visa processing services for countries worldwide, including:</p>
+  <div class="container">
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterCategory('all', this)">All Countries</button>
+      <button class="filter-btn" onclick="filterCategory('popular', this)">Popular</button>
+      <button class="filter-btn" onclick="filterCategory('asia', this)">Asia</button>
+      <button class="filter-btn" onclick="filterCategory('europe', this)">Europe</button>
+      <button class="filter-btn" onclick="filterCategory('america', this)">America</button>
+      <button class="filter-btn" onclick="filterCategory('oceania', this)">Oceania</button>
+    </div>
 
-<div style="margin-bottom: 3rem;">
-<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px;">Popular Visa Destinations</h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇺🇸 United States (USA)</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit Visas</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇬🇧 United Kingdom</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Family Visit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇨🇦 Canada</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇦🇺 Australia</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Family Visit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇸🇦 Saudi Arabia</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Umrah, Hajj</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇦🇪 UAE</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇲🇾 Malaysia</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Medical</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇸🇬 Singapore</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇹🇭 Thailand</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Medical</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇮🇳 India</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Medical</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇯🇵 Japan</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇰🇷 South Korea</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇪🇺 Europe (Schengen)</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Family Visit (26 Countries)</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇳🇿 New Zealand</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Family Visit</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇨🇳 China</p>
-<p style="font-size: 0.95rem; color: var(--text-light); margin: 0;">Tourist, Business, Transit</p>
-</div>
-</div>
-</div>
+    <div class="accordion-container" id="countryAccordion">
+      <!-- Accordion items will be generated by JS -->
+    </div>
 
-<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">📌 Types of Visas We Process</h2>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">We handle all types of visa applications, including:</p>
+    <div id="noResults" class="no-results">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">🔎</div>
+      <h3>No countries found matching your search.</h3>
+      <p>Try searching for a different country or contact us for assistance.</p>
+    </div>
 
-<div style="margin-bottom: 2rem;">
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Tourist & Visit Visas</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Short-term tourist visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Family visit visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Multiple entry tourist visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Long-term visit visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Transit visas</li>
-</ul>
-</div>
-
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Business & Work Visas</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Business visit visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Work permit applications</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Conference and seminar visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Investment visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Employment visas</li>
-</ul>
-</div>
-
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Specialized Visa Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Medical treatment visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Umrah and Hajj visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Diplomatic and official visas</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Visa extension services</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Visa renewal assistance</li>
-</ul>
-</div>
-
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Our Visa Processing Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Complete document preparation and verification</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Application form filling and submission</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Embassy appointment scheduling</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Interview preparation and guidance</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Application tracking and follow-up</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Visa collection assistance</li>
-</ul>
-</div>
-</div>
-
-<div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2.5rem; border-radius: 12px; text-align: center; margin-top: 3rem;">
-<h2 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0 0 1rem;">Ready to Apply for Your Visa?</h2>
-<p style="color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.6;">Contact us today for professional visa processing services! Our experienced team will guide you through every step of the visa application process.</p>
-<a href="../contact.html" class="btn primary" style="font-size: 1.2rem; padding: 1rem 3rem; display: inline-block; background: #fff; color: var(--primary); border: 2px solid #fff; font-weight: 600;">Apply for Visa Now</a>
-</div>
-</section>
+    <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 4rem 2rem; border-radius: 24px; text-align: center; margin-bottom: 4rem; color: #fff; box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);">
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem;">Don't see your destination?</h2>
+      <p style="font-size: 1.2rem; margin-bottom: 2.5rem; opacity: 0.95; max-width: 800px; margin-left: auto; margin-right: auto;">We process visas for over 150 countries worldwide. Contact our team for custom requirements.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="../contact.html" class="btn primary" style="background: #fff; color: var(--primary); padding: 1rem 3rem; font-size: 1.1rem;">Get Free Consultation</a>
+        <a href="tel:+8801818120900" class="btn outline" style="border-color: #fff; color: #fff; padding: 1rem 3rem; font-size: 1.1rem;">Call Support</a>
+      </div>
+    </div>
+  </div>
 </main>
 
+<script>
+  const rawCountries = [
+    {
+      id: 'aus', name: 'Australia', flag: '🇦🇺', cat: 'popular oceania', visa: 'Tourist • Business • Family',
+      req: ['Passport', 'Recent Photo', 'Detailed Bank History', 'Employment Docs', 'Invitation Letter (if applicable)', 'Family details'],
+      check: ['Subclass Selection', 'Online Portal Submission', 'Biometric Collection', 'Health Check (if required)', 'Financial Audit'],
+      time: '20-30 Working Days', charge: 'Contact for details'
+    },
+    {
+      id: 'canada', name: 'Canada', flag: '🇨🇦', cat: 'popular america', visa: 'Tourist • Business • Transit',
+      req: ['Valid Passport', 'Biometric Photos (35x45mm)', 'Bank Statement & Solvency', 'NOC/Trade License', 'Birth Certificate', 'Asset documents', 'Cover Letter'],
+      check: ['SOP/Motivation Letter', 'Document Scanning', 'Biometric Instructions (BIL)', 'VFS Appointment', 'Application Tracking'],
+      time: '2-4 Months', charge: 'Contact for details'
+    },
+    {
+      id: 'china', name: 'China', flag: '🇨🇳', cat: 'asia', visa: 'Tourist • Business • Transit',
+      req: ['Passport', 'Photos', 'Bank Statement', 'Trade License / NOC', 'Visiting Card'],
+      check: ['Embassy Submission', 'Form Completion', 'Itinerary Planning'],
+      time: '10-15 Working Days', charge: 'Standard'
+    },
+    {
+      id: 'egypt', name: 'Egypt', flag: '🇪🇬', cat: 'africa', visa: 'Tourist • Business',
+      req: ['Passport', 'Photos', 'Bank Statement', 'NOC'],
+      check: ['Form completion', 'Embassy Submission'],
+      time: '7-10 Working Days', charge: 'Standard'
+    },
+    {
+      id: 'india', name: 'India', flag: '🇮🇳', cat: 'asia', visa: 'Tourist • Business • Medical',
+      req: ['Latest Passport', 'Photos (2x2)', 'Utility Bill copy', 'NOC/Trade License', 'Bank Statement / Dollar Endorsement'],
+      check: ['IVAC Appointment Booking', 'Form Completion', 'Document Organization', 'Submission Support'],
+      time: '7-10 Working Days', charge: 'Minimal charges'
+    },
+    {
+      id: 'japan', name: 'Japan', flag: '🇯🇵', cat: 'asia', visa: 'Tourist • Business • Transit',
+      req: ['Passport', 'Photo', 'Bank Statement', 'Solvency', 'Income Tax proof'],
+      check: ['VFS Global Submission', 'Financial Documentation', 'Itinerary Proof', 'Interview Prep (if called)'],
+      time: '7-10 Working Days', charge: 'Standard'
+    },
+    {
+      id: 'malaysia', name: 'Malaysia', flag: '🇲🇾', cat: 'popular asia', visa: 'Tourist • Business • Medical',
+      req: ['Original Passport', 'Photos (35x45mm blue/white background)', 'Bank Statement', 'Solvency', 'NOC/Trade License'],
+      check: ['E-Visa / Sticker Selection', 'VFS Submission', 'Single Entry / Multiple Entry Check', 'Digital Tracking'],
+      time: '5-10 Working Days', charge: 'Standard rates'
+    },
+    {
+      id: 'maldives', name: 'Maldives', flag: '🇲🇻', cat: 'asia', visa: 'Tourist • Arrival Visa Support',
+      req: ['Passport', 'Confirmed Hotel Booking', 'Return Ticket'],
+      check: ['IMUGA Portal Entry', 'Arrival assistance'],
+      time: 'Instant', charge: 'Minimal'
+    },
+    {
+      id: 'nz', name: 'New Zealand', flag: '🇳🇿', cat: 'oceania', visa: 'Tourist • Business • Family',
+      req: ['Passport', 'Photos', 'Financial documents', 'NOC'],
+      check: ['Online application', 'Biometric (if required)'],
+      time: '20-30 Days', charge: 'Standard'
+    },
+    {
+      id: 'saudi', name: 'Saudi Arabia', flag: '🇸🇦', cat: 'popular asia', visa: 'Tourist • Business • Umrah',
+      req: ['Passport', 'Photos', 'NID', 'Vaccination proof', 'Bio-metric (for Umrah)'],
+      check: ['Enjaz Registration', 'Mofa Payment', 'Insurance Purchase', 'Embassy Submission', 'Biometric verification'],
+      time: '5-7 Working Days', charge: 'Contact for details'
+    },
+    {
+      id: 'schengen', name: 'Schengen (Europe)', flag: '🇪🇺', cat: 'popular europe', visa: 'Germany • France • Italy • Spain',
+      req: ['Passport', 'Biometric Photos', 'Travel Insurance (30k Euro cover)', 'Hotel/Flight Booking', '6 Months Bank details', 'NOC/Trade License'],
+      check: ['Specific Embassy Selection', 'VFS/BLS Appointment', 'Itinerary Planning', 'Cover Letter Writing', 'Insurance Policy Issue'],
+      time: '15-20 Working Days', charge: 'Contact for details'
+    },
+    {
+      id: 'singapore', name: 'Singapore', flag: '🇸🇬', cat: 'popular asia', visa: 'Tourist • Business • Transit',
+      req: ['Passport', 'Photos', 'Bank Statement', 'Visiting Card', 'Invitation (V39A) if applicable'],
+      check: ['Level 1 / Level 2 Assessment', 'E-visa Processing', 'Local Contact Verification', 'ICA Submission'],
+      time: '5-7 Working Days', charge: 'Standard rates'
+    },
+    {
+      id: 'thailand', name: 'Thailand', flag: '🇹🇭', cat: 'popular asia', visa: 'Tourist • Business • Medical',
+      req: ['Passport', 'Photos', 'Bank Statement (minimum balance 60k)', 'Solvency', 'NOC/Trade License'],
+      check: ['Embassy Appointment', 'VFS Submission', 'Insurance Check', 'Flight/Hotel Verification'],
+      time: '5-7 Working Days', charge: 'Standard rates'
+    },
+    {
+      id: 'turkey', name: 'Turkey', flag: '🇹🇷', cat: 'asia', visa: 'Sticker Visa • E-Visa',
+      req: ['Passport', 'Photos', 'Health Insurance', 'Bank Statement', 'NOC/Trade License'],
+      check: ['Submission to Embassy/Gateway', 'Interview appointment'],
+      time: '10-15 Working Days', charge: 'Standard'
+    },
+    {
+      id: 'uae', name: 'UAE (Dubai)', flag: '🇦🇪', cat: 'popular asia', visa: 'Tourist • Business • Transit',
+      req: ['Passport Scan', 'Photo Scan', 'NID copy'],
+      check: ['E-visa Application', 'Security Clearance', 'Health Insurance', 'Ticket Reservation'],
+      time: '3-5 Working Days', charge: 'Competitive rates'
+    },
+    {
+      id: 'uk', name: 'United Kingdom', flag: '🇬🇧', cat: 'popular europe', visa: 'Tourist • Business • Family',
+      req: ['Valid Passport', 'Last 2 Recent Photos (35x45mm, White background)', 'Bank Statement (last 6 months)', 'Bank Solvency Certificate', 'Trade License (for business)', 'NOC (for service)', 'TIN/Tax Returns', 'Marriage Certificate (if applicable)'],
+      check: ['Document Legalization', 'Online Application Submission', 'VFS Global Appointment', 'Biometric Enrollment', 'Tuberculosis Test (if required)'],
+      time: '15 Working Days', charge: 'Standard / Priority available'
+    },
+    {
+      id: 'usa', name: 'United States', flag: '🇺🇸', cat: 'popular america', visa: 'Tourist • Business • Transit',
+      req: ['Original Passport (valid for 6 months)', 'Last 2 Recent Photos (2x2 inch, White background)', 'Bank Statement (last 6 months)', 'Bank Solvency Certificate', 'Visiting Card / Professional ID', 'NID Copy', 'Forwarding Letter / NOC', 'Property/Asset documents (optional)'],
+      check: ['Document Verification', 'DS-160 Form Completion', 'Appointment Booking', 'Mock Interview Preparation', 'Submission Guidance'],
+      time: '15-20 Working Days', charge: 'Contact for details'
+    },
+    {
+      id: 'vietnam', name: 'Vietnam', flag: '🇻🇳', cat: 'asia', visa: 'E-Visa • Tourist • Business',
+      req: ['Passport Scan', 'Photo Scan'],
+      check: ['Portal Submission', 'Approval Letter management'],
+      time: '3-5 Working Days', charge: 'Low'
+    }
+  ];
+
+  // Alphabetical sort (A to Z) - ensures Australia is first
+  const sortedCountries = [...rawCountries].sort((a, b) => a.name.localeCompare(b.name));
+
+  function renderAccordions(data) {
+    const container = document.getElementById('countryAccordion');
+    container.innerHTML = '';
+    data.forEach((c, index) => {
+      const item = document.createElement('div');
+      // Set the very first item (Australia) to be expanded initially
+      item.className = index === 0 ? 'country-item active' : 'country-item';
+      item.setAttribute('data-category', c.cat);
+
+      item.innerHTML = `
+        <div class="country-header" onclick="toggleAccordion(this)">
+          <div class="country-flag">${c.flag}</div>
+          <div class="country-info">
+            <h3 class="country-name">${c.name}</h3>
+            <div class="visa-types">${c.visa}</div>
+          </div>
+          <div class="expand-icon">▾</div>
+        </div>
+        <div class="country-content" style="${index === 0 ? 'display:block' : ''}">
+          <div class="tabs">
+            <div class="tab-btn active" onclick="switchTab(this, 'req')">Requirements</div>
+            <div class="tab-btn" onclick="switchTab(this, 'check')">Our Checklist</div>
+            <div class="tab-btn" onclick="switchTab(this, 'info')">Processing Info</div>
+          </div>
+
+          <div class="tab-content-inner" data-tab="req" style="display:block">
+            <ul class="req-list">
+              ${c.req.map(r => `<li class="req-item"><span class="req-icon">✓</span> ${r}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="tab-content-inner" data-tab="check" style="display:none">
+            <ul class="req-list">
+              ${c.check.map(i => `<li class="req-item"><span class="req-icon">✓</span> ${i}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="tab-content-inner" data-tab="info" style="display:none">
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Estimated Time</label>
+                <span>${c.time}</span>
+              </div>
+              <div class="info-item">
+                <label>Visa Validity</label>
+                <span>As per Embassy</span>
+              </div>
+              <div class="info-item">
+                <label>Our Charge</label>
+                <span>${c.charge}</span>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+              <a href="../contact.html" class="btn primary">Apply for ${c.name} Visa</a>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(item);
+    });
+  }
+
+  // Initial render with sorted countries
+  renderAccordions(sortedCountries);
+
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    const isActive = item.classList.contains('active');
+
+    // Close other items
+    document.querySelectorAll('.country-item').forEach(i => {
+        if(i !== item) {
+          i.classList.remove('active');
+          i.querySelector('.country-content').style.display = 'none';
+        }
+    });
+
+    item.classList.toggle('active');
+    const content = item.querySelector('.country-content');
+    content.style.display = item.classList.contains('active') ? 'block' : 'none';
+  }
+
+  function switchTab(btn, tabName) {
+    event.stopPropagation();
+    const content = btn.closest('.country-content');
+
+    // Update buttons
+    content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update content panes
+    content.querySelectorAll('.tab-content-inner').forEach(c => c.style.display = 'none');
+    content.querySelector(`.tab-content-inner[data-tab="${tabName}"]`).style.display = 'block';
+  }
+
+  function handleSearch() {
+    const filter = document.getElementById('countrySearch').value.toLowerCase();
+    const items = document.querySelectorAll('.country-item');
+    const noResults = document.getElementById('noResults');
+    let hasResults = false;
+    let firstFound = false;
+
+    items.forEach(item => {
+      const name = item.querySelector('.country-name').textContent.toLowerCase();
+      const content = item.querySelector('.country-content');
+      if (name.includes(filter)) {
+        item.style.display = "";
+        hasResults = true;
+
+        // Expand first result of search
+        item.classList.remove('active');
+        content.style.display = 'none';
+        if(!firstFound && filter !== "") {
+           item.classList.add('active');
+           content.style.display = 'block';
+           firstFound = true;
+        }
+      } else {
+        item.style.display = "none";
+        item.classList.remove('active');
+        content.style.display = 'none';
+      }
+    });
+
+    noResults.style.display = hasResults ? "none" : "block";
+
+    // Reset filters
+    if (filter !== "") {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+    }
+  }
+
+  function filterCategory(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('countrySearch').value = "";
+
+    const items = document.querySelectorAll('.country-item');
+    let firstFound = false;
+
+    items.forEach(item => {
+      const cats = item.getAttribute('data-category').split(' ');
+      const content = item.querySelector('.country-content');
+      if (category === 'all' || cats.includes(category)) {
+        item.style.display = "";
+        item.classList.remove('active');
+        content.style.display = 'none';
+        if(!firstFound) {
+           item.classList.add('active');
+           content.style.display = 'block';
+           firstFound = true;
+        }
+      } else {
+        item.style.display = "none";
+        item.classList.remove('active');
+        content.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+<!-- Footer will be loaded here -->
 <footer class="site-footer">
 <div class="container">
 <div class="footer-inner">

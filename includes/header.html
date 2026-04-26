@@ -16,7 +16,7 @@
 <a href="#" id="nav-service-4"><span class="menu-icon">🎫</span>Air Ticketing</a>
 <a href="#" id="nav-service-5"><span class="menu-icon">🕌</span>Hajj &amp; Umrah</a>
 <a href="#" id="nav-service-6"><span class="menu-icon">📄</span>E-passport &amp; NID</a>
-<a href="#" id="nav-service-7"><span class="menu-icon">💼</span>Business Consultancy</a>
+<a href="#" id="nav-service-7"><span class="menu-icon">🏨</span>Hotel Booking</a>
 <a href="#" id="nav-service-8"><span class="menu-icon">💻</span>IT Services</a>
 </div>
 </div>
@@ -165,8 +165,8 @@
   document.querySelectorAll('.nav a[data-page]').forEach(link => {
     const linkPath = new URL(link.href, window.location.origin).pathname;
     if (currentPath.includes(linkPath) ||
-        (link.getAttribute('data-page') === 'home' && (currentPath === '/' || currentPath.endsWith('index.html')))) {
-      link.classList.add('active');
+        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
+      link.classList.add("active");
     }
   });
 })();

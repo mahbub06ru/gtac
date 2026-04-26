@@ -6,6 +6,199 @@
 <title>Hajj & Umrah Packages — MyVisa</title>
 <link rel="icon" type="image/png" href="../../assets/assets/images/fav.png">
 <link rel="stylesheet" href="../../assets/css/styles.css">
+<style>
+  .hero-banner {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .service-section {
+    margin-bottom: 3rem;
+  }
+
+  .service-section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .service-section p {
+    color: var(--text-dark);
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Accordion Styles */
+  .package-accordion {
+    margin: 3rem 0;
+  }
+  .package-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .package-item.active {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+  }
+  .package-header {
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #fff;
+    transition: background 0.3s;
+  }
+  .package-header:hover {
+    background: #f8fafc;
+  }
+  .package-icon {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+  }
+  .package-title-box {
+    flex: 1;
+  }
+  .package-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+  }
+  .expand-icon {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    transition: transform 0.3s;
+  }
+  .package-item.active .expand-icon {
+    transform: rotate(180deg);
+  }
+  .package-content {
+    display: none;
+    padding: 2rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .package-item.active .package-content {
+    display: block;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f1f5f9;
+  }
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .tab-pane {
+    display: none;
+  }
+  .tab-pane.active {
+    display: block;
+  }
+
+  .req-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem 2rem;
+  }
+  .req-item {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+  }
+  .req-icon {
+    color: var(--primary);
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  /* Booking Form */
+  .booking-card {
+    background: #fff;
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border);
+    margin-top: 4rem;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f8fafc;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  }
+  .booking-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .booking-card { padding: 2rem 1.5rem; }
+  }
+</style>
 </head>
 <body>
 <!-- Header will be loaded here -->
@@ -152,80 +345,201 @@
 })();
 </script>
 
-<main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
-<section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
-<h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem; line-height: 1.2; text-align: center;">🕋 Hajj & Umrah Packages</h1>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">Experience a blessed and hassle-free journey to the holy cities of Makkah and Madinah. We offer comprehensive Hajj and Umrah packages that include visa processing, flights, accommodation, transportation, and complete guidance throughout your spiritual journey.</p>
-<p style="color: var(--text-dark); font-size: 1.05rem; margin-bottom: 3rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; font-weight: 500;">From visa application to return journey, we ensure your pilgrimage is smooth, comfortable, and spiritually fulfilling.</p>
+<main class="container" style="max-width: 1100px; margin: 3rem auto; padding: 0 1rem;">
+  <!-- Hero Banner -->
+  <img src="https://nexttripbd.com/wp-content/uploads/2022/05/umrah-1-1.jpg" alt="Umrah Package Banner" class="hero-banner">
 
-<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">📌 Our Hajj & Umrah Package Services</h2>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">We provide comprehensive Hajj and Umrah packages that include all essential services for your spiritual journey:</p>
+  <section class="service-section">
+    <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem;">Umrah Package</h1>
+    <p>We have an experienced dedicated team in Saudi Arabia to manage Umrah & Hajj services properly. Even we can deal with a single guest. No issues if you are a first-time pilgrim or a regular one; we guide each guest properly to perform Umrah/Hajj with Bangladeshi religious guides (Maolana).</p>
+  </section>
 
-<div style="margin-bottom: 2rem;">
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Visa Processing Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Hajj visa application and processing</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Umrah visa application and processing</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Complete documentation support</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Medical certificate and vaccination guidance</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Visa collection and delivery</li>
-</ul>
-</div>
+  <div style="margin-bottom: 3rem;">
+    <div class="service-section">
+      <h2>UMRAH VISA</h2>
+      <p>We are an authorized Umrah Visa Agency providing instant visa issuance. You need a valid passport and photos for Umrah visa processing. Please note that vaccination requirements may apply as per current Saudi government regulations.</p>
+    </div>
 
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Flight & Transportation</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Round-trip flight booking (Dhaka ↔ Jeddah/Madinah)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Airport transfers in Saudi Arabia</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Inter-city transportation (Makkah ↔ Madinah)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Transportation to holy sites</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Group travel arrangements</li>
-</ul>
-</div>
+    <div class="service-section">
+      <h2>UMRAH HOTEL</h2>
+      <p>MyVisa has its own setup to manage Umrah/Hajj accommodation in Makkah and Madinah. We are premium business partners with 3-star, 4-star, and 5-star hotels situated in both holy places. You can choose to stay at a zero-meter distance from Masjid al-Haram.</p>
+    </div>
 
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Accommodation Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Hotel booking in Makkah (near Haram)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Hotel booking in Madinah (near Masjid an-Nabawi)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Accommodation during Hajj (Mina, Arafat, Muzdalifah)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Various hotel categories (3-star, 4-star, 5-star)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Group accommodation arrangements</li>
-</ul>
-</div>
+    <div class="service-section">
+      <h2>UMRAH TRANSPORT</h2>
+      <p>There are various types of vehicles in our transport pool. You can choose from the latest model Jeeps, Cars, SUVs, or Buses according to your group size and comfort preference.</p>
+    </div>
+  </div>
 
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Guidance & Support Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Experienced group leader (Muallim/Muallima)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Pre-departure orientation and guidance</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Ritual guidance (Hajj/Umrah procedures)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> 24/7 support during the journey</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Emergency assistance and medical support</li>
-</ul>
-</div>
+  <div class="service-section">
+    <h2>10 Days / 7 Days Best Umrah Package from Bangladesh</h2>
+    <p>It’s a dream trip for a Muslim to go to the Holy places Makkah and Madinah. We understand your emotion and needs. Our expert team has crafted Umrah Packages to fit your budget and ensure comfort. A hassle-free trip is essential to perform Umrah rituals properly.</p>
+  </div>
 
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Additional Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Travel insurance coordination</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> SIM card and communication support</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Meal arrangements (optional)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Ziyarat (visiting historical sites) arrangements</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Shopping assistance and guidance</li>
-</ul>
-</div>
-</div>
+  <!-- Package Accordion -->
+  <div class="package-accordion" id="packageAccordion">
+    <div class="package-item active">
+      <div class="package-header" onclick="toggleAccordion(this)">
+        <div class="package-icon">💎</div>
+        <div class="package-title-box">
+          <h3 class="package-name">VIP 5-Star Umrah Package</h3>
+        </div>
+        <div class="expand-icon">▾</div>
+      </div>
+      <div class="package-content" style="display:block">
+        <div class="tabs">
+          <div class="tab-btn active" onclick="switchTab(this, 'req')">Requirements</div>
+          <div class="tab-btn" onclick="switchTab(this, 'incl')">Inclusions</div>
+        </div>
+        <div class="tab-pane active" data-tab="req">
+          <ul class="req-list">
+            <li class="req-item"><span class="req-icon">✓</span> Original Passport (6 Months validity)</li>
+            <li class="req-item"><span class="req-icon">✓</span> 2 Recent Photos (White background)</li>
+            <li class="req-item"><span class="req-icon">✓</span> Vaccination Certificate</li>
+            <li class="req-item"><span class="req-icon">✓</span> NID Copy</li>
+          </ul>
+        </div>
+        <div class="tab-pane" data-tab="incl" style="display:none">
+          <ul class="req-list">
+            <li class="req-item"><span class="req-icon">✓</span> VIP Umrah Visa with Insurance</li>
+            <li class="req-item"><span class="req-icon">✓</span> 5-Star Hotel near Haram</li>
+            <li class="req-item"><span class="req-icon">✓</span> Private Transport (Jeep/GMC)</li>
+            <li class="req-item"><span class="req-icon">✓</span> Guided Ziyarat</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2.5rem; border-radius: 12px; text-align: center; margin-top: 3rem;">
-<h2 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0 0 1rem;">Ready to Begin Your Spiritual Journey?</h2>
-<p style="color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.6;">Contact us today for comprehensive Hajj and Umrah packages! Our experienced team will ensure your pilgrimage is smooth, comfortable, and spiritually fulfilling.</p>
-<a href="../contact.html" class="btn primary" style="font-size: 1.2rem; padding: 1rem 3rem; display: inline-block; background: #fff; color: var(--primary); border: 2px solid #fff; font-weight: 600;">Book Your Package Now</a>
-</div>
-</section>
+    <div class="package-item">
+      <div class="package-header" onclick="toggleAccordion(this)">
+        <div class="package-icon">🕋</div>
+        <div class="package-title-box">
+          <h3 class="package-name">Standard Economy Umrah Package</h3>
+        </div>
+        <div class="expand-icon">▾</div>
+      </div>
+      <div class="package-content">
+        <div class="tabs">
+          <div class="tab-btn active" onclick="switchTab(this, 'req-std')">Requirements</div>
+          <div class="tab-btn" onclick="switchTab(this, 'incl-std')">Inclusions</div>
+        </div>
+        <div class="tab-pane active" data-tab="req-std">
+          <ul class="req-list">
+            <li class="req-item"><span class="req-icon">✓</span> Original Passport</li>
+            <li class="req-item"><span class="req-icon">✓</span> Vaccination Proof</li>
+            <li class="req-item"><span class="req-icon">✓</span> NID / Birth Certificate</li>
+          </ul>
+        </div>
+        <div class="tab-pane" data-tab="incl-std" style="display:none">
+          <ul class="req-list">
+            <li class="req-item"><span class="req-icon">✓</span> Umrah Visa Processing</li>
+            <li class="req-item"><span class="req-icon">✓</span> 3-Star Hotels within 600m</li>
+            <li class="req-item"><span class="req-icon">✓</span> Shared Group Transport</li>
+            <li class="req-item"><span class="req-icon">✓</span> Bengali Guide</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Inquiry Form -->
+  <div class="booking-card">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+      <h2 style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">Umrah Booking Information</h2>
+      <p style="color: var(--text-light); margin-top: 0.5rem;">Please provide your details for a customized quotation.</p>
+    </div>
+
+    <form id="umrahBookingForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Name*</label>
+          <input type="text" name="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address*</label>
+          <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number*</label>
+          <input type="tel" name="phone" placeholder="e.g. 01706310913" required>
+        </div>
+        <div class="form-group">
+          <label>Umrah Duration*</label>
+          <input type="text" name="duration" placeholder="How many days?" required>
+        </div>
+        <div class="form-group">
+          <label>Hotel Type*</label>
+          <select name="hotel_type" required>
+            <option value="">Please select</option>
+            <option value="3 Star Hotel">3 Star Hotel</option>
+            <option value="4 Star Hotel">4 Star Hotel</option>
+            <option value="5 Star Hotel">5 Star Hotel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Bed Type*</label>
+          <select name="bed_type" required>
+            <option value="">Please select</option>
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Triple">Triple</option>
+            <option value="Quad">Quad</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label>Covid-19 Vaccinated?*</label>
+          <select name="vaccinated" required>
+            <option value="">Please select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group full-width">
+          <label>Additional Message</label>
+          <textarea name="message" rows="4" placeholder="Share any specific requirements..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn primary booking-btn">Submit Booking Inquiry</button>
+    </form>
+  </div>
 </main>
 
+<script>
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    const isActive = item.classList.contains('active');
+
+    document.querySelectorAll('.package-item').forEach(i => {
+      if(i !== item) {
+        i.classList.remove('active');
+        i.querySelector('.package-content').style.display = 'none';
+      }
+    });
+
+    item.classList.toggle('active');
+    const content = item.querySelector('.package-content');
+    content.style.display = item.classList.contains('active') ? 'block' : 'none';
+  }
+
+  function switchTab(btn, tabName) {
+    event.stopPropagation();
+    const content = btn.closest('.package-content');
+
+    content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    content.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    content.querySelector(`.tab-pane[data-tab="${tabName}"]`).classList.add('active');
+  }
+
+  document.getElementById('umrahBookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you! Your Umrah inquiry has been received. Our team will contact you shortly.');
+    this.reset();
+  });
+</script>
+
+<!-- Footer will be loaded here -->
 <footer class="site-footer">
 <div class="container">
 <div class="footer-inner">

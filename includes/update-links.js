@@ -72,7 +72,7 @@
     'nav-service-4': isRoot ? 'pages/service/airticket_domestic_international.html' : (isInTraining ? '../service/airticket_domestic_international.html' : (isInService ? 'airticket_domestic_international.html' : 'service/airticket_domestic_international.html')),
     'nav-service-5': isRoot ? 'pages/service/hajj_umrah_package.html' : (isInTraining ? '../service/hajj_umrah_package.html' : (isInService ? 'hajj_umrah_package.html' : 'service/hajj_umrah_package.html')),
     'nav-service-6': isRoot ? 'pages/service/passport_nid_police_verification.html' : (isInTraining ? '../service/passport_nid_police_verification.html' : (isInService ? 'passport_nid_police_verification.html' : 'service/passport_nid_police_verification.html')),
-    'nav-service-7': isRoot ? 'pages/service/business_legal_consultancy.html' : (isInTraining ? '../service/business_legal_consultancy.html' : (isInService ? 'business_legal_consultancy.html' : 'service/business_legal_consultancy.html')),
+    'nav-service-7': isRoot ? 'pages/service/hotel_booking.html' : (isInTraining ? '../service/hotel_booking.html' : (isInService ? 'hotel_booking.html' : 'service/hotel_booking.html')),
     'nav-service-8': isRoot ? 'pages/service/it_software_service.html' : (isInTraining ? '../service/it_software_service.html' : (isInService ? 'it_software_service.html' : 'service/it_software_service.html')),
     // Training dropdown items
     'nav-training-1': isRoot ? 'pages/training/ielts_preparation.html' : (isInTraining ? 'ielts_preparation.html' : (isInService ? '../training/ielts_preparation.html' : 'training/ielts_preparation.html')),
@@ -85,6 +85,10 @@
     const link = document.getElementById(id);
     if (link) {
       link.href = navLinks[id];
+      // Update text and icon for Hotel Booking (was Business Consultancy)
+      if (id === 'nav-service-7') {
+        link.innerHTML = '<span class="menu-icon">🏨</span>Hotel Booking';
+      }
     }
   });
   
@@ -127,4 +131,3 @@
   // Also run after a short delay to ensure all elements are available
   setTimeout(updateAllLinks, 100);
 })();
-

@@ -3,9 +3,210 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Student Visa Processing — MyVisa</title>
+<title>Student Visa Processing — Study Abroad — MyVisa</title>
 <link rel="icon" type="image/png" href="../../assets/assets/images/fav.png">
 <link rel="stylesheet" href="../../assets/css/styles.css">
+<style>
+  .search-container {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 4rem 1rem;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 3rem;
+    border-radius: 0 0 40px 40px;
+  }
+  .search-box {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    position: relative;
+  }
+  .search-input {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    padding-right: 4rem;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    outline: none;
+    color: var(--text-dark);
+  }
+  .search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-size: 1.5rem;
+  }
+  .filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+  }
+  .filter-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    border: 2px solid var(--border);
+    background: #fff;
+    color: var(--text-dark);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+    padding: 0 1rem;
+  }
+  .country-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .country-item.active {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+  }
+  .country-header {
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #fff;
+    transition: background 0.3s;
+    user-select: none;
+  }
+  .country-header:hover {
+    background: #f8fafc;
+  }
+  .country-flag {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    width: 40px;
+    text-align: center;
+  }
+  .country-info {
+    flex: 1;
+  }
+  .country-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+  }
+  .visa-types {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+  }
+  .expand-icon {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    transition: transform 0.3s;
+  }
+  .country-item.active .expand-icon {
+    transform: rotate(180deg);
+    color: var(--primary);
+  }
+
+  /* Content Styles */
+  .country-content {
+    display: none;
+    padding: 2rem;
+    border-top: 1px solid #f1f5f9;
+    background: #fff;
+  }
+  .country-item.active .country-content {
+    display: block;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f1f5f9;
+  }
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .req-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0.75rem 2rem;
+  }
+  .req-item {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+  }
+  .req-icon {
+    color: var(--primary);
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .info-item label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  .info-item span {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 1rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    display: none;
+  }
+</style>
 </head>
 <body>
 <!-- Header will be loaded here -->
@@ -152,170 +353,273 @@
 })();
 </script>
 
-<main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
-<section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
-<h1 style="font-size: 2.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1.5rem; line-height: 1.2; text-align: center;">Your Trusted Partner for Study Abroad in First‑World & Schengen Countries</h1>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">Studying abroad is a life‑changing decision. We help students fulfill their international education dreams by offering end‑to‑end professional student visa processing, covering USA, Canada, UK, Australia, New Zealand, Europe (Schengen), Asia, and more.</p>
-<p style="color: var(--text-dark); font-size: 1.05rem; margin-bottom: 3rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; font-weight: 500;">Whether you want to study Diploma, Bachelor, Master's, PhD, Foundation, or Language Programs, we manage the entire application—from university admission to visa submission.</p>
+<main>
+  <div class="search-container">
+    <div class="container">
+      <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">Student Visa Processing</h1>
+      <p style="font-size: 1.25rem; opacity: 0.9; max-width: 700px; margin: 0 auto;">Your gateway to global education. Find admission and visa requirements for your dream study destination.</p>
+      <div class="search-box">
+        <input type="text" id="countrySearch" class="search-input" placeholder="Search your study destination (e.g. USA, UK, Canada, Germany...)" onkeyup="handleSearch()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+  </div>
 
-<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">🎓 Countries We Support</h2>
+  <div class="container">
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterCategory('all', this)">All Countries</button>
+      <button class="filter-btn" onclick="filterCategory('popular', this)">Popular</button>
+      <button class="filter-btn" onclick="filterCategory('first-world', this)">First-World</button>
+      <button class="filter-btn" onclick="filterCategory('schengen', this)">Schengen</button>
+      <button class="filter-btn" onclick="filterCategory('asia', this)">Asia</button>
+      <button class="filter-btn" onclick="filterCategory('europe', this)">Europe</button>
+      <button class="filter-btn" onclick="filterCategory('america', this)">America</button>
+    </div>
 
-<div style="margin-bottom: 3rem;">
-<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px;">First-World Countries</h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇺🇸 United States of America (USA)</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇨🇦 Canada</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇬🇧 United Kingdom</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇦🇺 Australia</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇳🇿 New Zealand</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇸🇬 Singapore</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇯🇵 Japan</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇰🇷 South Korea</p>
-</div>
-</div>
-</div>
+    <div class="accordion-container" id="countryAccordion">
+      <!-- Accordion items will be generated by JS -->
+    </div>
 
-<div style="margin-bottom: 3rem;">
-<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px;">Schengen Countries (26 Countries)</h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇩🇪 Germany</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇫🇷 France</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇮🇹 Italy</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇳🇱 Netherlands</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇧🇪 Belgium</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇸🇪 Sweden</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇫🇮 Finland</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇩🇰 Denmark</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇵🇱 Poland</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇦🇹 Austria</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇨🇿 Czech Republic</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇭🇺 Hungary</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇵🇹 Portugal</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇪🇸 Spain</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇬🇷 Greece</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">More…</p>
-</div>
-</div>
-</div>
+    <div id="noResults" class="no-results">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">🔎</div>
+      <h3>No countries found matching your search.</h3>
+      <p>Try searching for a different country or contact our student consultants for assistance.</p>
+    </div>
 
-<div style="margin-bottom: 3rem;">
-<h3 style="font-size: 1.5rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); border-radius: 8px;">Other Popular Study Destinations</h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇲🇾 Malaysia</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇨🇳 China</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇹🇷 Turkey</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇦🇪 UAE</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇹🇭 Thailand</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇮🇳 India</p>
-</div>
-<div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary);">
-<p style="font-size: 1.2rem; margin: 0 0 0.5rem; font-weight: 600; color: var(--text-dark);">🇮🇩 Indonesia</p>
-</div>
-</div>
-</div>
-
-<h2 style="font-size: 2rem; font-weight: 700; color: var(--text-dark); margin: 3rem 0 1.5rem; text-align: center;">📌 Our Services for Student Visa Applicants</h2>
-<p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">We provide A-to-Z support, including:</p>
-
-<div style="margin-bottom: 2rem;">
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ University Admission Support</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> University shortlisting (according to profile)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Program selection (Diploma, Bachelor, Masters)</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Application submission</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> SOP/LOR guidance</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Scholarship assistance</li>
-</ul>
-</div>
-
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Visa Documentation Support</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Preparing all visa documents</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Financial sponsorship guidance</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Bank statement planning</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Tuition fee & accommodation documents</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Health insurance support</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Embassy appointment setup</li>
-</ul>
-</div>
-
-<div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
-<h3 style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin: 0 0 1rem;">✔ Pre-Departure Services</h3>
-<ul style="list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 2;">
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Accommodation arrangement</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Airport pickup support</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Travel preparation</li>
-<li style="padding: 0.5rem 0; display: flex; align-items: start;"><span style="color: var(--primary); margin-right: 0.75rem; font-size: 1.2rem;">✓</span> Student orientation and more</li>
-</ul>
-</div>
-</div>
-
-<div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 2.5rem; border-radius: 12px; text-align: center; margin-top: 3rem;">
-<h2 style="font-size: 1.8rem; font-weight: 700; color: #fff; margin: 0 0 1rem;">Ready to Start Your Study Abroad Journey?</h2>
-<p style="color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.6;">Contact us today for a free consultation and take the first step towards your international education!</p>
-<a href="../contact.html" class="btn primary" style="font-size: 1.2rem; padding: 1rem 3rem; display: inline-block; background: #fff; color: var(--primary); border: 2px solid #fff; font-weight: 600;">Contact Us Now</a>
-</div>
-</section>
+    <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 4rem 2rem; border-radius: 24px; text-align: center; margin-bottom: 4rem; color: #fff; box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);">
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem;">Need Personalized Guidance?</h2>
+      <p style="font-size: 1.2rem; margin-bottom: 2.5rem; opacity: 0.95; max-width: 800px; margin-left: auto; margin-right: auto;">Our expert consultants have helped thousands of students secure admissions and visas for top universities worldwide. Start your journey today.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="../contact.html" class="btn primary" style="background: #fff; color: var(--primary); padding: 1rem 3rem; font-size: 1.1rem;">Get Free Assessment</a>
+        <a href="tel:+8801818120900" class="btn outline" style="border-color: #fff; color: #fff; padding: 1rem 3rem; font-size: 1.1rem;">Talk to an Expert</a>
+      </div>
+    </div>
+  </div>
 </main>
+
+<script>
+  const rawCountries = [
+    {
+      id: 'usa', name: 'United States (USA)', flag: '🇺🇸', cat: 'popular america first-world', visa: 'Diploma • Bachelor • Master\'s • PhD',
+      req: ['Valid Passport', 'I-20 Form', 'SEVIS Fee Receipt', 'Academic Transcripts & Certificates', 'English Proficiency (IELTS/TOEFL/PTE)', 'Financial Solvency Proof', 'SOP & LOR'],
+      check: ['University Admission Support', 'DS-160 Form Assistance', 'I-20 Management', 'Financial Planning', 'Embassy Appointment', 'Mock Interview Prep'],
+      time: '2-4 Months', charge: 'Standard'
+    },
+    {
+      id: 'canada', name: 'Canada', flag: '🇨🇦', cat: 'popular america first-world', visa: 'Diploma • Bachelor • Master\'s',
+      req: ['Passport', 'Letter of Acceptance (LOA)', 'PAL (Provincial Attestation Letter)', 'GIC (Guaranteed Investment Certificate)', 'IELTS (Academic)', 'Police Clearance', 'Birth Certificate'],
+      check: ['University/College Admission', 'Study Permit Application', 'SOP for IRCC', 'CAQ (for Quebec)', 'Financial Audit', 'Biometric Support'],
+      time: '3-5 Months', charge: 'Contact for details'
+    },
+    {
+      id: 'uk', name: 'United Kingdom (UK)', flag: '🇬🇧', cat: 'popular europe first-world', visa: 'Bachelor • Master\'s • Foundation',
+      req: ['Passport', 'CAS (Confirmation of Acceptance)', 'IELTS for UKVI / Standard', 'TB Test Certificate', 'Financial Maintenance (28-day rule)', 'Previous Qualifications'],
+      check: ['University Admission Support', 'CAS Request Management', 'Financial Document Review', 'Credibility Interview Prep', 'Visa Application Submission'],
+      time: '1-2 Months', charge: 'Competitive'
+    },
+    {
+      id: 'aus', name: 'Australia', flag: '🇦🇺', cat: 'popular oceania first-world', visa: 'Bachelor • Master\'s • VET Courses',
+      req: ['Passport', 'eCoE (Electronic Confirmation of Enrolment)', 'IELTS/PTE Score', 'GTE (Genuine Temporary Entrant) Statement', 'Financial Solvency', 'Health Insurance (OSHC)'],
+      check: ['Admission Management', 'GTE Documentation', 'Financial Assessment', 'Visa Filing', 'OSHC Arrangement'],
+      time: '2-3 Months', charge: 'Contact for details'
+    },
+    {
+      id: 'germany', name: 'Germany', flag: '🇩🇪', cat: 'popular europe schengen first-world', visa: 'Bachelor • Master\'s (Free Education)',
+      req: ['Passport', 'Admission Letter', 'Blocked Account (Sperrkonto)', 'IELTS / Medium of Instruction (MOI)', 'Health Insurance', 'Motivation Letter'],
+      check: ['University Application (Uni-Assist)', 'Blocked Account Opening', 'SOP Guidance', 'Embassy Appointment Slot', 'Visa Preparation'],
+      time: '3-6 Months', charge: 'Standard'
+    },
+    {
+      id: 'malaysia', name: 'Malaysia', flag: '🇲🇾', cat: 'popular asia', visa: 'Diploma • Bachelor • Master\'s',
+      req: ['Passport (all pages)', 'Offer Letter', 'EMGS Approval', 'Academic Records', 'Blue Background Photos', 'Medical Report'],
+      check: ['EMGS Application Tracking', 'VAL (Visa Approval Letter) Management', 'e-VAL Processing', 'Travel Authorization'],
+      time: '1-2 Months', charge: 'Minimal'
+    },
+    {
+      id: 'nz', name: 'New Zealand', flag: '🇳🇿', cat: 'oceania first-world', visa: 'Level 7, 8, 9 Programs',
+      req: ['Passport', 'Offer of Place', 'Evidence of Funds', 'IELTS/PTE', 'Chest X-ray / Medicals'],
+      check: ['Admission Guidance', 'Financial Documentation', 'AIP (Approval in Principle)', 'Visa Submission'],
+      time: '2-3 Months', charge: 'Standard'
+    },
+    {
+      id: 'france', name: 'France', flag: '🇫🇷', cat: 'europe schengen', visa: 'Bachelor • Master\'s • MBA',
+      req: ['Passport', 'Campus France Interview', 'Acceptance Letter', 'Proof of Accommodation', 'Financial Resources'],
+      check: ['Campus France Registration', 'Interview Prep', 'VFS Appointment', 'Visa Filing'],
+      time: '2-3 Months', charge: 'Standard'
+    },
+    {
+      id: 'sweden', name: 'Sweden', flag: '🇸🇪', cat: 'europe schengen', visa: 'Bachelor • Master\'s',
+      req: ['Passport', 'Admission Notification', 'Tuition Fee Receipt', 'Bank Statement', 'Health Insurance'],
+      check: ['University Admissions Portal', 'Residence Permit Application', 'Financial Support'],
+      time: '3-4 Months', charge: 'Standard'
+    },
+    {
+      id: 'china', name: 'China', flag: '🇨🇳', cat: 'asia', visa: 'Bachelor • Master\'s (Scholarship)',
+      req: ['Passport', 'JW201/JW202 Form', 'Admission Notice', 'Physical Exam Form', 'Police Clearance'],
+      check: ['Scholarship Application', 'CSC Portal Management', 'Document Legalization', 'Visa Submission'],
+      time: '2-3 Months', charge: 'Standard'
+    },
+    {
+      id: 'south-korea', name: 'South Korea', flag: '🇰🇷', cat: 'asia first-world', visa: 'Language • Bachelor • Master\'s',
+      req: ['Passport', 'Certificate of Admission', 'Financial Solvency', 'Educational Docs (Apostille/Notarized)'],
+      check: ['University Liaison', 'Document Preparation', 'Embassy Submission'],
+      time: '2-3 Months', charge: 'Standard'
+    },
+    {
+      id: 'japan', name: 'Japan', flag: '🇯🇵', cat: 'asia first-world', visa: 'Language • Vocational • Bachelor',
+      req: ['Passport', 'COE (Certificate of Eligibility)', 'Japanese Language Proficiency (JLPT/NAT-TEST)', 'Sponsor Documents'],
+      check: ['COE Application Management', 'Language School Admission', 'Embassy Visa Interview'],
+      time: '4-6 Months', charge: 'Standard'
+    }
+  ];
+
+  const sortedCountries = [...rawCountries].sort((a, b) => a.name.localeCompare(b.name));
+
+  function renderAccordions(data) {
+    const container = document.getElementById('countryAccordion');
+    container.innerHTML = '';
+    data.forEach((c, index) => {
+      const item = document.createElement('div');
+      item.className = index === 0 ? 'country-item active' : 'country-item';
+      item.setAttribute('data-category', c.cat);
+
+      item.innerHTML = `
+        <div class="country-header" onclick="toggleAccordion(this)">
+          <div class="country-flag">${c.flag}</div>
+          <div class="country-info">
+            <h3 class="country-name">${c.name}</h3>
+            <div class="visa-types">${c.visa}</div>
+          </div>
+          <div class="expand-icon">▾</div>
+        </div>
+        <div class="country-content" style="${index === 0 ? 'display:block' : ''}">
+          <div class="tabs">
+            <div class="tab-btn active" onclick="switchTab(this, 'req')">Requirements</div>
+            <div class="tab-btn" onclick="switchTab(this, 'check')">Our Support</div>
+            <div class="tab-btn" onclick="switchTab(this, 'info')">Timeline</div>
+          </div>
+
+          <div class="tab-content-inner" data-tab="req" style="display:block">
+            <ul class="req-list">
+              ${c.req.map(r => `<li class="req-item"><span class="req-icon">✓</span> ${r}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="tab-content-inner" data-tab="check" style="display:none">
+            <ul class="req-list">
+              ${c.check.map(i => `<li class="req-item"><span class="req-icon">✓</span> ${i}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="tab-content-inner" data-tab="info" style="display:none">
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Estimated Process Time</label>
+                <span>${c.time}</span>
+              </div>
+              <div class="info-item">
+                <label>Intakes Available</label>
+                <span>Multiple Per Year</span>
+              </div>
+              <div class="info-item">
+                <label>Our Service Charge</label>
+                <span>${c.charge}</span>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+              <a href="../contact.html" class="btn primary">Apply for Study in ${c.name}</a>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(item);
+    });
+  }
+
+  renderAccordions(sortedCountries);
+
+  function toggleAccordion(header) {
+    const item = header.parentElement;
+    const isActive = item.classList.contains('active');
+    document.querySelectorAll('.country-item').forEach(i => {
+        if(i !== item) {
+          i.classList.remove('active');
+          i.querySelector('.country-content').style.display = 'none';
+        }
+    });
+    item.classList.toggle('active');
+    const content = item.querySelector('.country-content');
+    content.style.display = item.classList.contains('active') ? 'block' : 'none';
+  }
+
+  function switchTab(btn, tabName) {
+    event.stopPropagation();
+    const content = btn.closest('.country-content');
+    content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    content.querySelectorAll('.tab-content-inner').forEach(c => c.style.display = 'none');
+    content.querySelector(`.tab-content-inner[data-tab="${tabName}"]`).style.display = 'block';
+  }
+
+  function handleSearch() {
+    const filter = document.getElementById('countrySearch').value.toLowerCase();
+    const items = document.querySelectorAll('.country-item');
+    const noResults = document.getElementById('noResults');
+    let hasResults = false;
+    let firstFound = false;
+
+    items.forEach(item => {
+      const name = item.querySelector('.country-name').textContent.toLowerCase();
+      const content = item.querySelector('.country-content');
+      if (name.includes(filter)) {
+        item.style.display = "";
+        hasResults = true;
+        item.classList.remove('active');
+        content.style.display = 'none';
+        if(!firstFound && filter !== "") {
+           item.classList.add('active');
+           content.style.display = 'block';
+           firstFound = true;
+        }
+      } else {
+        item.style.display = "none";
+        item.classList.remove('active');
+        content.style.display = 'none';
+      }
+    });
+    noResults.style.display = hasResults ? "none" : "block";
+    if (filter !== "") {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+    }
+  }
+
+  function filterCategory(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('countrySearch').value = "";
+    const items = document.querySelectorAll('.country-item');
+    let firstFound = false;
+    items.forEach(item => {
+      const cats = item.getAttribute('data-category').split(' ');
+      const content = item.querySelector('.country-content');
+      if (category === 'all' || cats.includes(category)) {
+        item.style.display = "";
+        item.classList.remove('active');
+        content.style.display = 'none';
+        if(!firstFound) {
+           item.classList.add('active');
+           content.style.display = 'block';
+           firstFound = true;
+        }
+      } else {
+        item.style.display = "none";
+        item.classList.remove('active');
+        content.style.display = 'none';
+      }
+    });
+  }
+</script>
 
 <!-- Footer will be loaded here -->
 <footer class="site-footer">

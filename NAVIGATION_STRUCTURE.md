@@ -19,7 +19,7 @@ gtac/
 │   │   ├── airticket_domestic_international.html
 │   │   ├── hajj_umrah_package.html
 │   │   ├── passport_nid_police_verification.html
-│   │   ├── business_legal_consultancy.html
+│   │   ├── hotel_booking.html
 │   │   └── it_software_service.html
 │   └── training/
 │       ├── ielts_preparation.html
@@ -82,7 +82,7 @@ gtac/
 4. Air Ticketing → `pages/service/airticket_domestic_international.html`
 5. Hajj & Umrah → `pages/service/hajj_umrah_package.html`
 6. E-passport, NID, Police Clearance → `pages/service/passport_nid_police_verification.html`
-7. Business & Legal Consultancy → `pages/service/business_legal_consultancy.html`
+7. Hotel Booking → `pages/service/hotel_booking.html`
 8. IT Services → `pages/service/it_software_service.html`
 
 ### Training Dropdown (4 items)
@@ -111,7 +111,7 @@ gtac/
 - pages/service/airticket_domestic_international.html
 - pages/service/hajj_umrah_package.html
 - pages/service/passport_nid_police_verification.html
-- pages/service/business_legal_consultancy.html
+- pages/service/hotel_booking.html
 - pages/service/it_software_service.html
 
 ✅ **Training Folder:**
@@ -122,7 +122,7 @@ gtac/
 
 ## Notes
 
-- **Removed Pages**: `pages/service.html` and `pages/courses.html` have been removed as all services and training now have dedicated pages
+- **Removed Pages**: `pages/service/business_legal_consultancy.html` has been removed
 - **Services & Training Navigation**: The main "Services" and "Training" dropdown toggles now link directly to the first item in their respective dropdowns
 - **Footer Links**: Footer "Services" and "Training" links also point to the first item in their dropdowns
 - All navigation links use relative paths
@@ -130,4 +130,3 @@ gtac/
 - Footer links updated in all pages
 - Dropdown menus work correctly with new folder structure
 - Each service and training has its own dedicated page
-
