@@ -13,7 +13,7 @@
 <div class="container header-inner">
 <a class="brand" href="#" id="brand-link">
 <img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
-<span>MyVisa &mdash; Education &amp; Travel</span>
+<span>MyVisa &mdash; Education &amp; Travel Solution</span>
 </a>
 <nav class="nav" id="main-nav">
 <a href="#" data-page="home" id="nav-home">Home</a>
@@ -21,23 +21,22 @@
 <div class="nav-dropdown">
 <a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">&#9662;</span></a>
 <div class="dropdown-menu">
-<a href="#" id="nav-service-1"><span class="menu-icon">🎓</span>Student Consultancy</a>
-<a href="#" id="nav-service-2"><span class="menu-icon">🌍</span>Visa Process</a>
-<a href="#" id="nav-service-3"><span class="menu-icon">✈️</span>Tour Packages</a>
-<a href="#" id="nav-service-4"><span class="menu-icon">🎫</span>Air Ticketing</a>
-<a href="#" id="nav-service-5"><span class="menu-icon">🕌</span>Hajj &amp; Umrah</a>
-<a href="#" id="nav-service-6"><span class="menu-icon">📄</span>E-passport &amp; NID</a>
-<a href="#" id="nav-service-7"><span class="menu-icon">💼</span>Business Consultancy</a>
-<a href="#" id="nav-service-8"><span class="menu-icon">💻</span>IT Services</a>
+<a href="#" id="nav-service-1">Study Abroad</a>
+<a href="#" id="nav-service-2">Visa Process</a>
+<a href="#" id="nav-service-3">Tour Packages</a>
+<a href="#" id="nav-service-4">Air Ticket</a>
+<a href="#" id="nav-service-5">Hajj &amp; Umrah</a>
+<a href="#" id="nav-service-6">Hotel Book</a>
+<a href="#" id="nav-service-7">IT Services</a>
 </div>
 </div>
 <div class="nav-dropdown">
 <a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">&#9662;</span></a>
 <div class="dropdown-menu">
-<a href="#" id="nav-training-1"><span class="menu-icon">📝</span>IELTS Preparation</a>
-<a href="#" id="nav-training-2"><span class="menu-icon">📱</span>Mobile App Dev</a>
-<a href="#" id="nav-training-3"><span class="menu-icon">🖥️</span>GDS Ticketing</a>
-<a href="#" id="nav-training-4"><span class="menu-icon">📋</span>Visa Processing</a>
+<a href="#" id="nav-training-1">IELTS Preparation</a>
+<a href="#" id="nav-training-2">Mobile App Dev</a>
+<a href="#" id="nav-training-3">GDS Ticketing</a>
+<a href="#" id="nav-training-4">Visa Processing</a>
 </div>
 </div>
 <a href="#" data-page="career" id="nav-career">Career</a>
@@ -51,6 +50,107 @@
 </button>
 </div>
 </header>
+
+<script>
+(function initNavigation() {
+  var navToggle = document.getElementById("nav-toggle");
+  var nav = document.getElementById("main-nav");
+
+  if (navToggle && nav) {
+    navToggle.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isOpen = nav.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen);
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
+      if (isOpen) {
+        document.body.classList.add("nav-open");
+      } else {
+        document.body.classList.remove("nav-open");
+      }
+    });
+
+    window.addEventListener("resize", function() {
+      if (window.innerWidth > 768 && nav.classList.contains("open")) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+      }
+    });
+
+    document.addEventListener("click", function(e) {
+      if (!nav.classList.contains("open")) return;
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+      }
+    });
+
+    if (!window._navLinkCloseHandler) {
+      window._navLinkCloseHandler = function(e) {
+        if (window.innerWidth > 768) return;
+        var nav = document.getElementById("main-nav");
+        if (!nav || !nav.classList.contains("open")) return;
+        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
+        var clickedLink = e.target.closest("a");
+        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
+          nav.classList.remove("open");
+          var toggle = document.getElementById("nav-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("nav-open");
+        }
+      };
+      document.addEventListener("click", window._navLinkCloseHandler, false);
+    }
+  }
+
+  if (!window._dropdownToggleHandler) {
+    window._dropdownToggleHandler = function(e) {
+      if (window.innerWidth > 768) return;
+      var nav = document.getElementById("main-nav");
+      if (!nav || !nav.classList.contains("open")) return;
+      var dropdownToggle = e.target.closest(".dropdown-toggle");
+      if (!dropdownToggle) return;
+      var dropdown = dropdownToggle.closest(".nav-dropdown");
+      if (!dropdown) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      var isActive = dropdown.classList.contains("active");
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
+      dropdown.classList.toggle("active", !isActive);
+      return false;
+    };
+  }
+
+  document.removeEventListener("click", window._dropdownToggleHandler, true);
+  document.addEventListener("click", window._dropdownToggleHandler, true);
+
+  if (nav) {
+    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
+      link.addEventListener("click", function() {
+        if (window.innerWidth <= 768) {
+          var n = document.getElementById("main-nav");
+          var t = document.getElementById("nav-toggle");
+          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
+          document.body.classList.remove("nav-open");
+        }
+      });
+    });
+  }
+
+  var currentPath = window.location.pathname;
+  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
+    var linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) ||
+        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
+      link.classList.add("active");
+    }
+  });
+})();
+</script>
+
 
 <script>
 (function initNavigation() {
@@ -549,17 +649,17 @@ Enroll Now
 <div class="container">
 <div class="footer-inner">
 <div class="footer-section">
-<h3>MyVisa</h3>
-<p>Education & Travel Solution - Your trusted partner for international travel and education solutions.</p>
+<h3>MyVisa Bangladesh</h3>
+<p>Education & Travel Solution. Your trusted partner for international travel and education solutions.</p>
 <p style="margin-top: 1rem;"><strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br><strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
 </div>
 <div class="footer-section">
 <h3>Quick Links</h3>
 <a href="index.html" id="footer-home">Home</a>
-<a href="../../pages/about.html" id="footer-about">About Us</a>
-<a href="../../pages/career.html" id="footer-career">Career</a>
-<a href="../../pages/success_story.html" id="footer-success">Success Story</a>
-<a href="../../pages/contact.html" id="footer-contact">Contact</a>
+<a href="pages/about.html" id="footer-about">About Us</a>
+<a href="pages/career.html" id="footer-career">Career</a>
+<a href="pages/success_story.html" id="footer-success">Success Story</a>
+<a href="pages/contact.html" id="footer-contact">Contact</a>
 </div>
 <div class="footer-section">
 <h3>Contact Info</h3>
@@ -590,24 +690,22 @@ Enroll Now
 <div style="margin-top: 1.5rem;">
 <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
 <a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-<path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.31-.732V2.546c0-.272.11-.533.31-.732zM14.735 12.943L18.422 16.63l-1.353 1.353-2.334-2.333V12.943zm.001-1.887l2.333-2.333 1.353 1.353-3.687 3.687V11.056zM4.653 2.546l8.093 8.092h2.246L5.733 1.378a.996.996 0 0 0-1.08.168.996.996 0 0 0-.25.545v.455zm0 18.908v.455a.996.996 0 0 0 .25.545.996.996 0 0 0 1.08.168l9.259-9.26h-2.246l-8.093 8.092z"/>
-</svg>
+<img src="../../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
 </a>
 </div>
 </div>
 <div class="footer-section">
 <h3>Working Hours</h3>
-<p>Sat – Thus: 9:00 AM – 6:00 PM</p>
-<p>Friday: 10:00 AM – 10:00 PM</p>
+    <p>Sat – Thus: 9:00 AM – 6:00 PM</p>
+    <p>Friday: 10:00 AM – 10:00 PM</p>
 </div>
 </div>
 <div class="footer-bottom">
 <p>&copy; <span id="current-year"></span> MyVisa Bangladesh - Education & Travel Solution. All rights reserved.</p>
 <div class="footer-links">
-<a href="../../pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
+<a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
 <span>|</span>
-<a href="../../pages/terms.html" id="footer-terms">Terms & Services</a>
+<a href="pages/terms.html" id="footer-terms">Terms & Services</a>
 </div>
 </div>
 </div>
@@ -635,7 +733,7 @@ Hello! 👋 Welcome to MyVisa. How can we assist you today?
 <button type="submit" class="chat-send">Send</button>
 </form>
 <div class="chat-quick-actions">
-<a href="../../pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
 <a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
 </div>
 </div>
@@ -703,7 +801,7 @@ function addMessage(text, type) {
 // Close chat when clicking outside
 document.addEventListener('click', (e) => {
   if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !chatWindow.contains(e.target) && 
+      chatWindow && !nav.contains(e.target) &&
       chatButton && !chatButton.contains(e.target)) {
     chatWidget.classList.remove('active');
   }
@@ -731,6 +829,5 @@ if (scrollToTopBtn) {
 </script>
 
 <script src="../../includes/update-links.js"></script>
-
 </body>
 </html>
