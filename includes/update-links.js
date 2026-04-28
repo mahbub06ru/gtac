@@ -84,14 +84,14 @@
     const link = document.getElementById(id);
     if (link) {
       link.href = navLinks[id];
-      // Force update labels to match user request and include icons
-      if (id === 'nav-service-1') link.innerHTML = '<span class="menu-icon">🎓</span>Study Abroad';
-      if (id === 'nav-service-2') link.innerHTML = '<span class="menu-icon">🌍</span>Visa Process';
-      if (id === 'nav-service-3') link.innerHTML = '<span class="menu-icon">✈️</span>Tour Packages';
-      if (id === 'nav-service-4') link.innerHTML = '<span class="menu-icon">🎫</span>Air Ticket';
-      if (id === 'nav-service-5') link.innerHTML = '<span class="menu-icon">🕌</span>Hajj & Umrah';
-      if (id === 'nav-service-6') link.innerHTML = '<span class="menu-icon">🏨</span>Hotel Book';
-      if (id === 'nav-service-7') link.innerHTML = '<span class="menu-icon">💻</span>IT Services';
+      // Force update labels to match user request (icons removed)
+      if (id === 'nav-service-1') link.textContent = 'Study Abroad';
+      if (id === 'nav-service-2') link.textContent = 'Visa Process';
+      if (id === 'nav-service-3') link.textContent = 'Tour Packages';
+      if (id === 'nav-service-4') link.textContent = 'Air Ticket';
+      if (id === 'nav-service-5') link.textContent = 'Hajj & Umrah';
+      if (id === 'nav-service-6') link.textContent = 'Hotel Book';
+      if (id === 'nav-service-7') link.textContent = 'IT Services';
     }
   });
   
