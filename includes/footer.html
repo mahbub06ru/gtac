@@ -154,7 +154,7 @@ function addMessage(text, type) {
 // Close chat when clicking outside
 document.addEventListener('click', (e) => {
   if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !nav.contains(e.target) &&
+      chatWindow && !chatWindow.contains(e.target) &&
       chatButton && !chatButton.contains(e.target)) {
     chatWidget.classList.remove('active');
   }

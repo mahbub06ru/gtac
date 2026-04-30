@@ -39,6 +39,7 @@
 <a href="#" id="nav-training-4">Visa Processing</a>
 </div>
 </div>
+<a href="#" data-page="updates" id="nav-updates">Latest Update</a>
 <a href="#" data-page="career" id="nav-career">Career</a>
 <a href="#" data-page="success" id="nav-success">Success</a>
 <a href="#" data-page="contact" id="nav-contact" class="nav-cta">Contact Us</a>
@@ -49,7 +50,114 @@
   <span class="hamburger-bar"></span>
 </button>
 </div>
+
+<script>
+(function initNavigation() {
+  var navToggle = document.getElementById("nav-toggle");
+  var nav = document.getElementById("main-nav");
+
+  if (navToggle && nav) {
+    // Remove existing listeners to prevent duplicates if script runs multiple times
+    var newNavToggle = navToggle.cloneNode(true);
+    navToggle.parentNode.replaceChild(newNavToggle, navToggle);
+    navToggle = newNavToggle;
+
+    navToggle.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isOpen = nav.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen);
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
+      if (isOpen) {
+        document.body.classList.add("nav-open");
+      } else {
+        document.body.classList.remove("nav-open");
+      }
+    });
+
+    window.addEventListener("resize", function() {
+      if (window.innerWidth > 768 && nav.classList.contains("open")) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+      }
+    });
+
+    document.addEventListener("click", function(e) {
+      if (!nav.classList.contains("open")) return;
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+      }
+    });
+
+    if (!window._navLinkCloseHandler) {
+      window._navLinkCloseHandler = function(e) {
+        if (window.innerWidth > 768) return;
+        var nav = document.getElementById("main-nav");
+        if (!nav || !nav.classList.contains("open")) return;
+        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
+        var clickedLink = e.target.closest("a");
+        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
+          nav.classList.remove("open");
+          var toggle = document.getElementById("nav-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("nav-open");
+        }
+      };
+      document.addEventListener("click", window._navLinkCloseHandler, false);
+    }
+  }
+
+  if (!window._dropdownToggleHandler) {
+    window._dropdownToggleHandler = function(e) {
+      if (window.innerWidth > 768) return;
+      var nav = document.getElementById("main-nav");
+      if (!nav || !nav.classList.contains("open")) return;
+      var dropdownToggle = e.target.closest(".dropdown-toggle");
+      if (!dropdownToggle) return;
+      var dropdown = dropdownToggle.closest(".nav-dropdown");
+      if (!dropdown) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      var isActive = dropdown.classList.contains("active");
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
+      dropdown.classList.toggle("active", !isActive);
+      return false;
+    };
+  }
+
+  document.removeEventListener("click", window._dropdownToggleHandler, true);
+  document.addEventListener("click", window._dropdownToggleHandler, true);
+
+  if (nav) {
+    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
+      link.addEventListener("click", function() {
+        if (window.innerWidth <= 768) {
+          var n = document.getElementById("main-nav");
+          var t = document.getElementById("nav-toggle");
+          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
+          document.body.classList.remove("nav-open");
+        }
+      });
+    });
+  }
+
+  var currentPath = window.location.pathname;
+  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
+    var linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) ||
+        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
+      link.classList.add("active");
+    }
+  });
+})();
+</script>
 </header>
+
+
 
 <script>
 (function initNavigation() {
@@ -1028,7 +1136,7 @@ scrollToTopBtn.addEventListener('click', () => {
 <div class="footer-inner">
 <div class="footer-section">
 <h3>MyVisa Bangladesh</h3>
-<p>Education & Travel Solution. Your trusted partner for international travel and education solutions.</p>
+<p>Education & Travel Solution. We are B2B partner of IATA approved agency. We provide One Stop Solution for Study, Visa, Travel & Career.</p>
 <p style="margin-top: 1rem;"><strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br><strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
 </div>
 <div class="footer-section">
@@ -1088,6 +1196,126 @@ scrollToTopBtn.addEventListener('click', () => {
 </div>
 </div>
 </footer>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
 
 <!-- Chat Widget -->
 <div class="chat-widget" id="chatWidget">

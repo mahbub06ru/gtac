@@ -130,3 +130,7 @@ gtac/
 - Footer links updated in all pages
 - Dropdown menus work correctly with new folder structure
 - Each service and training has its own dedicated page
+
+
+## command for coomon header
+ - node build-inject-header-footer.js
