@@ -157,8 +157,6 @@
 </script>
 </header>
 
-
-
 <main>
 <!-- ===== DYNAMIC CONTENT SECTION ===== -->
 <section class="dynamic-content-section" style="background: #f0f4f8; padding: 48px 0; min-height: 80vh;">
@@ -604,124 +602,132 @@ if (scrollToTopBtn) {
 
 <script src="../includes/update-links.js"></script>
 
-
-<!-- Chat Widget -->
-<div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div>
-<h3>Chat with Us</h3>
-<div class="chat-status">We're online. How can we help?</div>
-</div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot">
-<div class="message-bubble">
-Hello! 👋 Welcome to MyVisa. How can we assist you today?
-</div>
-</div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-<div class="chat-quick-actions">
-<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
-<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
-</div>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">
-<span class="chat-icon">💬</span>
-<span class="close-icon">✕</span>
-</button>
-</div>
-
-<!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
-</button>
-
+<!-- ===== SCRIPTS FOR DYNAMIC SECTION ===== -->
 <script>
-// Set current year
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear();
-}
+// ── 1. RSS News Feed via rss2json (free, no API key needed) ──
+(function loadBDNews() {
+  // Using The Daily Star RSS via rss2json free API
+  var RSS_URL = encodeURIComponent('https://www.thedailystar.net/rss.xml');
+  var API_URL = 'https://api.rss2json.com/v1/api.json?rss_url=' + RSS_URL + '&count=15';
 
-// Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
+  fetch(API_URL)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data.items || !data.items.length) throw new Error('No items');
 
-if (chatButton && chatWidget) {
-  chatButton.addEventListener('click', () => {
-    chatWidget.classList.toggle('active');
-  });
-}
+      var list = document.getElementById('bd-news-list');
+      var ticker = document.getElementById('news-ticker');
+      if (!list || !ticker) return;
 
-if (chatForm && chatInput) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, 'user');
-      chatInput.value = '';
-      
-      // Simulate bot response
-      setTimeout(() => {
-        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
-      }, 1000);
-    }
-  });
-}
+      list.innerHTML = '';
+      var tickerItems = [];
 
-function addMessage(text, type) {
-  if (!chatBody) return;
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
+      data.items.forEach(function(item) {
+        var title = item.title || '';
+        var link  = item.link  || '#';
+        var date  = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-BD', {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
 
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !nav.contains(e.target) &&
-      chatButton && !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
-  }
-});
+        // Sidebar list
+        var a = document.createElement('a');
+        a.href = link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'news-item';
+        a.innerHTML = '<div class="news-dot"></div><div><div class="news-title">' + title + '</div><div class="news-date">📅 ' + date + '</div></div>';
+        list.appendChild(a);
 
-// Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
+        // Ticker
+        tickerItems.push(title);
+      });
 
-if (scrollToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
-    }
-  });
-
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+      // Build ticker — duplicate for seamless loop
+      var all = tickerItems.concat(tickerItems);
+      ticker.innerHTML = all.map(function(t) {
+        return '<span style="padding-right:60px;">🔹 ' + t + '</span>';
+      }).join('');
+    })
+    .catch(function() {
+      var list = document.getElementById('bd-news-list');
+      if (list) list.innerHTML = '<div style="padding:14px 18px; color:#888; font-size:0.85rem;">⚠️ Could not load headlines. <a href="https://www.thedailystar.net/" target="_blank" rel="noopener noreferrer" style="color:#1a2a4a;">Visit The Daily Star →</a></div>';
+      var ticker = document.getElementById('news-ticker');
+      if (ticker) ticker.innerHTML = '<span>🔹 Visit thedailystar.net for latest Bangladesh news 🔹 Visit prothomalo.com for Bangla news</span>';
     });
-  });
-}
+})();
+
+// ── 2. Dhaka Weather via Open-Meteo (100% free, no API key) ──
+(function loadWeather() {
+  // Open-Meteo free weather API — no key required
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude=23.8103&longitude=90.4125&current_weather=true&hourly=relativehumidity_2m,apparent_temperature,visibility,windspeed_10m&timezone=Asia%2FDhaka&forecast_days=1';
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var cw = d.current_weather;
+      if (!cw) throw new Error('no data');
+
+      var temp     = Math.round(cw.temperature);
+      var wind     = Math.round(cw.windspeed);
+      var wcode    = cw.weathercode;
+      var isDay    = cw.is_day;
+
+      // Map WMO code to emoji
+      function wmoToEmoji(code, day) {
+        if (code === 0) return day ? '☀️' : '🌙';
+        if (code <= 2)  return day ? '🌤️' : '🌤️';
+        if (code <= 3)  return '☁️';
+        if (code <= 49) return '🌫️';
+        if (code <= 59) return '🌦️';
+        if (code <= 69) return '🌧️';
+        if (code <= 79) return '🌨️';
+        if (code <= 82) return '🌧️';
+        if (code <= 99) return '⛈️';
+        return '🌡️';
+      }
+      function wmoToDesc(code) {
+        if (code === 0) return 'Clear sky';
+        if (code <= 2)  return 'Partly cloudy';
+        if (code <= 3)  return 'Overcast';
+        if (code <= 49) return 'Foggy';
+        if (code <= 59) return 'Drizzle';
+        if (code <= 69) return 'Rainy';
+        if (code <= 79) return 'Snow';
+        if (code <= 82) return 'Rain showers';
+        if (code <= 99) return 'Thunderstorm';
+        return 'Unknown';
+      }
+
+      // Get hourly index for current hour
+      var now = new Date();
+      var hourIdx = now.getHours();
+
+      var humidity = d.hourly && d.hourly.relativehumidity_2m ? d.hourly.relativehumidity_2m[hourIdx] + '%' : '–';
+      var feels    = d.hourly && d.hourly.apparent_temperature ? Math.round(d.hourly.apparent_temperature[hourIdx]) + '°C' : '–';
+      var vis      = d.hourly && d.hourly.visibility ? (d.hourly.visibility[hourIdx] / 1000).toFixed(1) + ' km' : '–';
+
+      document.getElementById('weather-icon').textContent    = wmoToEmoji(wcode, isDay);
+      document.getElementById('weather-temp').textContent    = temp + '°C';
+      document.getElementById('weather-desc').textContent    = wmoToDesc(wcode);
+      document.getElementById('weather-humidity').textContent = humidity;
+      document.getElementById('weather-wind').textContent    = wind + ' km/h';
+      document.getElementById('weather-feels').textContent   = feels;
+      document.getElementById('weather-vis').textContent     = vis;
+
+      var t = document.getElementById('weather-time');
+      if (t) t.textContent = now.toLocaleTimeString('en-BD', {hour:'2-digit', minute:'2-digit'}) + ' • Live';
+    })
+    .catch(function() {
+      document.getElementById('weather-temp').textContent = 'N/A';
+      document.getElementById('weather-desc').textContent = 'Could not load weather';
+    });
+})();
+
+// ── 3. DSE Index — placeholder (DSE has no free public API) ──
+// Shows a helpful link; TradingView widget above handles live chart
+(function loadDSE() {
+  document.getElementById('dsex-val').textContent = 'See Chart ↑';
+  document.getElementById('ds30-val').textContent = 'See Chart ↑';
+})();
 </script>
 
-<script src="../includes/update-links.js"></script>
 </body>
 </html>
