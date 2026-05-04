@@ -1,525 +1,583 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MyVisa-Education & Travel Solution</title>
-<link rel="icon" type="image/png" href="assets/assets/images/fav.png">
-<link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MyVisa-Education & Travel Solution</title>
+  <link rel="icon" type="image/png" href="assets/assets/images/fav.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
 <header class="site-header">
-<div class="container header-inner">
-<a class="brand" href="index.html" id="brand-link">
-<img src="assets/assets/images/gtac-logo.png" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
-<span>MyVisa &mdash; Education &amp; Travel Solution</span>
-</a>
-<nav class="nav" id="main-nav">
-<a href="index.html" data-page="home" id="nav-home">Home</a>
-<a href="pages/about.html" data-page="about" id="nav-about">About</a>
-<div class="nav-dropdown">
-<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">&#9662;</span></a>
-<div class="dropdown-menu">
-<a href="pages/service/student_visa_processing.html" id="nav-service-1">Study Abroad</a>
-<a href="pages/service/country_visa_processing.html" id="nav-service-2">Visa Process</a>
-<a href="pages/service/holiday_tour_packages.html" id="nav-service-3">Tour Packages</a>
-<a href="pages/service/airticket_domestic_international.html" id="nav-service-4">Air Ticket</a>
-<a href="pages/service/hajj_umrah_package.html" id="nav-service-5">Hajj &amp; Umrah</a>
-<a href="pages/service/hotel_booking.html" id="nav-service-6">Hotel Book</a>
-<a href="pages/service/it_software_service.html" id="nav-service-7">IT Services</a>
-</div>
-</div>
-<div class="nav-dropdown">
-<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">&#9662;</span></a>
-<div class="dropdown-menu">
-<a href="pages/training/ielts_preparation.html" id="nav-training-1">IELTS Preparation</a>
-<a href="pages/training/flutter_development.html" id="nav-training-2">Mobile App Dev</a>
-<a href="pages/training/gds_training.html" id="nav-training-3">GDS Ticketing</a>
-<a href="pages/training/visa_process.html" id="nav-training-4">Visa Processing</a>
-</div>
-</div>
-<a href="pages/career.html" data-page="career" id="nav-career">Career</a>
-<a href="pages/success_story.html" data-page="success" id="nav-success">Success</a>
-<a href="pages/contact.html" data-page="contact" id="nav-contact" class="nav-cta">Contact Us</a>
-</nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
-  <span class="hamburger-bar"></span>
-  <span class="hamburger-bar"></span>
-  <span class="hamburger-bar"></span>
-</button>
-</div>
+  <div class="container header-inner">
+    <a class="brand" href="index.html" id="brand-link">
+      <img src="assets/assets/images/gtac-logo.png" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
+      <span>MyVisa &mdash; Education &amp; Travel Solution</span>
+    </a>
+    <nav class="nav" id="main-nav">
+      <a href="index.html" data-page="home" id="nav-home">Home</a>
+      <a href="pages/about.html" data-page="about" id="nav-about">About</a>
+      <div class="nav-dropdown">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">&#9662;</span></a>
+        <div class="dropdown-menu">
+          <a href="pages/service/student_visa_processing.html" id="nav-service-1">Study Abroad</a>
+          <a href="pages/service/country_visa_processing.html" id="nav-service-2">Visa Process</a>
+          <a href="pages/service/holiday_tour_packages.html" id="nav-service-3">Tour Packages</a>
+          <a href="pages/service/airticket_domestic_international.html" id="nav-service-4">Air Ticket</a>
+          <a href="pages/service/hajj_umrah_package.html" id="nav-service-5">Hajj &amp; Umrah</a>
+          <a href="pages/service/hotel_booking.html" id="nav-service-6">Hotel Book</a>
+          <a href="pages/service/it_software_service.html" id="nav-service-7">IT Services</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">&#9662;</span></a>
+        <div class="dropdown-menu">
+          <a href="pages/training/ielts_preparation.html" id="nav-training-1">IELTS Preparation</a>
+          <a href="pages/training/flutter_development.html" id="nav-training-2">Mobile App Dev</a>
+          <a href="pages/training/gds_training.html" id="nav-training-3">GDS Ticketing</a>
+          <a href="pages/training/visa_process.html" id="nav-training-4">Visa Processing</a>
+        </div>
+      </div>
+      <a href="pages/career.html" data-page="career" id="nav-career">Career</a>
+      <a href="pages/success_story.html" data-page="success" id="nav-success">Success</a>
+      <a href="pages/contact.html" data-page="contact" id="nav-contact" class="nav-cta">Contact Us</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </div>
 
-<script>
-(function initNavigation() {
-  var navToggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("main-nav");
+  <script>
+    (function initNavigation() {
+      var navToggle = document.getElementById("nav-toggle");
+      var nav = document.getElementById("main-nav");
 
-  if (navToggle && nav) {
-    var newNavToggle = navToggle.cloneNode(true);
-    navToggle.parentNode.replaceChild(newNavToggle, navToggle);
-    navToggle = newNavToggle;
+      if (navToggle && nav) {
+        var newNavToggle = navToggle.cloneNode(true);
+        navToggle.parentNode.replaceChild(newNavToggle, navToggle);
+        navToggle = newNavToggle;
 
-    navToggle.addEventListener("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var isOpen = nav.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", isOpen);
-      if (isOpen) {
-        document.body.classList.add("nav-open");
-      } else {
-        document.body.classList.remove("nav-open");
+        navToggle.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var isOpen = nav.classList.toggle("open");
+          navToggle.setAttribute("aria-expanded", isOpen);
+          if (isOpen) {
+            document.body.classList.add("nav-open");
+          } else {
+            document.body.classList.remove("nav-open");
+          }
+        });
+
+        window.addEventListener("resize", function() {
+          if (window.innerWidth > 768 && nav.classList.contains("open")) {
+            nav.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
+            document.body.classList.remove("nav-open");
+          }
+        });
+
+        document.addEventListener("click", function(e) {
+          if (!nav.classList.contains("open")) return;
+          if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+            nav.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
+            document.body.classList.remove("nav-open");
+          }
+        });
       }
-    });
 
-    window.addEventListener("resize", function() {
-      if (window.innerWidth > 768 && nav.classList.contains("open")) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
+      document.addEventListener("click", function(e) {
+        var dropdownToggle = e.target.closest(".dropdown-toggle");
+        if (dropdownToggle && window.innerWidth <= 768) {
+          e.preventDefault();
+          e.stopPropagation();
+          var dropdown = dropdownToggle.closest(".nav-dropdown");
+          var isActive = dropdown.classList.contains("active");
+          document.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
+          dropdown.classList.toggle("active", !isActive);
+        }
+      }, true);
 
-    document.addEventListener("click", function(e) {
-      if (!nav.classList.contains("open")) return;
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-  }
-
-  document.addEventListener("click", function(e) {
-    var dropdownToggle = e.target.closest(".dropdown-toggle");
-    if (dropdownToggle && window.innerWidth <= 768) {
-      e.preventDefault();
-      e.stopPropagation();
-      var dropdown = dropdownToggle.closest(".nav-dropdown");
-      var isActive = dropdown.classList.contains("active");
-      document.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-      dropdown.classList.toggle("active", !isActive);
-    }
-  }, true);
-
-  var currentPath = window.location.pathname;
-  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
-    var linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) || (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
-      link.classList.add("active");
-    }
-  });
-})();
-</script>
+      var currentPath = window.location.pathname;
+      document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
+        var linkPath = new URL(link.href, window.location.origin).pathname;
+        if (currentPath.includes(linkPath) || (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
+          link.classList.add("active");
+        }
+      });
+    })();
+  </script>
 </header>
 
 <main>
-<section class="hero">
-<div class="container hero-inner">
-<div class="hero-content">
-<h1>Your Trusted Partner for <span>Global Solutions</span></h1>
-<p class="tagline">Providing expert consultancy for Education, Visa, Travel and IT services tailored to your success.</p>
-<div class="hero-buttons">
-<a href="pages/service/student_visa_processing.html" class="btn primary">Our Services</a>
-<a href="pages/contact.html" class="btn outline">Contact Us</a>
-</div>
-</div>
-<div class="hero-image">
-<div class="hero-carousel" id="hero-carousel">
-<div class="hero-slide active">
-<img src="assets/assets/images/gtac-home.png" alt="Global Education">
-</div>
-<div class="hero-slide">
-<img src="assets/assets/images/gta-home2.png" alt="World Travel">
-</div>
-<div class="hero-slide">
-<img src="assets/assets/images/gtac-home.png" alt="Visa Solutions">
-</div>
-<div class="hero-carousel-dots" id="hero-dots">
-<span class="dot active" data-index="0"></span>
-<span class="dot" data-index="1"></span>
-<span class="dot" data-index="2"></span>
-</div>
-</div>
-</div>
-</div>
-</section>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1>Your Trusted Partner for <span>Global Solutions</span></h1>
+        <p class="tagline">Providing expert consultancy for Education, Visa, Travel and IT services tailored to your success.</p>
+        <div class="hero-buttons">
+          <a href="pages/service/student_visa_processing.html" class="btn primary">Our Services</a>
+          <a href="pages/contact.html" class="btn outline">Contact Us</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-carousel" id="hero-carousel">
+          <div class="hero-slide active">
+            <img src="assets/assets/images/gtac-home.png" alt="Global Education">
+          </div>
+          <div class="hero-slide">
+            <img src="assets/assets/images/gta-home2.png" alt="World Travel">
+          </div>
+          <div class="hero-slide">
+            <img src="assets/assets/images/gtac-home.png" alt="Visa Solutions">
+          </div>
+          <div class="hero-carousel-dots" id="hero-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-(function() {
-  var slides = document.querySelectorAll('#hero-carousel .hero-slide');
-  var dots = document.querySelectorAll('#hero-dots .dot');
-  var current = 0;
-  var timer;
-  function showSlide(index) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = (index + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
-  }
-  function nextSlide() { showSlide(current + 1); }
-  function startTimer() { timer = setInterval(nextSlide, 5000); }
-  function resetTimer() { clearInterval(timer); startTimer(); }
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() {
-      var idx = parseInt(this.dataset.index);
-      if (idx !== current) { showSlide(idx); resetTimer(); }
-    });
-  });
-  startTimer();
-})();
-</script>
+  <script>
+    (function() {
+      var slides = document.querySelectorAll('#hero-carousel .hero-slide');
+      var dots = document.querySelectorAll('#hero-dots .dot');
+      var current = 0;
+      var timer;
+      function showSlide(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+      function nextSlide() { showSlide(current + 1); }
+      function startTimer() { timer = setInterval(nextSlide, 5000); }
+      function resetTimer() { clearInterval(timer); startTimer(); }
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var idx = parseInt(this.dataset.index);
+          if (idx !== current) { showSlide(idx); resetTimer(); }
+        });
+      });
+      startTimer();
+    })();
+  </script>
 
-<section class="packages-grid-section">
-<div class="container">
-<div class="section-header">
-<h2>Our Service Packages</h2>
-<p>Comprehensive solutions tailored to your needs</p>
-</div>
-<div class="packages-grid">
-<div class="package-card">
-<div class="package-icon">🌍</div>
-<h3>Visa Processing</h3>
-<p>End-to-end visa application handling: document check, appointment booking, submission, and tracking. We ensure a smooth and stress-free visa application process.</p>
-<a href="pages/service/country_visa_processing.html" class="feature-link">Learn More →</a>
-</div>
-<div class="package-card">
-<div class="package-icon">🎓</div>
-<h3>Study Abroad Consultancy</h3>
-<p>University shortlisting, application management, SOP/LOI writing, scholarship searches and pre-departure briefings. Your complete study abroad solution.</p>
-<a href="pages/service/student_visa_processing.html" class="feature-link">Learn More →</a>
-</div>
-<div class="package-card">
-<div class="package-icon">✈️</div>
-<h3>Holiday Packages</h3>
-<p>Custom itineraries, flight + hotel + tours, group and private packages. Create unforgettable memories with our expertly crafted travel experiences.</p>
-<a href="pages/service/holiday_tour_packages.html" class="feature-link">Learn More →</a>
-</div>
-<div class="package-card">
-<div class="package-icon">🎫</div>
-<h3>Air Ticketing</h3>
-<p>Domestic and international air ticket booking at competitive rates. Flexible options with real-time seat availability and instant confirmation for your journey.</p>
-<a href="pages/service/airticket_domestic_international.html" class="feature-link">Learn More →</a>
-</div>
-<div class="package-card">
-<div class="package-icon">🕌</div>
-<h3>Hajj &amp; Umrah</h3>
-<p>Complete Hajj and Umrah packages with accommodation, transport, and guidance. We handle every detail so you can focus on your spiritual journey.</p>
-<a href="pages/service/hajj_umrah_package.html" class="feature-link">Learn More →</a>
-</div>
-<div class="package-card">
-<div class="package-icon">🏨</div>
-<h3>Hotel Booking</h3>
-<p>Find the perfect stay from over 200,000 options worldwide. We offer real-time availability and competitive rates for all your accommodation needs.</p>
-<a href="pages/service/hotel_booking.html" class="feature-link">Learn More →</a>
-</div>
-</div>
-</div>
-</section>
+  <section class="packages-grid-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Service Packages</h2>
+        <p>Comprehensive solutions tailored to your needs</p>
+      </div>
+      <div class="packages-grid">
+        <div class="package-card">
+          <div class="package-icon">ðŸŒ</div>
+          <h3>Visa Processing</h3>
+          <p>End-to-end visa application handling: document check, appointment booking, submission, and tracking. We ensure a smooth and stress-free visa application process.</p>
+          <a href="pages/service/country_visa_processing.html" class="feature-link">Learn More â†’</a>
+        </div>
+        <div class="package-card">
+          <div class="package-icon">ðŸŽ“</div>
+          <h3>Study Abroad Consultancy</h3>
+          <p>University shortlisting, application management, SOP/LOI writing, scholarship searches and pre-departure briefings. Your complete study abroad solution.</p>
+          <a href="pages/service/student_visa_processing.html" class="feature-link">Learn More â†’</a>
+        </div>
+        <div class="package-card">
+          <div class="package-icon">âœˆï¸</div>
+          <h3>Holiday Packages</h3>
+          <p>Custom itineraries, flight + hotel + tours, group and private packages. Create unforgettable memories with our expertly crafted travel experiences.</p>
+          <a href="pages/service/holiday_tour_packages.html" class="feature-link">Learn More â†’</a>
+        </div>
+        <div class="package-card">
+          <div class="package-icon">ðŸŽ«</div>
+          <h3>Air Ticketing</h3>
+          <p>Domestic and international air ticket booking at competitive rates. Flexible options with real-time seat availability and instant confirmation for your journey.</p>
+          <a href="pages/service/airticket_domestic_international.html" class="feature-link">Learn More â†’</a>
+        </div>
+        <div class="package-card">
+          <div class="package-icon">ðŸ•Œ</div>
+          <h3>Hajj &amp; Umrah</h3>
+          <p>Complete Hajj and Umrah packages with accommodation, transport, and guidance. We handle every detail so you can focus on your spiritual journey.</p>
+          <a href="pages/service/hajj_umrah_package.html" class="feature-link">Learn More â†’</a>
+        </div>
+        <div class="package-card">
+          <div class="package-icon">ðŸ¨</div>
+          <h3>Hotel Booking</h3>
+          <p>Find the perfect stay from over 200,000 options worldwide. We offer real-time availability and competitive rates for all your accommodation needs.</p>
+          <a href="pages/service/hotel_booking.html" class="feature-link">Learn More â†’</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="why-us-section">
-<div class="container">
-<div class="why-us">
-<h2>Why Choose MyVisa?</h2>
-<div class="two-col">
-<div>
-<h3>Expert Guidance</h3>
-<ul class="checklist">
-<li>Experienced consultants with years of industry knowledge</li>
-<li>Personalized service tailored to your specific needs</li>
-<li>Transparent process with regular updates and communication</li>
-<li>Proven track record of successful applications</li>
-</ul>
-</div>
-<div>
-<h3>Comprehensive Support</h3>
-<ul class="checklist">
-<li>Document preparation and verification</li>
-<li>Application tracking and follow-up</li>
-<li>Post-arrival support and assistance</li>
-<li>24/7 customer support for your peace of mind</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</section>
+  <section class="why-us-section">
+    <div class="container">
+      <div class="why-us">
+        <h2>Why Choose MyVisa?</h2>
+        <div class="two-col">
+          <div>
+            <h3>Expert Guidance</h3>
+            <ul class="checklist">
+              <li>Experienced consultants with years of industry knowledge</li>
+              <li>Personalized service tailored to your specific needs</li>
+              <li>Transparent process with regular updates and communication</li>
+              <li>Proven track record of successful applications</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Comprehensive Support</h3>
+            <ul class="checklist">
+              <li>Document preparation and verification</li>
+              <li>Application tracking and follow-up</li>
+              <li>Post-arrival support and assistance</li>
+              <li>24/7 customer support for your peace of mind</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="team-grid-section">
-<div class="container">
-<div class="section-header">
-<h2>Our Team Members</h2>
-<p>Meet with our experts</p>
-</div>
-<div class="team-grid">
-<div class="team-member">
-<div class="team-avatar">
-<img src="assets/assets/images/mahbub.png" alt="Md. Mahbubur Rahman" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
-</div>
-<h3>Md. Mahbubur Rahman</h3>
-<p class="team-role">CEO &amp; Founder</p>
-<p class="team-bio">With over 15 years of experience in Software development in USA, China, UAE, Australia & Bangladesh. He now owner of MyVisa Bangladesh - A one stop solution of Software, Study & Travel solution.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">SK</div>
-</div>
-<h3>Sarah Khan</h3>
-<p class="team-role">Visa Specialist</p>
-<p class="team-bio">Expert in visa processing with extensive knowledge of international visa requirements. Sarah has helped hundreds of clients successfully obtain their visas.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">AR</div>
-</div>
-<h3>Ahmed Rahman</h3>
-<p class="team-role">Education Consultant</p>
-<p class="team-bio">Specialized in study abroad programs and university applications. Ahmed guides students to find the perfect academic programs worldwide.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">FI</div>
-</div>
-<h3>Fatima Islam</h3>
-<p class="team-role">Travel Coordinator</p>
-<p class="team-bio">Creates unforgettable travel experiences with customized holiday packages. Fatima ensures every trip is perfectly planned and executed.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">MH</div>
-</div>
-<h3>Mohammad Hasan</h3>
-<p class="team-role">SOP Writer</p>
-<p class="team-bio">Professional writer specializing in SOP and LOI documents. Mohammad crafts compelling narratives that help students stand out in applications.</p>
-</div>
-<div class="team-member">
-<div class="team-avatar">
-<div class="avatar-placeholder">NZ</div>
-</div>
-<h3>Nazia Zaman</h3>
-<p class="team-role">Customer Support Manager</p>
-<p class="team-bio">Ensures exceptional customer service and support throughout your journey. Nazia is dedicated to making every client's experience smooth and stress-free.</p>
-</div>
-</div>
-</div>
-</section>
+  <section class="team-grid-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Team Members</h2>
+        <p>Meet with our experts</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-avatar">
+            <img src="assets/assets/images/mahbub.png" alt="Md. Mahbubur Rahman" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          </div>
+          <h3>Md. Mahbubur Rahman</h3>
+          <p class="team-role">CEO &amp; Founder</p>
+          <p class="team-bio">With over 15 years of experience in Software development in USA, China, UAE, Australia & Bangladesh. He now owner of MyVisa Bangladesh - A one stop solution of Software, Study & Travel solution.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">
+            <div class="avatar-placeholder">SK</div>
+          </div>
+          <h3>Sarah Khan</h3>
+          <p class="team-role">Visa Specialist</p>
+          <p class="team-bio">Expert in visa processing with extensive knowledge of international visa requirements. Sarah has helped hundreds of clients successfully obtain their visas.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">
+            <div class="avatar-placeholder">AR</div>
+          </div>
+          <h3>Ahmed Rahman</h3>
+          <p class="team-role">Education Consultant</p>
+          <p class="team-bio">Specialized in study abroad programs and university applications. Ahmed guides students to find the perfect academic programs worldwide.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">
+            <div class="avatar-placeholder">FI</div>
+          </div>
+          <h3>Fatima Islam</h3>
+          <p class="team-role">Travel Coordinator</p>
+          <p class="team-bio">Creates unforgettable travel experiences with customized holiday packages. Fatima ensures every trip is perfectly planned and executed.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">
+            <div class="avatar-placeholder">MH</div>
+          </div>
+          <h3>Mohammad Hasan</h3>
+          <p class="team-role">SOP Writer</p>
+          <p class="team-bio">Professional writer specializing in SOP and LOI documents. Mohammad crafts compelling narratives that help students stand out in applications.</p>
+        </div>
+        <div class="team-member">
+          <div class="team-avatar">
+            <div class="avatar-placeholder">NZ</div>
+          </div>
+          <h3>Nazia Zaman</h3>
+          <p class="team-role">Customer Support Manager</p>
+          <p class="team-bio">Ensures exceptional customer service and support throughout your journey. Nazia is dedicated to making every client's experience smooth and stress-free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="testimonials-section">
-<div class="container">
-<div class="section-header">
-<h2>What Our Clients Say</h2>
-</div>
-<div class="testimonials-slider">
-<button class="slider-btn slider-prev" aria-label="Previous testimonial">
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-</button>
-<div class="slider-track-wrapper">
-<div class="slider-track" id="testimonials-track">
-<blockquote class="testimonial-slide">
-<div class="quote-icon">"</div>
-<p>MyVisa helped me get my student visa quickly and supported my university application every step of the way. Their team was professional, responsive, and always available to answer my questions.</p>
-<cite>— Tania A., Student</cite>
-</blockquote>
-<blockquote class="testimonial-slide">
-<div class="quote-icon">"</div>
-<p>Excellent travel package and friendly service. Highly recommended! They took care of everything from flights to hotels, making our vacation stress-free and enjoyable.</p>
-<cite>— Rashed M., Traveler</cite>
-</blockquote>
-<blockquote class="testimonial-slide">
-<div class="quote-icon">"</div>
-<p>The visa processing was smooth and efficient. MyVisa's expertise and attention to detail made all the difference. I couldn't have done it without their help.</p>
-<cite>— Ahmed K., Professional</cite>
-</blockquote>
-</div>
-</div>
-<button class="slider-btn slider-next" aria-label="Next testimonial">
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-</button>
-</div>
-<div class="slider-dots" id="testimonials-dots">
-<button class="slider-dot active" data-index="0" aria-label="Testimonial 1"></button>
-<button class="slider-dot" data-index="1" aria-label="Testimonial 2"></button>
-<button class="slider-dot" data-index="2" aria-label="Testimonial 3"></button>
-</div>
-</div>
-</section>
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>What Our Clients Say</h2>
+      </div>
+      <div class="testimonials-slider">
+        <button class="slider-btn slider-prev" aria-label="Previous testimonial">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="slider-track-wrapper">
+          <div class="slider-track" id="testimonials-track">
+            <blockquote class="testimonial-slide">
+              <div class="quote-icon">"</div>
+              <p>MyVisa helped me get my student visa quickly and supported my university application every step of the way. Their team was professional, responsive, and always available to answer my questions.</p>
+              <cite>â€” Tania A., Student</cite>
+            </blockquote>
+            <blockquote class="testimonial-slide">
+              <div class="quote-icon">"</div>
+              <p>Excellent travel package and friendly service. Highly recommended! They took care of everything from flights to hotels, making our vacation stress-free and enjoyable.</p>
+              <cite>â€” Rashed M., Traveler</cite>
+            </blockquote>
+            <blockquote class="testimonial-slide">
+              <div class="quote-icon">"</div>
+              <p>The visa processing was smooth and efficient. MyVisa's expertise and attention to detail made all the difference. I couldn't have done it without their help.</p>
+              <cite>â€” Ahmed K., Professional</cite>
+            </blockquote>
+          </div>
+        </div>
+        <button class="slider-btn slider-next" aria-label="Next testimonial">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div class="slider-dots" id="testimonials-dots">
+        <button class="slider-dot active" data-index="0" aria-label="Testimonial 1"></button>
+        <button class="slider-dot" data-index="1" aria-label="Testimonial 2"></button>
+        <button class="slider-dot" data-index="2" aria-label="Testimonial 3"></button>
+      </div>
+    </div>
+  </section>
 
-<script>
-(function() {
-  var track = document.getElementById('testimonials-track');
-  var dots = document.querySelectorAll('#testimonials-dots .slider-dot');
-  var slides = track ? track.querySelectorAll('.testimonial-slide') : [];
-  var current = 0;
-  var total = slides.length;
-  var autoTimer;
-  function goTo(index) {
-    current = (index + total) % total;
-    if (track) track.style.transform = 'translateX(-' + (current * 100) + '%)';
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
-  }
-  function startAuto() { autoTimer = setInterval(function() { goTo(current + 1); }, 5000); }
-  function resetAuto() { clearInterval(autoTimer); startAuto(); }
-  var prevBtn = document.querySelector('.slider-prev');
-  var nextBtn = document.querySelector('.slider-next');
-  if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
-  if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); resetAuto(); });
-  });
-  startAuto();
-})();
-</script>
+  <script>
+    (function() {
+      var track = document.getElementById('testimonials-track');
+      var dots = document.querySelectorAll('#testimonials-dots .slider-dot');
+      var slides = track ? track.querySelectorAll('.testimonial-slide') : [];
+      var current = 0;
+      var total = slides.length;
+      var autoTimer;
+      function goTo(index) {
+        current = (index + total) % total;
+        if (track) track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+      }
+      function startAuto() { autoTimer = setInterval(function() { goTo(current + 1); }, 5000); }
+      function resetAuto() { clearInterval(autoTimer); startAuto(); }
+      var prevBtn = document.querySelector('.slider-prev');
+      var nextBtn = document.querySelector('.slider-next');
+      if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); resetAuto(); });
+      });
+      startAuto();
+    })();
+  </script>
 
-<section class="partners-section">
-<div class="container">
-<div class="section-header" style="margin-bottom: 4rem;">
-<h2 style="margin-bottom: 1.5rem;">Our Partners</h2>
-<p>We work with trusted organizations worldwide</p>
-</div>
-<div class="carousel-wrapper partners-carousel">
-<div class="carousel-container">
-<div class="carousel-track partners-track">
-<div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Harvard University</div></div>
-<div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">MIT</div></div>
-<div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Stanford University</div></div>
-<div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Emirates Airlines</div></div>
-<div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Qatar Airways</div></div>
-<div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Booking.com</div></div>
-</div>
-</div>
-</div>
-</div>
-</section>
+  <section class="partners-section">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 4rem;">
+        <h2 style="margin-bottom: 1.5rem;">Our Partners</h2>
+        <p>We work with trusted organizations worldwide</p>
+      </div>
+      <div class="carousel-wrapper partners-carousel">
+        <div class="carousel-container">
+          <div class="carousel-track partners-track">
+            <div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Harvard University</div></div>
+            <div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">MIT</div></div>
+            <div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Stanford University</div></div>
+            <div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Emirates Airlines</div></div>
+            <div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Qatar Airways</div></div>
+            <div class="partner-item"><img src="assets/assets/images/gtac-logo.png" alt="Partner"><div class="partner-logo">Booking.com</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="newsletter">
-<div class="container">
-<h2>Request a Free Consultation</h2>
-<p>Get expert advice on your travel or education journey. Fill out the form below and we'll get back to you within 24 hours.</p>
-<form action="#" class="form-inline">
-<input type="text" name="name" placeholder="Your name" required>
-<input type="email" name="email" placeholder="Email address" required>
-<select name="service">
-<option value="visa">Visa Processing</option>
-<option value="student-visa">Student Visa</option>
-<option value="holiday">Holiday Packages</option>
-</select>
-<button class="btn primary" type="submit">Request Consultation</button>
-</form>
-</div>
-</section>
+  <section class="newsletter">
+    <div class="container">
+      <h2>Request a Free Consultation</h2>
+      <p>Get expert advice on your travel or education journey. Fill out the form below and we'll get back to you within 24 hours.</p>
+      <form id="consultationForm" class="form-inline">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Email address" required>
+        <input type="tel" name="phone" placeholder="Mobile number" required>
+        <select name="service">
+          <option value="Visa Processing">Visa Processing</option>
+          <option value="Student Visa">Student Visa</option>
+          <option value="Holiday Packages">Holiday Packages</option>
+        </select>
+        <button class="btn primary" type="submit" id="consultationSubmitBtn">Request Consultation</button>
+      </form>
+    </div>
+  </section>
 </main>
 
+<script>
+  // ====================================================================
+  // Consultation form submission â€” posts to merged Apps Script with formType
+  // The same SCRIPT_URL handles AirTicket, Umrah, Hotel, and Consultation forms.
+  // formType="consultation" routes the data to the "Consultation" tab in the sheet.
+  // IMPORTANT: Make sure FORM_CONFIG in Apps Script has a "consultation" entry.
+  // ====================================================================
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzeG24i56YtisflGG9ajG_APIOpakCOquxcb5lbad4zF089fd3DKqcBThIfH7gpEVGytQ/exec";
+
+  document.getElementById('consultationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const submitBtn = document.getElementById('consultationSubmitBtn');
+    const originalBtnText = submitBtn.textContent;
+
+    // FIX: type="phone" is invalid HTML â€” should be type="tel". Already fixed above.
+    const data = {
+      formType: "consultation",
+      name:     form.name.value,
+      email:    form.email.value,
+      phone:    form.phone.value,
+      service:  form.service.value
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      // NOTE: no Content-Type header â€” required for no-cors to deliver the body.
+      body: JSON.stringify(data)
+    }).then(() => {
+      alert('Thank you! Your consultation request has been received. Our team will get back to you within 24 hours.');
+      form.reset();
+    }).catch(() => {
+      alert('Something went wrong. Please try again or contact us directly at +880 1818-120900.');
+    }).finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+    });
+  });
+</script>
+
 <footer class="site-footer">
-<div class="container">
-<div class="footer-inner">
-<div class="footer-section">
-<h3>MyVisa Bangladesh</h3>
-<p>Education & Travel Solution. We are B2B partner and Authorized agency of IATA licensed agency. We provide One Stop Solution for Study, Medical, Visa, Tourism & Career.</p>
-<p style="margin-top: 1rem;"><strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br><strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<a href="index.html">Home</a>
-<a href="pages/about.html">About Us</a>
-<a href="pages/career.html">Career</a>
-<a href="pages/success_story.html">Success Story</a>
-<a href="pages/contact.html">Contact</a>
-</div>
-<div class="footer-section">
-<h3>Contact Info</h3>
-<p>Phone: <a href="tel:+8801818120900">+880 1818-120900</a></p>
-<p>Email: <a href="mailto:contact.myvisabd@gmail.com">contact.myvisabd@gmail.com</a></p>
-<div class="social-icons">
-<a href="https://www.facebook.com/MyVisaBDOfficial" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-</a>
-<a href="https://www.linkedin.com/company/myvisabd/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-</a>
-<a href="https://www.youtube.com/@myvisabd" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-</a>
-</div>
-</div>
-<div class="footer-section">
-<h3>Working Hours</h3>
-<p>Sat – Thu: 9:00 AM – 6:00 PM</p>
-<p>Friday: 10:00 AM – 10:00 PM</p>
-</div>
-</div>
-<div class="footer-bottom">
-<p>&copy; <span id="current-year"></span> MyVisa Bangladesh. All rights reserved.</p>
-<div class="footer-links">
-<a href="pages/privacy.html">Privacy Policy</a>
-<span>|</span>
-<a href="pages/terms.html">Terms of Service</a>
-</div>
-</div>
-</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-section">
+        <h3>MyVisa Bangladesh</h3>
+        <p>Education & Travel Solution. We are B2B partner and Authorized agency of IATA licensed agency. We provide One Stop Solution for Study, Medical, Visa, Tourism & Career.</p>
+        <p style="margin-top: 1rem;"><strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br><strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="pages/about.html">About Us</a>
+        <a href="pages/career.html">Career</a>
+        <a href="pages/success_story.html">Success Story</a>
+        <a href="pages/contact.html">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <p>Phone: <a href="tel:+8801818120900">+880 1818-120900</a></p>
+        <p>Email: <a href="mailto:contact.myvisabd@gmail.com">contact.myvisabd@gmail.com</a></p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/MyVisaBDOfficial" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.albarakahinternational.com/" target="_blank" rel="noopener noreferrer" aria-label="Website" class="social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/myvisabd/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@myvisabd" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+        <div style="margin-top: 1.5rem;">
+          <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
+          <a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
+            <img src="assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
+          </a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Working Hours</h3>
+        <p>Sat â€“ Thu: 9:00 AM â€“ 6:00 PM</p>
+        <p>Friday: 10:00 AM â€“ 10:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> MyVisa Bangladesh. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="pages/privacy.html">Privacy Policy</a>
+        <span>|</span>
+        <a href="pages/terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div><h3>Chat with Us</h3><div class="chat-status">We're online.</div></div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot"><div class="message-bubble">Hello! 👋 How can we assist you today?</div></div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">💬</button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div><h3>Chat with Us</h3><div class="chat-status">We're online.</div></div>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message bot"><div class="message-bubble">Hello! ðŸ‘‹ How can we assist you today?</div></div>
+    </div>
+    <div class="chat-form">
+      <form id="chatForm">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+        <button type="submit" class="chat-send">Send</button>
+      </form>
+    </div>
+  </div>
+  <button class="chat-button" id="chatButton" aria-label="Open chat">
+    <span class="chat-icon">ðŸ’¬</span>
+    <span class="close-icon">âœ•</span>
+  </button>
 </div>
 
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">↑</button>
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">â†‘</button>
 
 <script>
-(function() {
-  const yearSpan = document.getElementById('current-year');
-  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+  (function() {
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-  const chatWidget = document.getElementById('chatWidget');
-  const chatButton = document.getElementById('chatButton');
-  const chatWindow = document.getElementById('chatWindow');
-  const chatBody = document.getElementById('chatBody');
-  const chatForm = document.getElementById('chatForm');
-  const chatInput = document.getElementById('chatInput');
+    const chatWidget = document.getElementById('chatWidget');
+    const chatButton = document.getElementById('chatButton');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatBody = document.getElementById('chatBody');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
 
-  if (chatButton) chatButton.addEventListener('click', () => chatWidget.classList.toggle('active'));
+    if (chatButton) chatButton.addEventListener('click', () => chatWidget.classList.toggle('active'));
 
-  if (chatForm) {
-    chatForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const msg = chatInput.value.trim();
-      if (msg) {
-        addMessage(msg, 'user');
-        chatInput.value = '';
-        setTimeout(() => addMessage('Thank you! Our team will get back to you soon.', 'bot'), 1000);
-      }
+    if (chatForm) {
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = chatInput.value.trim();
+        if (msg) {
+          addMessage(msg, 'user');
+          chatInput.value = '';
+          setTimeout(() => addMessage('Thank you! Our team will get back to you soon.', 'bot'), 1000);
+        }
+      });
+    }
+
+    function addMessage(text, type) {
+      const div = document.createElement('div');
+      div.className = `chat-message ${type}`;
+      div.innerHTML = `<div class="message-bubble">${text}</div>`;
+      chatBody.appendChild(div);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) scrollToTopBtn.classList.add('show');
+      else scrollToTopBtn.classList.remove('show');
     });
-  }
-
-  function addMessage(text, type) {
-    const div = document.createElement('div');
-    div.className = `chat-message ${type}`;
-    div.innerHTML = `<div class="message-bubble">${text}</div>`;
-    chatBody.appendChild(div);
-    chatBody.scrollTop = chatBody.scrollHeight;
-  }
-
-  const scrollToTopBtn = document.getElementById('scrollToTop');
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) scrollToTopBtn.classList.add('show');
-    else scrollToTopBtn.classList.remove('show');
-  });
-  scrollToTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
-})();
+    scrollToTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+  })();
 </script>
 
 <script src="includes/update-links.js"></script>
