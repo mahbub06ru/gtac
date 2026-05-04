@@ -209,7 +209,7 @@
 </style>
 </head>
 <body>
-<!-- Header will be loaded here -->
+<!-- Header -->
 <header class="site-header">
 <div class="container header-inner">
 <a class="brand" href="#" id="brand-link">
@@ -257,7 +257,7 @@
   var nav = document.getElementById("main-nav");
 
   if (navToggle && nav) {
-    // Remove existing listeners to prevent duplicates if script runs multiple times
+    // Remove existing listeners to prevent duplicates
     var newNavToggle = navToggle.cloneNode(true);
     navToggle.parentNode.replaceChild(newNavToggle, navToggle);
     navToggle = newNavToggle;
@@ -356,312 +356,6 @@
 })();
 </script>
 </header>
-
-
-
-
-
-<script>
-(function initNavigation() {
-  var navToggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("main-nav");
-
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var isOpen = nav.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", isOpen);
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-      if (isOpen) {
-        document.body.classList.add("nav-open");
-      } else {
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    window.addEventListener("resize", function() {
-      if (window.innerWidth > 768 && nav.classList.contains("open")) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    document.addEventListener("click", function(e) {
-      if (!nav.classList.contains("open")) return;
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    if (!window._navLinkCloseHandler) {
-      window._navLinkCloseHandler = function(e) {
-        if (window.innerWidth > 768) return;
-        var nav = document.getElementById("main-nav");
-        if (!nav || !nav.classList.contains("open")) return;
-        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
-        var clickedLink = e.target.closest("a");
-        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
-          nav.classList.remove("open");
-          var toggle = document.getElementById("nav-toggle");
-          if (toggle) toggle.setAttribute("aria-expanded", "false");
-          document.body.classList.remove("nav-open");
-        }
-      };
-      document.addEventListener("click", window._navLinkCloseHandler, false);
-    }
-  }
-
-  if (!window._dropdownToggleHandler) {
-    window._dropdownToggleHandler = function(e) {
-      if (window.innerWidth > 768) return;
-      var nav = document.getElementById("main-nav");
-      if (!nav || !nav.classList.contains("open")) return;
-      var dropdownToggle = e.target.closest(".dropdown-toggle");
-      if (!dropdownToggle) return;
-      var dropdown = dropdownToggle.closest(".nav-dropdown");
-      if (!dropdown) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      var isActive = dropdown.classList.contains("active");
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
-      dropdown.classList.toggle("active", !isActive);
-      return false;
-    };
-  }
-
-  document.removeEventListener("click", window._dropdownToggleHandler, true);
-  document.addEventListener("click", window._dropdownToggleHandler, true);
-
-  if (nav) {
-    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
-      link.addEventListener("click", function() {
-        if (window.innerWidth <= 768) {
-          var n = document.getElementById("main-nav");
-          var t = document.getElementById("nav-toggle");
-          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
-          document.body.classList.remove("nav-open");
-        }
-      });
-    });
-  }
-
-  var currentPath = window.location.pathname;
-  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
-    var linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) ||
-        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
-      link.classList.add("active");
-    }
-  });
-})();
-</script>
-
-
-<script>
-(function initNavigation() {
-  var navToggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("main-nav");
-
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var isOpen = nav.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", isOpen);
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-      if (isOpen) {
-        document.body.classList.add("nav-open");
-      } else {
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    window.addEventListener("resize", function() {
-      if (window.innerWidth > 768 && nav.classList.contains("open")) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    document.addEventListener("click", function(e) {
-      if (!nav.classList.contains("open")) return;
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    if (!window._navLinkCloseHandler) {
-      window._navLinkCloseHandler = function(e) {
-        if (window.innerWidth > 768) return;
-        var nav = document.getElementById("main-nav");
-        if (!nav || !nav.classList.contains("open")) return;
-        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
-        var clickedLink = e.target.closest("a");
-        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
-          nav.classList.remove("open");
-          var toggle = document.getElementById("nav-toggle");
-          if (toggle) toggle.setAttribute("aria-expanded", "false");
-          document.body.classList.remove("nav-open");
-        }
-      };
-      document.addEventListener("click", window._navLinkCloseHandler, false);
-    }
-  }
-
-  if (!window._dropdownToggleHandler) {
-    window._dropdownToggleHandler = function(e) {
-      if (window.innerWidth > 768) return;
-      var nav = document.getElementById("main-nav");
-      if (!nav || !nav.classList.contains("open")) return;
-      var dropdownToggle = e.target.closest(".dropdown-toggle");
-      if (!dropdownToggle) return;
-      var dropdown = dropdownToggle.closest(".nav-dropdown");
-      if (!dropdown) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      var isActive = dropdown.classList.contains("active");
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
-      dropdown.classList.toggle("active", !isActive);
-      return false;
-    };
-  }
-
-  document.removeEventListener("click", window._dropdownToggleHandler, true);
-  document.addEventListener("click", window._dropdownToggleHandler, true);
-
-  if (nav) {
-    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
-      link.addEventListener("click", function() {
-        if (window.innerWidth <= 768) {
-          var n = document.getElementById("main-nav");
-          var t = document.getElementById("nav-toggle");
-          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
-          document.body.classList.remove("nav-open");
-        }
-      });
-    });
-  }
-
-  var currentPath = window.location.pathname;
-  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
-    var linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) ||
-        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
-      link.classList.add("active");
-    }
-  });
-})();
-</script>
-
-
-<script>
-(function initNavigation() {
-  var navToggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("main-nav");
-
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var isOpen = nav.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", isOpen);
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-      if (isOpen) {
-        document.body.classList.add("nav-open");
-      } else {
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    window.addEventListener("resize", function() {
-      if (window.innerWidth > 768 && nav.classList.contains("open")) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    document.addEventListener("click", function(e) {
-      if (!nav.classList.contains("open")) return;
-      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-        nav.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("nav-open");
-      }
-    });
-
-    if (!window._navLinkCloseHandler) {
-      window._navLinkCloseHandler = function(e) {
-        if (window.innerWidth > 768) return;
-        var nav = document.getElementById("main-nav");
-        if (!nav || !nav.classList.contains("open")) return;
-        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
-        var clickedLink = e.target.closest("a");
-        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
-          nav.classList.remove("open");
-          var toggle = document.getElementById("nav-toggle");
-          if (toggle) toggle.setAttribute("aria-expanded", "false");
-          document.body.classList.remove("nav-open");
-        }
-      };
-      document.addEventListener("click", window._navLinkCloseHandler, false);
-    }
-  }
-
-  if (!window._dropdownToggleHandler) {
-    window._dropdownToggleHandler = function(e) {
-      if (window.innerWidth > 768) return;
-      var nav = document.getElementById("main-nav");
-      if (!nav || !nav.classList.contains("open")) return;
-      var dropdownToggle = e.target.closest(".dropdown-toggle");
-      if (!dropdownToggle) return;
-      var dropdown = dropdownToggle.closest(".nav-dropdown");
-      if (!dropdown) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      var isActive = dropdown.classList.contains("active");
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
-      dropdown.classList.toggle("active", !isActive);
-      return false;
-    };
-  }
-
-  document.removeEventListener("click", window._dropdownToggleHandler, true);
-  document.addEventListener("click", window._dropdownToggleHandler, true);
-
-  if (nav) {
-    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
-      link.addEventListener("click", function() {
-        if (window.innerWidth <= 768) {
-          var n = document.getElementById("main-nav");
-          var t = document.getElementById("nav-toggle");
-          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
-          document.body.classList.remove("nav-open");
-        }
-      });
-    });
-  }
-
-  var currentPath = window.location.pathname;
-  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
-    var linkPath = new URL(link.href, window.location.origin).pathname;
-    if (currentPath.includes(linkPath) ||
-        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
-      link.classList.add("active");
-    }
-  });
-})();
-</script>
 
 <main>
   <div class="search-container">
@@ -818,15 +512,14 @@
     }
   ];
 
-  // Alphabetical sort (A to Z) - ensures Australia is first
   const sortedCountries = [...rawCountries].sort((a, b) => a.name.localeCompare(b.name));
 
   function renderAccordions(data) {
     const container = document.getElementById('countryAccordion');
+    if(!container) return;
     container.innerHTML = '';
     data.forEach((c, index) => {
       const item = document.createElement('div');
-      // Set the very first item (Australia) to be expanded initially
       item.className = index === 0 ? 'country-item active' : 'country-item';
       item.setAttribute('data-category', c.cat);
 
@@ -841,9 +534,9 @@
         </div>
         <div class="country-content" style="${index === 0 ? 'display:block' : ''}">
           <div class="tabs">
-            <div class="tab-btn active" onclick="switchTab(this, 'req')">Requirements</div>
-            <div class="tab-btn" onclick="switchTab(this, 'check')">Our Checklist</div>
-            <div class="tab-btn" onclick="switchTab(this, 'info')">Processing Info</div>
+            <div class="tab-btn active" onclick="switchTab(event, this, 'req')">Requirements</div>
+            <div class="tab-btn" onclick="switchTab(event, this, 'check')">Our Checklist</div>
+            <div class="tab-btn" onclick="switchTab(event, this, 'info')">Processing Info</div>
           </div>
 
           <div class="tab-content-inner" data-tab="req" style="display:block">
@@ -883,37 +576,31 @@
     });
   }
 
-  // Initial render with sorted countries
   renderAccordions(sortedCountries);
 
   function toggleAccordion(header) {
     const item = header.parentElement;
-    const isActive = item.classList.contains('active');
-
-    // Close other items
     document.querySelectorAll('.country-item').forEach(i => {
         if(i !== item) {
           i.classList.remove('active');
-          i.querySelector('.country-content').style.display = 'none';
+          const content = i.querySelector('.country-content');
+          if(content) content.style.display = 'none';
         }
     });
 
     item.classList.toggle('active');
     const content = item.querySelector('.country-content');
-    content.style.display = item.classList.contains('active') ? 'block' : 'none';
+    if(content) content.style.display = item.classList.contains('active') ? 'block' : 'none';
   }
 
-  function switchTab(btn, tabName) {
-    event.stopPropagation();
+  function switchTab(event, btn, tabName) {
+    if(event) event.stopPropagation();
     const content = btn.closest('.country-content');
-
-    // Update buttons
     content.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
-    // Update content panes
     content.querySelectorAll('.tab-content-inner').forEach(c => c.style.display = 'none');
-    content.querySelector(`.tab-content-inner[data-tab="${tabName}"]`).style.display = 'block';
+    const targetTab = content.querySelector(`.tab-content-inner[data-tab="${tabName}"]`);
+    if(targetTab) targetTab.style.display = 'block';
   }
 
   function handleSearch() {
@@ -929,35 +616,34 @@
       if (name.includes(filter)) {
         item.style.display = "";
         hasResults = true;
-
-        // Expand first result of search
         item.classList.remove('active');
-        content.style.display = 'none';
+        if(content) content.style.display = 'none';
         if(!firstFound && filter !== "") {
            item.classList.add('active');
-           content.style.display = 'block';
+           if(content) content.style.display = 'block';
            firstFound = true;
         }
       } else {
         item.style.display = "none";
         item.classList.remove('active');
-        content.style.display = 'none';
+        if(content) content.style.display = 'none';
       }
     });
 
-    noResults.style.display = hasResults ? "none" : "block";
+    if(noResults) noResults.style.display = hasResults ? "none" : "block";
 
-    // Reset filters
     if (filter !== "") {
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelector('.filter-btn[onclick*="all"]').classList.add('active');
+      const allBtn = document.querySelector('.filter-btn[onclick*="all"]');
+      if(allBtn) allBtn.classList.add('active');
     }
   }
 
   function filterCategory(category, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('countrySearch').value = "";
+    const searchInput = document.getElementById('countrySearch');
+    if(searchInput) searchInput.value = "";
 
     const items = document.querySelectorAll('.country-item');
     let firstFound = false;
@@ -968,22 +654,22 @@
       if (category === 'all' || cats.includes(category)) {
         item.style.display = "";
         item.classList.remove('active');
-        content.style.display = 'none';
+        if(content) content.style.display = 'none';
         if(!firstFound) {
            item.classList.add('active');
-           content.style.display = 'block';
+           if(content) content.style.display = 'block';
            firstFound = true;
         }
       } else {
         item.style.display = "none";
         item.classList.remove('active');
-        content.style.display = 'none';
+        if(content) content.style.display = 'none';
       }
     });
   }
 </script>
 
-<!-- Footer will be loaded here -->
+<!-- Footer -->
 <footer class="site-footer">
 <div class="container">
 <div class="footer-inner">
@@ -1024,12 +710,6 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
 </svg>
-</a>
-</div>
-<div style="margin-top: 1.5rem;">
-<h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
-<a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
-<img src="../../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
 </a>
 </div>
 </div>
@@ -1090,441 +770,79 @@ Hello! 👋 Welcome to MyVisa. How can we assist you today?
 
 <script>
 // Set current year
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear();
-}
+(function() {
+  const yearSpan = document.getElementById('current-year');
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+  }
+})();
 
 // Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
+(function initChatWidget() {
+  const chatWidget = document.getElementById('chatWidget');
+  const chatButton = document.getElementById('chatButton');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatBody = document.getElementById('chatBody');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
 
-if (chatButton && chatWidget) {
-  chatButton.addEventListener('click', () => {
-    chatWidget.classList.toggle('active');
-  });
-}
+  if (chatButton && chatWidget) {
+    chatButton.addEventListener('click', () => {
+      chatWidget.classList.toggle('active');
+    });
+  }
 
-if (chatForm && chatInput) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, 'user');
-      chatInput.value = '';
-      
-      // Simulate bot response
-      setTimeout(() => {
-        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
-      }, 1000);
+  if (chatForm && chatInput) {
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (message) {
+        addChatMessage(message, 'user');
+        chatInput.value = '';
+        setTimeout(() => {
+          addChatMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+        }, 1000);
+      }
+    });
+  }
+
+  function addChatMessage(text, type) {
+    if (!chatBody) return;
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${type}`;
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.textContent = text;
+    messageDiv.appendChild(bubble);
+    chatBody.appendChild(messageDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  document.addEventListener('click', (e) => {
+    if (chatWidget && chatWidget.classList.contains('active') &&
+        chatWindow && !chatWindow.contains(e.target) &&
+        chatButton && !chatButton.contains(e.target)) {
+      chatWidget.classList.remove('active');
     }
   });
-}
-
-function addMessage(text, type) {
-  if (!chatBody) return;
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !chatWindow.contains(e.target) &&
-      chatButton && !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
-  }
-});
+})();
 
 // Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-if (scrollToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
-    }
-  });
-
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+(function initScrollToTop() {
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+  if (scrollToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
     });
-  });
-}
-</script>
-
-<script src="../../includes/update-links.js"></script>
-
-
-<!-- Chat Widget -->
-<div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div>
-<h3>Chat with Us</h3>
-<div class="chat-status">We're online. How can we help?</div>
-</div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot">
-<div class="message-bubble">
-Hello! 👋 Welcome to MyVisa. How can we assist you today?
-</div>
-</div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-<div class="chat-quick-actions">
-<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
-<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
-</div>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">
-<span class="chat-icon">💬</span>
-<span class="close-icon">✕</span>
-</button>
-</div>
-
-<!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
-</button>
-
-<script>
-// Set current year
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear();
-}
-
-// Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-
-if (chatButton && chatWidget) {
-  chatButton.addEventListener('click', () => {
-    chatWidget.classList.toggle('active');
-  });
-}
-
-if (chatForm && chatInput) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, 'user');
-      chatInput.value = '';
-      
-      // Simulate bot response
-      setTimeout(() => {
-        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
-      }, 1000);
-    }
-  });
-}
-
-function addMessage(text, type) {
-  if (!chatBody) return;
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !chatWindow.contains(e.target) &&
-      chatButton && !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
-});
-
-// Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-if (scrollToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
-    }
-  });
-
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
-</script>
-
-<script src="../../includes/update-links.js"></script>
-
-
-<!-- Chat Widget -->
-<div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div>
-<h3>Chat with Us</h3>
-<div class="chat-status">We're online. How can we help?</div>
-</div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot">
-<div class="message-bubble">
-Hello! 👋 Welcome to MyVisa. How can we assist you today?
-</div>
-</div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-<div class="chat-quick-actions">
-<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
-<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
-</div>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">
-<span class="chat-icon">💬</span>
-<span class="close-icon">✕</span>
-</button>
-</div>
-
-<!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
-</button>
-
-<script>
-// Set current year
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear();
-}
-
-// Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-
-if (chatButton && chatWidget) {
-  chatButton.addEventListener('click', () => {
-    chatWidget.classList.toggle('active');
-  });
-}
-
-if (chatForm && chatInput) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, 'user');
-      chatInput.value = '';
-      
-      // Simulate bot response
-      setTimeout(() => {
-        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
-      }, 1000);
-    }
-  });
-}
-
-function addMessage(text, type) {
-  if (!chatBody) return;
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !chatWindow.contains(e.target) &&
-      chatButton && !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
-  }
-});
-
-// Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-if (scrollToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
-    }
-  });
-
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
-</script>
-
-<script src="../../includes/update-links.js"></script>
-
-
-<!-- Chat Widget -->
-<div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div>
-<h3>Chat with Us</h3>
-<div class="chat-status">We're online. How can we help?</div>
-</div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot">
-<div class="message-bubble">
-Hello! 👋 Welcome to MyVisa. How can we assist you today?
-</div>
-</div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-<div class="chat-quick-actions">
-<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
-<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
-</div>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">
-<span class="chat-icon">💬</span>
-<span class="close-icon">✕</span>
-</button>
-</div>
-
-<!-- Scroll to Top Button -->
-<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
-</button>
-
-<script>
-// Set current year
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear();
-}
-
-// Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-
-if (chatButton && chatWidget) {
-  chatButton.addEventListener('click', () => {
-    chatWidget.classList.toggle('active');
-  });
-}
-
-if (chatForm && chatInput) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, 'user');
-      chatInput.value = '';
-      
-      // Simulate bot response
-      setTimeout(() => {
-        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
-      }, 1000);
-    }
-  });
-}
-
-function addMessage(text, type) {
-  if (!chatBody) return;
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !nav.contains(e.target) &&
-      chatButton && !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
-  }
-});
-
-// Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-if (scrollToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
-    }
-  });
-
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
+})();
 </script>
 
 <script src="../../includes/update-links.js"></script>
