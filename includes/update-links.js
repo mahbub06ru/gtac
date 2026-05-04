@@ -62,7 +62,6 @@
     'nav-service': 'javascript:void(0)',
     // Training dropdown toggle - no navigation, just toggles dropdown
     'nav-training': 'javascript:void(0)',
-    'nav-updates': isRoot ? 'pages/latest_update.html' : (isInTraining || isInService ? '../latest_update.html' : 'latest_update.html'),
     'nav-career': isRoot ? 'pages/career.html' : (isInTraining || isInService ? '../career.html' : 'career.html'),
     'nav-success': isRoot ? 'pages/success_story.html' : (isInTraining || isInService ? '../success_story.html' : 'success_story.html'),
     'nav-contact': isRoot ? 'pages/contact.html' : (isInTraining || isInService ? '../contact.html' : 'contact.html'),

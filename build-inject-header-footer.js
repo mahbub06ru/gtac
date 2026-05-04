@@ -91,7 +91,6 @@ const filesToProcess = [
   { path: 'pages/success_story.html', depth: 1 },
   { path: 'pages/terms.html', depth: 1 },
   { path: 'pages/privacy.html', depth: 1 },
-  { path: 'pages/latest_update.html', depth: 1 },
   { path: 'pages/training/ielts_preparation.html', depth: 2 },
   { path: 'pages/training/gds_training.html', depth: 2 },
   { path: 'pages/training/visa_process.html', depth: 2 },

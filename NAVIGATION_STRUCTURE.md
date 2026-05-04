@@ -132,5 +132,5 @@ gtac/
 - Each service and training has its own dedicated page
 
 
-## command for coomon header
+## command for common header
  - node build-inject-header-footer.js
