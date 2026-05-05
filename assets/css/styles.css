@@ -35,7 +35,7 @@ body {
   color: var(--text-dark);
   background: var(--bg-white);
   font-size: 16px;
-  padding-top: 105px; /* Fixed header: ~35px top bar + 70px main header */
+  padding-top: 66px; /* Fixed header: ~26px top bar + 70px main header */
 }
 
 .container {
