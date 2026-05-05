@@ -111,150 +111,162 @@
 <body>
 
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="#" id="brand-link">
-      <img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
-      <span>MyVisa &mdash; Education &amp; Travel Solution</span>
-    </a>
-    <nav class="nav" id="main-nav">
-      <a href="#" data-page="home" id="nav-home">Home</a>
-      <a href="#" data-page="about" id="nav-about">About</a>
-      <div class="nav-dropdown">
-        <a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">&#9662;</span></a>
-        <div class="dropdown-menu">
-          <a href="#" id="nav-service-1">Study Abroad</a>
-          <a href="#" id="nav-service-2">Visa Process</a>
-          <a href="#" id="nav-service-3">Tour Packages</a>
-          <a href="#" id="nav-service-4">Air Ticket</a>
-          <a href="#" id="nav-service-5">Hajj &amp; Umrah</a>
-          <a href="#" id="nav-service-6">Hotel Book</a>
-          <a href="#" id="nav-service-7">IT Services</a>
-        </div>
-      </div>
-      <div class="nav-dropdown">
-        <a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">&#9662;</span></a>
-        <div class="dropdown-menu">
-          <a href="#" id="nav-training-1">IELTS Preparation</a>
-          <a href="#" id="nav-training-2">Mobile App Dev</a>
-          <a href="#" id="nav-training-3">GDS Ticketing</a>
-          <a href="#" id="nav-training-4">Visa Processing</a>
-        </div>
-      </div>
-      <a href="#" data-page="career" id="nav-career">Career</a>
-      <a href="#" data-page="success" id="nav-success">Success</a>
-      <a href="#" data-page="contact" id="nav-contact" class="nav-cta">Contact Us</a>
-    </nav>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
-      <span class="hamburger-bar"></span>
-      <span class="hamburger-bar"></span>
-      <span class="hamburger-bar"></span>
-    </button>
-  </div>
+<div class="container header-inner">
+<a class="brand" href="#" id="brand-link">
+<img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
+  <span>
+  MyVisa Consultancy
+</span>
+</a>
+<nav class="nav" id="main-nav">
+<a href="#" data-page="home" id="nav-home">Home</a>
+<a href="#" data-page="about" id="nav-about">About</a>
+<div class="nav-dropdown">
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">Services <span class="dropdown-arrow">&#9662;</span></a>
+<div class="dropdown-menu">
+<a href="#" id="nav-service-1">Study Abroad</a>
+<a href="#" id="nav-service-2">Visa Process</a>
+<a href="#" id="nav-service-3">Tour Packages</a>
+<a href="#" id="nav-service-4">Air Ticket</a>
+<a href="#" id="nav-service-5">Hajj &amp; Umrah</a>
+<a href="#" id="nav-service-6">Hotel Book</a>
+<a href="#" id="nav-service-7">IT Services</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">Training <span class="dropdown-arrow">&#9662;</span></a>
+<div class="dropdown-menu">
+<a href="#" id="nav-training-1">IELTS Preparation</a>
+<a href="#" id="nav-training-2">Mobile App Dev</a>
+<a href="#" id="nav-training-3">GDS Ticketing</a>
+<a href="#" id="nav-training-4">Visa Processing</a>
+</div>
+</div>
+<a href="#" data-page="career" id="nav-career">Career</a>
+<a href="#" data-page="success" id="nav-success">Success</a>
+<a href="#" data-page="contact" id="nav-contact" class="nav-cta">Contact Us</a>
+</nav>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
+  <span class="hamburger-bar"></span>
+  <span class="hamburger-bar"></span>
+  <span class="hamburger-bar"></span>
+</button>
+</div>
 
-  <script>
-    (function initNavigation() {
-      var navToggle = document.getElementById("nav-toggle");
-      var nav = document.getElementById("main-nav");
+<script>
+(function initNavigation() {
+  var navToggle = document.getElementById("nav-toggle");
+  var nav = document.getElementById("main-nav");
 
-      if (navToggle && nav) {
-        var newNavToggle = navToggle.cloneNode(true);
-        navToggle.parentNode.replaceChild(newNavToggle, navToggle);
-        navToggle = newNavToggle;
+  if (navToggle && nav) {
+    // Remove existing listeners to prevent duplicates if script runs multiple times
+    var newNavToggle = navToggle.cloneNode(true);
+    navToggle.parentNode.replaceChild(newNavToggle, navToggle);
+    navToggle = newNavToggle;
 
-        navToggle.addEventListener("click", function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          var isOpen = nav.classList.toggle("open");
-          navToggle.setAttribute("aria-expanded", isOpen);
-          nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-          if (isOpen) {
-            document.body.classList.add("nav-open");
-          } else {
-            document.body.classList.remove("nav-open");
-          }
-        });
+    navToggle.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isOpen = nav.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen);
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
+      if (isOpen) {
+        document.body.classList.add("nav-open");
+      } else {
+        document.body.classList.remove("nav-open");
+      }
+    });
 
-        window.addEventListener("resize", function() {
-          if (window.innerWidth > 768 && nav.classList.contains("open")) {
-            nav.classList.remove("open");
-            navToggle.setAttribute("aria-expanded", "false");
-            document.body.classList.remove("nav-open");
-          }
-        });
+    window.addEventListener("resize", function() {
+      if (window.innerWidth > 768 && nav.classList.contains("open")) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+      }
+    });
 
-        document.addEventListener("click", function(e) {
-          if (!nav.classList.contains("open")) return;
-          if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
-            nav.classList.remove("open");
-            navToggle.setAttribute("aria-expanded", "false");
-            document.body.classList.remove("nav-open");
-          }
-        });
+    document.addEventListener("click", function(e) {
+      if (!nav.classList.contains("open")) return;
+      if (!nav.contains(e.target) && !navToggle.contains(e.target)) {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+      }
+    });
 
-        if (!window._navLinkCloseHandler) {
-          window._navLinkCloseHandler = function(e) {
-            if (window.innerWidth > 768) return;
-            var nav = document.getElementById("main-nav");
-            if (!nav || !nav.classList.contains("open")) return;
-            if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
-            var clickedLink = e.target.closest("a");
-            if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
-              nav.classList.remove("open");
-              var toggle = document.getElementById("nav-toggle");
-              if (toggle) toggle.setAttribute("aria-expanded", "false");
-              document.body.classList.remove("nav-open");
-            }
-          };
-          document.addEventListener("click", window._navLinkCloseHandler, false);
+    if (!window._navLinkCloseHandler) {
+      window._navLinkCloseHandler = function(e) {
+        if (window.innerWidth > 768) return;
+        var nav = document.getElementById("main-nav");
+        if (!nav || !nav.classList.contains("open")) return;
+        if (e.target.closest(".dropdown-toggle") || e.target.closest(".dropdown-menu")) return;
+        var clickedLink = e.target.closest("a");
+        if (clickedLink && !clickedLink.classList.contains("dropdown-toggle") && clickedLink.closest(".nav")) {
+          nav.classList.remove("open");
+          var toggle = document.getElementById("nav-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("nav-open");
         }
-      }
+      };
+      document.addEventListener("click", window._navLinkCloseHandler, false);
+    }
+  }
 
-      if (!window._dropdownToggleHandler) {
-        window._dropdownToggleHandler = function(e) {
-          if (window.innerWidth > 768) return;
-          var nav = document.getElementById("main-nav");
-          if (!nav || !nav.classList.contains("open")) return;
-          var dropdownToggle = e.target.closest(".dropdown-toggle");
-          if (!dropdownToggle) return;
-          var dropdown = dropdownToggle.closest(".nav-dropdown");
-          if (!dropdown) return;
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          var isActive = dropdown.classList.contains("active");
-          nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
-          dropdown.classList.toggle("active", !isActive);
-          return false;
-        };
-      }
+  if (!window._dropdownToggleHandler) {
+    window._dropdownToggleHandler = function(e) {
+      if (window.innerWidth > 768) return;
+      var nav = document.getElementById("main-nav");
+      if (!nav || !nav.classList.contains("open")) return;
+      var dropdownToggle = e.target.closest(".dropdown-toggle");
+      if (!dropdownToggle) return;
+      var dropdown = dropdownToggle.closest(".nav-dropdown");
+      if (!dropdown) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      var isActive = dropdown.classList.contains("active");
+      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { if (d !== dropdown) d.classList.remove("active"); });
+      dropdown.classList.toggle("active", !isActive);
+      return false;
+    };
+  }
 
-      document.removeEventListener("click", window._dropdownToggleHandler, true);
-      document.addEventListener("click", window._dropdownToggleHandler, true);
+  document.removeEventListener("click", window._dropdownToggleHandler, true);
+  document.addEventListener("click", window._dropdownToggleHandler, true);
 
-      if (nav) {
-        nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
-          link.addEventListener("click", function() {
-            if (window.innerWidth <= 768) {
-              var n = document.getElementById("main-nav");
-              var t = document.getElementById("nav-toggle");
-              if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
-              document.body.classList.remove("nav-open");
-            }
-          });
-        });
-      }
-
-      var currentPath = window.location.pathname;
-      document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
-        var linkPath = new URL(link.href, window.location.origin).pathname;
-        if (currentPath.includes(linkPath) ||
-            (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
-          link.classList.add("active");
+  if (nav) {
+    nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
+      link.addEventListener("click", function() {
+        if (window.innerWidth <= 768) {
+          var n = document.getElementById("main-nav");
+          var t = document.getElementById("nav-toggle");
+          if (n) { n.classList.remove("open"); if (t) t.setAttribute("aria-expanded", "false"); }
+          document.body.classList.remove("nav-open");
         }
       });
-    })();
-  </script>
+    });
+  }
+
+  var currentPath = window.location.pathname;
+  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
+    var linkPath = new URL(link.href, window.location.origin).pathname;
+    if (currentPath.includes(linkPath) ||
+        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
+      link.classList.add("active");
+    }
+  });
+})();
+</script>
 </header>
+
+
+
+
+
+
+
+
+
 
 <main class="container" style="max-width: 1100px; margin: 3rem auto; padding: 0 1rem;">
   <section style="background: #fff; padding: 3rem; border-radius: 20px; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
@@ -450,70 +462,1153 @@
 </script>
 
 <footer class="site-footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-section">
-        <h3>MyVisa Bangladesh</h3>
-        <p>Education & Travel Solution. We are B2B partner and Authorized agency of IATA licensed agency. We provide One Stop Solution for Study, Medical, Visa, Tourism & Career.</p>
-        <p style="margin-top: 1rem;"><strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br><strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
-      </div>
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <a href="index.html" id="footer-home">Home</a>
-        <a href="pages/about.html" id="footer-about">About Us</a>
-        <a href="pages/career.html" id="footer-career">Career</a>
-        <a href="pages/success_story.html" id="footer-success">Success Story</a>
-        <a href="pages/contact.html" id="footer-contact">Contact</a>
-      </div>
-      <div class="footer-section">
-        <h3>Contact Info</h3>
-        <p>Phone: <a href="tel:+8801818120900">+880 1818-120900</a></p>
-        <p>Email: <a href="mailto:contact.myvisabd@gmail.com">contact.myvisabd@gmail.com</a></p>
-        <div class="social-icons">
-          <a href="https://www.facebook.com/MyVisaBDOfficial" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-            </svg>
-          </a>
-          <a href="https://www.albarakahinternational.com/" target="_blank" rel="noopener noreferrer" aria-label="Website" class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-            </svg>
-          </a>
-          <a href="https://www.linkedin.com/company/myvisabd/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
-          <a href="https://www.youtube.com/@myvisabd" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
-          </a>
-        </div>
-        <div style="margin-top: 1.5rem;">
-          <h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
-          <a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
-            <img src="../../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
-          </a>
-        </div>
-      </div>
-      <div class="footer-section">
-        <h3>Working Hours</h3>
-        <p>Sat – Thus: 9:00 AM – 6:00 PM</p>
-        <p>Friday: 10:00 AM – 10:00 PM</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; <span id="current-year"></span> MyVisa Bangladesh - Education & Travel Solution. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
-        <span>|</span>
-        <a href="pages/terms.html" id="footer-terms">Terms & Services</a>
-      </div>
-    </div>
-  </div>
+<div class="container">
+<div class="footer-inner">
+<div class="footer-section">
+<h3>MyVisa Consultancy</h3>
+<p>We offer complete visa support for Study, Tourist, and Medical applications with a focus on transparency and success. We also collaborate as a B2B partner with IATA-licensed agencies to ensure reliable travel-related support for our clients.</p>
+<p style="margin-top: 1rem;">
+    <strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br>
+    <strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
+    <strong>Banani office:</strong> House# 74 Road# 7, Block# H, Banani, Dhaka</p>
+</div>
+<div class="footer-section">
+<h3>Quick Links</h3>
+<a href="index.html" id="footer-home">Home</a>
+<a href="pages/about.html" id="footer-about">About Us</a>
+<a href="pages/career.html" id="footer-career">Career</a>
+<a href="pages/success_story.html" id="footer-success">Success Story</a>
+<a href="pages/contact.html" id="footer-contact">Contact</a>
+</div>
+<div class="footer-section">
+<h3>Contact Info</h3>
+<p>Phone: <a href="tel:+8801818120900">+880 1818-120900</a></p>
+<p>Email: <a href="mailto:contact.myvisabd@gmail.com">contact.myvisabd@gmail.com</a></p>
+<div class="social-icons">
+<a href="https://www.facebook.com/MyVisaBDOfficial" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+</svg>
+</a>
+<a href="https://www.albarakahinternational.com/" target="_blank" rel="noopener noreferrer" aria-label="Website" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+</svg>
+</a>
+<a href="https://www.linkedin.com/company/myvisabd/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg>
+</a>
+<a href="https://www.youtube.com/@myvisabd" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg>
+</a>
+</div>
+<div style="margin-top: 1.5rem;">
+<h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
+<a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
+<img src="../../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
+</a>
+</div>
+</div>
+<div class="footer-section">
+<h3>Working Hours</h3>
+    <p>Sat – Thus: 9:00 AM – 6:00 PM</p>
+    <p>Friday: 10:00 AM – 10:00 PM</p>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; <span id="current-year"></span> MyVisa Consultancy - Complete Visa Consultancy for Study, Tourist & Medical. All rights reserved.</p>
+<div class="footer-links">
+<a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
+<span>|</span>
+<a href="pages/terms.html" id="footer-terms">Terms & Services</a>
+</div>
+</div>
+</div>
 </footer>
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
+
+<!-- Chat Widget -->
+<div class="chat-widget" id="chatWidget">
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<div>
+<h3>Chat with Us</h3>
+<div class="chat-status">We're online. How can we help?</div>
+</div>
+</div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">
+<div class="message-bubble">
+Hello! 👋 Welcome to MyVisa. How can we assist you today?
+</div>
+</div>
+</div>
+<div class="chat-form">
+<form id="chatForm">
+<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+<button type="submit" class="chat-send">Send</button>
+</form>
+<div class="chat-quick-actions">
+<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+</div>
+</div>
+</div>
+<button class="chat-button" id="chatButton" aria-label="Open chat">
+<span class="chat-icon">💬</span>
+<span class="close-icon">✕</span>
+</button>
+</div>
+
+<!-- Scroll to Top Button -->
+<button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+↑
+</button>
+
+<script>
+// Set current year
+const yearSpan = document.getElementById('current-year');
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+// Chat Widget Functionality
+const chatWidget = document.getElementById('chatWidget');
+const chatButton = document.getElementById('chatButton');
+const chatWindow = document.getElementById('chatWindow');
+const chatBody = document.getElementById('chatBody');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+
+if (chatButton && chatWidget) {
+  chatButton.addEventListener('click', () => {
+    chatWidget.classList.toggle('active');
+  });
+}
+
+if (chatForm && chatInput) {
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      addMessage(message, 'user');
+      chatInput.value = '';
+      
+      // Simulate bot response
+      setTimeout(() => {
+        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+      }, 1000);
+    }
+  });
+}
+
+function addMessage(text, type) {
+  if (!chatBody) return;
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chat-message ${type}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'message-bubble';
+  bubble.textContent = text;
+  messageDiv.appendChild(bubble);
+  chatBody.appendChild(messageDiv);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Close chat when clicking outside
+document.addEventListener('click', (e) => {
+  if (chatWidget && chatWidget.classList.contains('active') && 
+      chatWindow && !chatWindow.contains(e.target) &&
+      chatButton && !chatButton.contains(e.target)) {
+    chatWidget.classList.remove('active');
+  }
+});
+
+// Scroll to Top Functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+if (scrollToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add('show');
+    } else {
+      scrollToTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+</script>
+
+<script src="../../includes/update-links.js"></script>
+
 
 <!-- Chat Widget -->
 <div class="chat-widget" id="chatWidget">

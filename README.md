@@ -1,6 +1,6 @@
-# MyVisa-Education & Travel Solution
+# MyVisa-Complete Visa Consultancy for Study, Tourist & Medical
 
-A professional, responsive website for MyVisa-Education & Travel Solution, offering comprehensive travel and consultancy services including visa processing, study abroad consultancy, holiday packages, and more.
+A professional, responsive website for MyVisa-Complete Visa Consultancy for Study, Tourist & Medical, offering comprehensive travel and consultancy services including visa processing, study abroad consultancy, holiday packages, and more.
 
 ## Features
 
@@ -81,4 +81,4 @@ gtac/
 
 ## License
 
-This project is created for MyVisa-Education & Travel Solution.
+This project is created for MyVisa-Complete Visa Consultancy for Study, Tourist & Medical.
