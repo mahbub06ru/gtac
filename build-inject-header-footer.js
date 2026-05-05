@@ -1,5 +1,5 @@
 // Build script to inject header and footer into all HTML files
-// This works with file:// protocol
+// This version is "idempotent": it cleans up duplicates before injecting
 const fs = require('fs');
 const path = require('path');
 
@@ -7,17 +7,20 @@ const path = require('path');
 const headerContent = fs.readFileSync('includes/header.html', 'utf8');
 const footerContent = fs.readFileSync('includes/footer.html', 'utf8');
 
-// Function to update asset paths based on file location
+/**
+ * Updates asset paths based on the file's directory depth.
+ */
 function updateAssetPaths(content, depth) {
   const prefix = '../'.repeat(depth);
-  // Update CSS and image paths - more specific regex to avoid double prefixing
-  // Only match paths that start with assets/ or includes/ (not ../assets/)
+  // Match paths that start with assets/ or includes/
   content = content.replace(/(href|src)="assets\//g, `$1="${prefix}assets/`);
   content = content.replace(/(href|src)="includes\//g, `$1="${prefix}includes/`);
   return content;
 }
 
-// Function to process an HTML file
+/**
+ * Processes an HTML file: Cleans up all duplicates and injects fresh content with markers.
+ */
 function processFile(filePath, depth) {
   console.log(`Processing: ${filePath}`);
   
@@ -27,62 +30,60 @@ function processFile(filePath, depth) {
   }
 
   let content = fs.readFileSync(filePath, 'utf8');
-  const prefix = '../'.repeat(depth);
 
-  // 1. Update existing asset paths in the page head (only if not already prefixed)
-  content = content.replace(/(href|src)="assets\//g, `$1="${prefix}assets/`);
+  // Markers for reliable replacement
+  const H_START = '<!-- HEADER_START -->';
+  const H_END = '<!-- HEADER_END -->';
+  const F_START = '<!-- FOOTER_START -->';
+  const F_END = '<!-- FOOTER_END -->';
 
-  // 2. Replace Header
-  // Targets <div id="header-placeholder"></div> OR <header class="site-header">...</header>
-  const headerRegex = /<div id="header-placeholder"><\/div>|<header class="site-header">[\s\S]*?<\/header>/;
-  if (headerRegex.test(content)) {
-    let updatedHeader = updateAssetPaths(headerContent, depth);
-    content = content.replace(headerRegex, updatedHeader);
-  } else if (!content.includes('<header')) {
-    // If no header found at all, insert after <body>
-    let updatedHeader = updateAssetPaths(headerContent, depth);
-    content = content.replace(/<body[^>]*>/, `$& \n${updatedHeader}`);
-  }
-  
-  // 3. Replace Footer
-  // More surgical: targets the footer and common scripts, preserving unique page scripts
-  const footerStartRegex = /<footer class="site-footer">/;
-  const footerEndRegex = /<\/footer>/;
+  const updatedHeader = `\n${H_START}\n${updateAssetPaths(headerContent, depth).trim()}\n${H_END}\n`;
+  const updatedFooter = `\n${F_START}\n${updateAssetPaths(footerContent, depth).trim()}\n${F_END}\n`;
 
-  if (footerStartRegex.test(content)) {
-    // We replace from the footer start until the end of the site-footer,
-    // AND then we clean up common trailing scripts like update-links.js
-    // to prevent duplicates, but we must NOT touch unique scripts.
+  // --- 1. CLEANUP PREVIOUS INJECTIONS & DUPLICATES ---
 
-    let updatedFooter = updateAssetPaths(footerContent, depth);
+  // Remove any previous marker-wrapped blocks (removes all occurrences)
+  content = content.replace(new RegExp(`${H_START}[\\s\\S]*?${H_END}`, 'g'), '');
+  content = content.replace(new RegExp(`${F_START}[\\s\\S]*?${F_END}`, 'g'), '');
 
-    // Replace the footer tag itself
-    const fullFooterRegex = /<footer class="site-footer">[\s\S]*?<\/footer>/;
-    content = content.replace(fullFooterRegex, updatedFooter);
+  // Remove legacy tags (for migration) and ALL their duplicates
+  content = content.replace(/<header class="site-header">[\s\S]*?<\/header>/g, '');
+  content = content.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/g, '');
 
-    // Clean up duplicated update-links.js script tags if they appear after footer
-    // (This is common if the script was already present)
-    const scriptRegex = new RegExp(`<script src="[^"]*update-links\\.js"><\\/script>`, 'g');
-    // We want to keep ONLY the one that is part of the injected footerContent.
-    // Since we just injected it, any *other* occurrence should be removed.
-    // However, it's safer to just let the script handle its own logic.
-  } else if (content.includes('<div id="footer-placeholder"></div>')) {
-    let updatedFooter = updateAssetPaths(footerContent, depth);
-    content = content.replace('<div id="footer-placeholder"></div>', updatedFooter);
-  } else {
-    // No footer found, insert before </body>
-    let updatedFooter = updateAssetPaths(footerContent, depth);
-    content = content.replace('</body>', `${updatedFooter}\n</body>`);
-  }
-  
-  // Remove duplicate loader scripts if any exist
+  // Remove common components that leaked out of the footer tag in previous runs
+  content = content.replace(/<!-- Chat Widget -->[\s\S]*?<script src="[^"]*update-links\.js"><\/script>/g, '');
+  content = content.replace(/<div class="chat-widget" id="chatWidget">[\s\S]*?<script src="[^"]*update-links\.js"><\/script>/g, '');
+  content = content.replace(/<button class="scroll-to-top"[\s\S]*?<\/script>/g, '');
+
+  // Remove duplicate script tags
+  content = content.replace(/<script src="[^"]*update-links\.js"><\/script>/g, '');
   content = content.replace(/<script src="[^"]*load-header-footer\.js"><\/script>/g, '');
-  
+
+  // Remove old placeholder divs
+  content = content.replace(/<div id="header-placeholder"><\/div>/g, '');
+  content = content.replace(/<div id="footer-placeholder"><\/div>/g, '');
+
+  // --- 2. INJECT NEW CONTENT ---
+
+  // Inject Header right after <body>
+  if (content.includes('<body')) {
+    content = content.replace(/(<body[^>]*>)/, `$1${updatedHeader}`);
+  }
+
+  // Inject Footer right before </body>
+  if (content.includes('</body>')) {
+    content = content.replace('</body>', `${updatedFooter}</body>`);
+  }
+
+  // --- 3. FINAL POLISH ---
+  // Remove excessive blank lines created by multiple replacements
+  content = content.replace(/\n\s*\n\s*\n+/g, '\n\n');
+
   fs.writeFileSync(filePath, content, 'utf8');
-  console.log(`✓ Updated: ${filePath}`);
+  console.log(`✓ Updated and Cleaned: ${filePath}`);
 }
 
-// Process all HTML files
+// All pages to process
 const filesToProcess = [
   { path: 'index.html', depth: 0 },
   { path: 'pages/about.html', depth: 1 },
@@ -109,4 +110,4 @@ filesToProcess.forEach(file => {
   processFile(file.path, file.depth);
 });
 
-console.log('\n✓ Build complete! All files updated.');
+console.log('\n✓ Build complete! All files cleaned and updated with markers.');
