@@ -1378,6 +1378,43 @@ body.nav-open::before {
   font-size: 0.95rem;
 }
 
+/* Founder highlight — centered full-width spotlight */
+.founder-highlight {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem 1rem 3rem;
+}
+
+.founder-card {
+  flex: none !important;
+  min-width: 0 !important;
+  width: 100%;
+  max-width: 840px;
+  text-align: center;
+}
+
+.founder-avatar {
+  width: 160px;
+  height: 160px;
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.28);
+}
+
+.founder-card .team-bio,
+.founder-card > p:not(.team-role):not(.team-bio) {
+  text-align: left;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Team grid cards — reset carousel flex sizing so grid works */
+.team-grid .team-member {
+  flex: none;
+  min-width: 0;
+  width: 100%;
+}
+
 /* Partners Section */
 .partners-section {
   margin: 5rem 0;
@@ -1419,6 +1456,7 @@ body.nav-open::before {
   gap: 2rem;
   animation: scroll-right 40s linear infinite;
   width: fit-content;
+  will-change: transform;
 }
 
 .partners-track:hover {
@@ -2235,6 +2273,15 @@ body.nav-open::before {
     padding: 2.5rem 0;
   }
 
+  .founder-highlight {
+    padding: 0.5rem 1rem 2rem;
+  }
+
+  .founder-avatar {
+    width: 130px;
+    height: 130px;
+  }
+
   .team-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.25rem;
@@ -2776,6 +2823,28 @@ h1, h2, h3 {
 }
 
 @media (max-width: 480px) {
+  .founder-highlight {
+    padding: 0.5rem 0.75rem 1.5rem;
+  }
+
+  .founder-card {
+    max-width: 100%;
+  }
+
+  .founder-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  .founder-card .team-bio,
+  .founder-card > p:not(.team-role):not(.team-bio) {
+    font-size: 0.9rem;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
   .chat-window {
     width: calc(100vw - 20px);
     right: 10px;
