@@ -240,7 +240,7 @@
       <div class="hero-image">
         <div class="hero-carousel" id="hero-carousel">
           <div class="hero-slide active">
-            <img src="assets/assets/images/hero_1.png" alt="Global Education">
+            <img src="assets/assets/images/hero_1.png" alt="Global Education" loading="eager">
           </div>
           <div class="hero-slide">
             <img src="assets/assets/images/hero_2.png" alt="World Travel">
@@ -248,7 +248,7 @@
           <div class="hero-slide">
             <img src="assets/assets/images/mahbub.png" alt="Visa Solutions">
           </div>
-          <div class="hero-slide active">
+          <div class="hero-slide">
             <img src="assets/assets/images/hero_3.png" alt="Global Education">
           </div>
           <div class="hero-slide">
@@ -281,7 +281,6 @@
             <span class="dot" data-index="7"></span>
             <span class="dot" data-index="8"></span>
             <span class="dot" data-index="9"></span>
-
           </div>
         </div>
       </div>
@@ -835,7 +834,7 @@ if (chatForm && chatInput) {
     if (message) {
       addMessage(message, 'user');
       chatInput.value = '';
-      
+
       // Simulate bot response
       setTimeout(() => {
         addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
@@ -858,7 +857,7 @@ function addMessage(text, type) {
 
 // Close chat when clicking outside
 document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
+  if (chatWidget && chatWidget.classList.contains('active') &&
       chatWindow && !chatWindow.contains(e.target) &&
       chatButton && !chatButton.contains(e.target)) {
     chatWidget.classList.remove('active');

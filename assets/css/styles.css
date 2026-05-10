@@ -558,11 +558,15 @@ body.nav-open::before {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 0s linear 1s;
+  z-index: 1;
 }
 
 .hero-slide.active {
   opacity: 1;
+  visibility: visible;
+  transition: opacity 1s ease-in-out, visibility 0s linear 0s;
   z-index: 2;
 }
 
@@ -571,6 +575,7 @@ body.nav-open::before {
   height: 100%;
   object-fit: cover;
   border-radius: 20px;
+  display: block;
 }
 
 .hero-carousel-dots {
@@ -603,7 +608,6 @@ body.nav-open::before {
   background: rgba(255, 255, 255, 0.8);
   transform: scale(1.1);
 }
-
 /* Service Icons Section */
 .service-area {
   padding: 4rem 0;
