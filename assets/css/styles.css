@@ -270,7 +270,7 @@ body {
 }
 
 .dropdown-arrow {
-  font-size: 0.7rem;
+  font-size: 1.0rem;
   transition: transform 0.25s;
   opacity: 0.5;
   line-height: 1;
@@ -319,6 +319,7 @@ body {
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
   border-radius: 10px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   font-size: 0.855rem;
   font-weight: 500;
   position: relative;
