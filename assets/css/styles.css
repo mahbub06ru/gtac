@@ -1572,8 +1572,8 @@ body.nav-open::before {
 
 /* Footer */
 .site-footer {
-  background: var(--darkblue);
-  color: #fff;
+  background: #ffffff;
+  color: #000000;
   padding: 4rem 0 2rem;
   margin-top: 5rem;
 }
@@ -1586,7 +1586,7 @@ body.nav-open::before {
 }
 
 .footer-section h3 {
-  color: #fff;
+  color: var(--darkblue);
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
   font-weight: 700;
@@ -1594,16 +1594,16 @@ body.nav-open::before {
 
 .footer-section p,
 .footer-section a {
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
   text-decoration: none;
   line-height: 1.8;
   display: block;
   margin-bottom: 0.5rem;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .footer-section a:hover {
-  color: #fff;
+  color: var(--primary);
 }
 
 .social-icons {
@@ -1619,18 +1619,19 @@ body.nav-open::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: #f1f5f9;
   border-radius: 50%;
-  color: rgba(255, 255, 255, 0.8);
-  transition: all 0.3s;
+  color: var(--darkblue);
+  transition: all 0.3s ease;
   text-decoration: none;
+  border: 1px solid #dbeafe;
 }
 
 .social-icon:hover {
   background: var(--primary);
-  color: #fff;
+  color: #ffffff;
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .social-icon svg {
@@ -1639,18 +1640,19 @@ body.nav-open::before {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #e2e8f0;
   padding-top: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: #000000;
 }
 
 .footer-bottom p {
   margin: 0;
+  color: #000000;
 }
 
 .footer-links {
@@ -1661,18 +1663,18 @@ body.nav-open::before {
 }
 
 .footer-links a {
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
   font-size: 0.9rem;
 }
 
 .footer-links a:hover {
-  color: #fff;
+  color: var(--primary);
 }
 
 .footer-links span {
-  color: rgba(255, 255, 255, 0.5);
+  color: #94a3b8;
 }
 
 /* Contact page */

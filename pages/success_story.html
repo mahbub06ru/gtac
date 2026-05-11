@@ -249,7 +249,7 @@
     <p>Sat – Thus: 9:00 AM – 6:00 PM</p>
     <p>Friday: 10:00 AM – 10:00 PM</p>
 <div style="margin-top: 1.5rem;">
-<h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Download MyVisa App</h3>
+<h3 style="margin-bottom: 0.75rem; font-size: 1.1rem; color: #000;">Download MyVisa App</h3>
 <a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
 <img src="../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
 </a>
@@ -333,7 +333,7 @@ if (chatForm && chatInput) {
     if (message) {
       addMessage(message, 'user');
       chatInput.value = '';
-
+      
       // Simulate bot response
       setTimeout(() => {
         addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
@@ -356,7 +356,7 @@ function addMessage(text, type) {
 
 // Close chat when clicking outside
 document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') &&
+  if (chatWidget && chatWidget.classList.contains('active') && 
       chatWindow && !chatWindow.contains(e.target) &&
       chatButton && !chatButton.contains(e.target)) {
     chatWidget.classList.remove('active');
@@ -385,116 +385,6 @@ if (scrollToTopBtn) {
 </script>
 
 <script src="../includes/update-links.js"></script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-
-    const API_URL = "https://script.google.com/macros/s/AKfycbzRlVOJr2KkJcmjE_F6B2XAadiDeF2WoIQaIyrxcAOWrIrHzf51qd-iqhfd97Udp4HPGg/exec";
-
-    const container = document.getElementById("successStories");
-
-    try {
-
-      const response = await fetch(API_URL);
-      const stories = await response.json();
-
-      container.innerHTML = "";
-
-      if (!stories.length) {
-        container.innerHTML = `
-          <div style="grid-column:1/-1;text-align:center;padding:3rem;">
-            No success stories found.
-          </div>
-        `;
-        return;
-      }
-
-      stories.reverse();
-
-      stories.forEach(item => {
-
-        const card = document.createElement("article");
-        card.className = "success-card";
-
-        /* 🔥 FORCE CLICKABILITY */
-        card.style.cssText = `
-          background:#fff;
-          border-radius:16px;
-          overflow:hidden;
-          box-shadow:0 4px 20px rgba(0,0,0,0.08);
-          transition:0.3s;
-          cursor:${item.facebook ? "pointer" : "default"};
-          pointer-events:auto;
-          position:relative;
-          z-index:1;
-        `;
-
-        card.dataset.link = item.facebook || "";
-
-        card.innerHTML = `
-          <div style="width:100%;height:220px;overflow:hidden;position:relative;">
-            <img src="${item.photo || '../assets/assets/images/profile.png'}"
-              style="width:100%;height:100%;object-fit:cover;"
-            />
-
-            <div style="
-              position:absolute;
-              top:15px;
-              right:15px;
-              background:rgba(255,255,255,.9);
-              color:#2563eb;
-              padding:6px 12px;
-              border-radius:30px;
-              font-size:.85rem;
-              font-weight:600;
-            ">
-              ${item.country || ""}
-            </div>
-          </div>
-
-          <div style="padding:1.5rem;">
-
-  <h3 style="margin:0 0 10px;">
-    ${item.name || ""}
-  </h3>
-
-  <h2 style="margin:0 0 10px; font-size:1rem; color:#2563eb;">
-    ${item.visaType || ""}
-  </h2>
-
-  <p style="color:#666;">
-    ${item.description || ""}
-  </p>
-
-</div>
-        `;
-
-        container.appendChild(card);
-      });
-
-      /* 🔥 EVENT DELEGATION (MOST RELIABLE FIX) */
-      container.addEventListener("click", (e) => {
-        const card = e.target.closest(".success-card");
-        if (!card) return;
-
-        const link = card.dataset.link;
-        if (link) {
-          window.open(link, "_blank");
-        }
-      });
-
-    } catch (error) {
-      console.error(error);
-      container.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:3rem;color:red;">
-          Failed to load success stories.
-        </div>
-      `;
-    }
-
-  });
-</script>
-
 <!-- FOOTER_END -->
 </body>
 
