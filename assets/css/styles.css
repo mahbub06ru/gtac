@@ -9,8 +9,8 @@
   --accent: #06b6d4;
   --text-dark: #0f172a;
   --text-light: #64748b;
-  --bg-light: #f8fafc;
-  --bg-white: #ffffff;
+  --bg-light: rgba(248, 250, 252, 0.85);
+  --bg-white: rgba(255, 255, 255, 0.95);
   --border: #e2e8f0;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -33,7 +33,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.7;
   color: var(--text-dark);
-  background: var(--bg-white);
+  background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('../assets/images/hero_1.png') no-repeat center center fixed;
+  background-size: cover;
   font-size: 16px;
   padding-top: 66px; /* Fixed header: ~26px top bar + 70px main header */
 }
@@ -424,7 +425,7 @@ body.nav-open::before {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+  background: transparent;
   padding: 5rem 0;
   position: relative;
   overflow: hidden;
@@ -611,7 +612,7 @@ body.nav-open::before {
 /* Service Icons Section */
 .service-area {
   padding: 4rem 0;
-  background: var(--bg-white);
+  background: transparent;
 }
 
 .section-header {
@@ -714,7 +715,7 @@ body.nav-open::before {
 
 /* Statistics Section */
 .stats-section {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(14, 165, 233, 0.9) 100%);
   padding: 4rem 0;
   color: #fff;
   margin: 4rem 0;
@@ -747,7 +748,7 @@ body.nav-open::before {
 /* Packages Grid Section */
 .packages-grid-section {
   padding: 4rem 0;
-  background: var(--bg-light);
+  background: transparent;
 }
 
 .packages-grid {
@@ -841,12 +842,12 @@ body.nav-open::before {
 
 .carousel-wrapper::before {
   left: 0;
-  background: linear-gradient(to right, var(--bg-white), transparent);
+  background: linear-gradient(to right, transparent, transparent);
 }
 
 .carousel-wrapper::after {
   right: 0;
-  background: linear-gradient(to left, var(--bg-white), transparent);
+  background: linear-gradient(to left, transparent, transparent);
 }
 
 .carousel-container {
@@ -950,12 +951,13 @@ body.nav-open::before {
 /* Why Us Section */
 .why-us-section {
   padding: 4rem 0;
+  background: transparent;
 }
 
 .why-us {
   margin: 0;
   padding: 3rem;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.02) 0%, rgba(14, 165, 233, 0.02) 100%);
+  background: var(--bg-white);
   border-radius: 20px;
   border: 1px solid var(--border);
 }
@@ -1006,7 +1008,7 @@ body.nav-open::before {
 /* Testimonials Slider */
 .testimonials-section {
   padding: 4rem 0;
-  background: var(--bg-light);
+  background: transparent;
 }
 
 .testimonials-section h2 {
@@ -1234,7 +1236,7 @@ body.nav-open::before {
 /* Team Grid Section */
 .team-grid-section {
   padding: 4rem 0;
-  background: var(--bg-light);
+  background: transparent;
 }
 
 .team-grid {
@@ -1424,7 +1426,7 @@ body.nav-open::before {
   margin: 5rem 0;
   padding: 3rem 0;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.02) 0%, rgba(14, 165, 233, 0.02) 100%);
+  background: transparent;
 }
 
 .partners-carousel {
@@ -1447,12 +1449,12 @@ body.nav-open::before {
 
 .partners-carousel::before {
   left: 0;
-  background: linear-gradient(to right, rgba(248, 250, 252, 1), transparent);
+  background: linear-gradient(to right, transparent, transparent);
 }
 
 .partners-carousel::after {
   right: 0;
-  background: linear-gradient(to left, rgba(248, 250, 252, 1), transparent);
+  background: linear-gradient(to left, transparent, transparent);
 }
 
 .partners-track {
@@ -1516,7 +1518,7 @@ body.nav-open::before {
 .newsletter {
   margin: 5rem 0;
   padding: 3rem 0;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(14, 165, 233, 0.15) 100%);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   text-align: center;
@@ -1558,6 +1560,7 @@ body.nav-open::before {
   flex: 1;
   min-width: 200px;
   transition: all 0.3s;
+  background: var(--bg-white);
 }
 
 .form-inline input:focus,
@@ -2154,7 +2157,7 @@ body.nav-open::before {
   }
 
   .hero {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
   }
 
   @media (max-width: 500px) {
