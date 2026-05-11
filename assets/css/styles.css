@@ -73,7 +73,7 @@ body {
 
 /* Header Top Bar */
 .header-top {
-  background: #c0392b;
+  background: var(--darkblue);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 12px;
   line-height: 1;
