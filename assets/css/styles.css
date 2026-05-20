@@ -73,7 +73,7 @@ body {
 
 /* Header Top Bar */
 .header-top {
-  background: var(--darkblue);
+  background: rgba(255, 255, 255, 0.97);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 12px;
   line-height: 1;
@@ -99,14 +99,14 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #ffffff;
+  color: var(--darkblue);
   text-decoration: none;
   font-size: 12px;
   line-height: 1;
 }
 
 .contact-item:hover {
-  color: #ffffff;
+  color:var(--primary);
 }
 
 .contact-item svg {
@@ -133,7 +133,7 @@ body {
   height: 18px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  color:var(--darkblue);
   text-decoration: none;
 }
 
