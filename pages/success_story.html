@@ -1,293 +1,292 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Success Stories — MyVisa</title>
-<link rel="icon" type="image/png" href="../assets/assets/images/fav.png">
-<link rel="stylesheet" href="../assets/css/styles.css">
-<style>
-  .success-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .success-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-  }
-  .success-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    background-color: #f8fafc;
-    border-bottom: 1px solid #eee;
-  }
-  .success-info {
-    padding: 1.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .success-country {
-    color: var(--primary, #2563eb);
-    font-weight: 700;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-  }
-  .success-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-dark, #1e293b);
-    margin-bottom: 0.75rem;
-  }
-  .success-text {
-    color: var(--text-light, #64748b);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin: 0;
-  }
-  .loading-spinner {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--text-light);
-  }
-  .error-message {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 2rem;
-    color: #ef4444;
-  }
-  .retry-btn {
-    margin-top: 1rem;
-    padding: 0.5rem 1.5rem;
-    background: var(--primary, #2563eb);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Success Stories — MyVisa</title>
+  <link rel="icon" type="image/png" href="../assets/assets/images/fav.png">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .success-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .success-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .success-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background-color: #f8fafc;
+      border-bottom: 1px solid #eee;
+    }
+    .success-info {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .success-country {
+      color: var(--primary, #2563eb);
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .success-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-dark, #1e293b);
+      margin-bottom: 0.75rem;
+    }
+    .success-text {
+      color: var(--text-light, #64748b);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .loading-spinner {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-light);
+    }
+    .error-message {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 2rem;
+      color: #ef4444;
+    }
+    .retry-btn {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      background: var(--primary, #2563eb);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
 
-  /* Added badge styles */
-  .success-image-wrapper {
-    position: relative;
-  }
-  .success-badge {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(37, 99, 235, 0.9);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-</style>
+    /* Added badge styles */
+    .success-image-wrapper {
+      position: relative;
+    }
+    .success-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(37, 99, 235, 0.9);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 <!-- HEADER_START -->
 <header class="site-header">
-<!-- Top Bar with Contact Info and Social Icons -->
-<div class="header-top">
-  <div class="container header-top-inner">
-    <div class="contact-info">
-      <a href="https://wa.me/8801818120900" class="contact-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-        </svg>
-        <span>+880 1818-120900</span>
-      </a>
-      <a href="mailto:contact.myvisabd@gmail.com" class="contact-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-          <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-        <span>contact.myvisabd@gmail.com</span>
-      </a>
-    </div>
-    <div class="social-icons">
-      <a href="https://facebook.com/MyVisaBDOfficial" class="social-icon" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-        </svg>
-      </a>
-      <a href="https://wa.me/8801818120900" class="social-icon" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-      </a>
-      <a href="https://www.linkedin.com/company/myvisabd" class="social-icon" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
-      </a>
-      <a href="https://instagram.com" class="social-icon" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
-        </svg>
-      </a>
+  <!-- Top Bar with Contact Info and Social Icons -->
+  <div class="header-top">
+    <div class="container header-top-inner">
+      <div class="contact-info">
+        <a href="https://wa.me/8801818120900" class="contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span>+880 1818-120900</span>
+        </a>
+        <a href="mailto:contact.myvisabd@gmail.com" class="contact-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>contact.myvisabd@gmail.com</span>
+        </a>
+      </div>
+      <div class="social-icons">
+        <a href="https://facebook.com/MyVisaBDOfficial" class="social-icon" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <a href="https://wa.me/8801818120900" class="social-icon" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/company/myvisabd" class="social-icon" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com" class="social-icon" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container header-inner">
-  <a class="brand" href="#" id="brand-link">
-    <img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
-    <div class="brand-text">
-      <span class="brand-name">MyVisa Solutions</span>
-      <span class="brand-tagline">Trusted Partner for Tech-Driven Study Abroad, Visa & Travel Solutions</span>
-    </div>
-  </a>
-  <nav class="nav" id="main-nav">
+  <div class="container header-inner">
+    <a class="brand" href="#" id="brand-link">
+      <img src="#" alt="MyVisa Logo" class="brand-logo" id="brand-logo-img">
+      <span>
+  MyVisa Consultancy
+</span>
+    </a>
+    <nav class="nav" id="main-nav">
 
-    <a href="#" data-page="home" id="nav-home">Home</a>
+      <a href="#" data-page="home" id="nav-home">Home</a>
 
-    <a href="#" data-page="about" id="nav-about">About</a>
+      <a href="#" data-page="about" id="nav-about">About</a>
 
-    <!-- SERVICES -->
-    <div class="nav-dropdown">
-      <a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">
-        Visa Services <span class="dropdown-arrow">&#9662;</span>
-      </a>
+      <!-- SERVICES -->
+      <div class="nav-dropdown">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-page="service" id="nav-service">
+          Visa Services <span class="dropdown-arrow">&#9662;</span>
+        </a>
 
-      <div class="dropdown-menu">
-        <a href="#" id="nav-service-1">Study Visa</a>
-        <a href="#" id="nav-service-2">Tourist Visa</a>
-        <a href="#" id="nav-service-3">Medical Visa</a>
-        <a href="#" id="nav-service-4">Visa Documentation</a>
-        <a href="#" id="nav-service-5">SOP & Application Support</a>
+        <div class="dropdown-menu">
+          <a href="#" id="nav-service-1">Study Visa</a>
+          <a href="#" id="nav-service-2">Tourist Visa</a>
+          <a href="#" id="nav-service-3">Medical Visa</a>
+          <a href="#" id="nav-service-4">Visa Documentation</a>
+          <a href="#" id="nav-service-5">SOP & Application Support</a>
+        </div>
       </div>
-    </div>
 
-    <!-- TRAINING -->
-    <div class="nav-dropdown">
-      <a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">
-        Training & Skills <span class="dropdown-arrow">&#9662;</span>
-      </a>
+      <!-- TRAINING -->
+      <div class="nav-dropdown">
+        <a href="javascript:void(0)" class="dropdown-toggle" data-page="training" id="nav-training">
+          Training & Skills <span class="dropdown-arrow">&#9662;</span>
+        </a>
 
-      <div class="dropdown-menu">
-        <a href="#" id="nav-training-1">IELTS & Spoken English</a>
-        <a href="#" id="nav-training-2">Mobile App Development</a>
-        <a href="#" id="nav-training-3">Air Ticketing (GDS)</a>
-        <a href="#" id="nav-training-4">Visa Processing Training</a>
+        <div class="dropdown-menu">
+          <a href="#" id="nav-training-1">IELTS & Spoken English</a>
+          <a href="#" id="nav-training-2">Mobile App Development</a>
+          <a href="#" id="nav-training-3">Air Ticketing (GDS)</a>
+          <a href="#" id="nav-training-4">Visa Processing Training</a>
 
+        </div>
       </div>
-    </div>
 
-    <a href="#" data-page="career" id="nav-career">Career</a>
+      <a href="#" data-page="career" id="nav-career">Career</a>
 
-    <a href="#" data-page="success" id="nav-success">Success</a>
+      <a href="#" data-page="success" id="nav-success">Success</a>
 
-    <a href="#" data-page="contact" id="nav-contact" class="nav-cta">Free Consultation</a>
+      <a href="#" data-page="contact" id="nav-contact" class="nav-cta">Free Consultation</a>
 
-  </nav>
-<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
-  <span class="hamburger-bar"></span>
-  <span class="hamburger-bar"></span>
-  <span class="hamburger-bar"></span>
-</button>
-</div>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" type="button">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </div>
 
-<script>
-(function initNavigation() {
-  var navToggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("main-nav");
-  if (!navToggle || !nav) return;
+  <script>
+    (function initNavigation() {
+      var navToggle = document.getElementById("nav-toggle");
+      var nav = document.getElementById("main-nav");
+      if (!navToggle || !nav) return;
 
-  function isMobile() { return window.innerWidth <= 768; }
+      function isMobile() { return window.innerWidth <= 768; }
 
-  function closeNav() {
-    nav.classList.remove("open");
-    navToggle.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("nav-open");
-    nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-  }
+      function closeNav() {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("nav-open");
+        nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
+      }
 
-  // Hamburger toggle
-  navToggle.addEventListener("click", function(e) {
-    e.stopPropagation();
-    var isOpen = nav.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    if (isOpen) {
-      document.body.classList.add("nav-open");
-    } else {
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
-      document.body.classList.remove("nav-open");
-    }
-  });
-
-  // Dropdown toggle on mobile (tap)
-  nav.querySelectorAll(".dropdown-toggle").forEach(function(toggle) {
-    toggle.addEventListener("click", function(e) {
-      if (!isMobile()) return;
-      e.preventDefault();
-      e.stopPropagation();
-      var dropdown = toggle.closest(".nav-dropdown");
-      if (!dropdown) return;
-      var isActive = dropdown.classList.contains("active");
-      // Close all other open dropdowns
-      nav.querySelectorAll(".nav-dropdown").forEach(function(d) {
-        if (d !== dropdown) d.classList.remove("active");
+      // Hamburger toggle
+      navToggle.addEventListener("click", function(e) {
+        e.stopPropagation();
+        var isOpen = nav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        if (isOpen) {
+          document.body.classList.add("nav-open");
+        } else {
+          nav.querySelectorAll(".nav-dropdown").forEach(function(d) { d.classList.remove("active"); });
+          document.body.classList.remove("nav-open");
+        }
       });
-      dropdown.classList.toggle("active", !isActive);
-    });
-  });
 
-  // Close nav when a submenu link is clicked on mobile
-  nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
-    link.addEventListener("click", function() {
-      if (isMobile()) closeNav();
-    });
-  });
+      // Dropdown toggle on mobile (tap)
+      nav.querySelectorAll(".dropdown-toggle").forEach(function(toggle) {
+        toggle.addEventListener("click", function(e) {
+          if (!isMobile()) return;
+          e.preventDefault();
+          e.stopPropagation();
+          var dropdown = toggle.closest(".nav-dropdown");
+          if (!dropdown) return;
+          var isActive = dropdown.classList.contains("active");
+          // Close all other open dropdowns
+          nav.querySelectorAll(".nav-dropdown").forEach(function(d) {
+            if (d !== dropdown) d.classList.remove("active");
+          });
+          dropdown.classList.toggle("active", !isActive);
+        });
+      });
 
-  // Close nav when clicking outside
-  document.addEventListener("click", function(e) {
-    if (!nav.classList.contains("open")) return;
-    if (!nav.contains(e.target) && !navToggle.contains(e.target)) closeNav();
-  });
+      // Close nav when a submenu link is clicked on mobile
+      nav.querySelectorAll(".dropdown-menu a").forEach(function(link) {
+        link.addEventListener("click", function() {
+          if (isMobile()) closeNav();
+        });
+      });
 
-  // Close nav on resize to desktop
-  window.addEventListener("resize", function() {
-    if (!isMobile() && nav.classList.contains("open")) closeNav();
-  });
+      // Close nav when clicking outside
+      document.addEventListener("click", function(e) {
+        if (!nav.classList.contains("open")) return;
+        if (!nav.contains(e.target) && !navToggle.contains(e.target)) closeNav();
+      });
 
-  // Highlight active nav link
-  var currentPath = window.location.pathname;
-  document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
-    var linkPath = new URL(link.href, window.location.origin).pathname;
-    if (linkPath !== "/" && currentPath.includes(linkPath) ||
-        (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
-      link.classList.add("active");
-    }
-  });
-})();
-</script>
+      // Close nav on resize to desktop
+      window.addEventListener("resize", function() {
+        if (!isMobile() && nav.classList.contains("open")) closeNav();
+      });
+
+      // Highlight active nav link
+      var currentPath = window.location.pathname;
+      document.querySelectorAll(".nav a[data-page]").forEach(function(link) {
+        var linkPath = new URL(link.href, window.location.origin).pathname;
+        if (linkPath !== "/" && currentPath.includes(linkPath) ||
+            (link.getAttribute("data-page") === "home" && (currentPath === "/" || currentPath.endsWith("index.html")))) {
+          link.classList.add("active");
+        }
+      });
+    })();
+  </script>
 </header>
 <!-- HEADER_END -->
 
 <main class="container" style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
-<section style="text-align: center; margin-bottom: 3rem;">
-<h1 style="font-size: 3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1rem;">Success Stories</h1>
-<p style="color: var(--text-light); font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Discover the inspiring journeys of our clients who achieved their dreams with MyVisa's professional services</p>
-</section>
+  <section style="text-align: center; margin-bottom: 3rem;">
+    <h1 style="font-size: 3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 1rem;">Success Stories</h1>
+    <p style="color: var(--text-light); font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Discover the inspiring journeys of our clients who achieved their dreams with MyVisa's professional services</p>
+  </section>
 
   <section
           id="successStories"
@@ -307,177 +306,260 @@
 
 <!-- FOOTER_START -->
 <footer class="site-footer">
-<div class="container">
-<div class="footer-inner">
-<div class="footer-section">
-<h3>MyVisa Solutions</h3>
-<p>We offer complete visa support for Study, Tourist, and Medical applications with a focus on transparency and success. We also collaborate as a B2B partner with IATA-licensed agencies to ensure reliable travel-related support for our clients.</p>
-<p style="margin-top: 1rem;">
-    <strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br>
-    <strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
-    <strong>Banani office:</strong> House# 74 Road# 7, Block# H, Banani, Dhaka</p>
-</div>
-<div class="footer-section">
-<h3>Quick Links</h3>
-<a href="index.html" id="footer-home">Home</a>
-<a href="pages/about.html" id="footer-about">About Us</a>
-<a href="pages/career.html" id="footer-career">Career</a>
-<a href="pages/success_story.html" id="footer-success">Success Story</a>
-<a href="pages/contact.html" id="footer-contact">Contact</a>
-</div>
-<div class="footer-section">
-<h3>Visa by Country</h3>
-<a href="#">United States</a>
-<a href="#">United Kingdom</a>
-<a href="#">Canada</a>
-<a href="#">Australia</a>
-<a href="#">Schengen (Europe)</a>
-<a href="#">Malaysia</a>
-<a href="#">Thailand</a>
-<a href="#">Siangapore</a>
-<a href="#">China</a>
-</div>
-<div class="footer-section">
-<h3>Working Hours</h3>
-    <p>Sat – Thus: 9:00 AM – 6:00 PM</p>
-    <p>Friday: 10:00 AM – 10:00 PM</p>
-<div style="margin-top: 1.5rem;">
-<h3 style="margin-bottom: 0.75rem; font-size: 1.0rem; color: #000;">Download MyVisa App</h3>
-<a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
-<img src="../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
-</a>
-</div>
-</div>
-</div>
-<div class="footer-bottom">
-<p>&copy; <span id="current-year"></span> MyVisa Solutions. All rights reserved.</p>
-<div class="footer-links">
-<a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
-<span>|</span>
-<a href="pages/terms.html" id="footer-terms">Terms & Services</a>
-</div>
-</div>
-</div>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-section">
+        <h3>MyVisa Consultancy</h3>
+        <p>We offer complete visa support for Study, Tourist, and Medical applications with a focus on transparency and success. We also collaborate as a B2B partner with IATA-licensed agencies to ensure reliable travel-related support for our clients.</p>
+        <p style="margin-top: 1rem;">
+          <strong>Head office:</strong> Hanif Tower, 4th floor, Uttarkhan Majar, Uttara 1230 Dhaka, Bangladesh<br>
+          <strong>Badda office:</strong> Nadda, Evercare Road, Raba Ideal Creative madrasa Goli, Waterpolo BD, Vatara, Dhaka</p>
+        <strong>Banani office:</strong> House# 74 Road# 7, Block# H, Banani, Dhaka</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="index.html" id="footer-home">Home</a>
+        <a href="pages/about.html" id="footer-about">About Us</a>
+        <a href="pages/career.html" id="footer-career">Career</a>
+        <a href="pages/success_story.html" id="footer-success">Success Story</a>
+        <a href="pages/contact.html" id="footer-contact">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h3>Visa by Country</h3>
+        <a href="#">United States</a>
+        <a href="#">United Kingdom</a>
+        <a href="#">Canada</a>
+        <a href="#">Australia</a>
+        <a href="#">Schengen (Europe)</a>
+        <a href="#">Malaysia</a>
+        <a href="#">Thailand</a>
+        <a href="#">Siangapore</a>
+        <a href="#">China</a>
+      </div>
+      <div class="footer-section">
+        <h3>Working Hours</h3>
+        <p>Sat – Thus: 9:00 AM – 6:00 PM</p>
+        <p>Friday: 10:00 AM – 10:00 PM</p>
+        <div style="margin-top: 1.5rem;">
+          <h3 style="margin-bottom: 0.75rem; font-size: 1.0rem; color: #000;">Download MyVisa App</h3>
+          <a href="https://drive.google.com/file/d/1WbMdeNWgzNUUfYc_ULemuI4k2pcF3_Xh/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Download Android App" class="social-icon">
+            <img src="../assets/assets/icons/google-play-store-icon.svg" alt="Google Play Store" style="width: 24px; height: 24px;">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> MyVisa Consultancy. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="pages/privacy.html" id="footer-privacy">Privacy & Policy</a>
+        <span>|</span>
+        <a href="pages/terms.html" id="footer-terms">Terms & Services</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <!-- Chat Widget -->
 <div class="chat-widget" id="chatWidget">
-<div class="chat-window" id="chatWindow">
-<div class="chat-header">
-<div>
-<h3>Chat with Us</h3>
-<div class="chat-status">We're online. How can we help?</div>
-</div>
-</div>
-<div class="chat-body" id="chatBody">
-<div class="chat-message bot">
-<div class="message-bubble">
-Hello! 👋 Welcome to MyVisa. How can we assist you today?
-</div>
-</div>
-</div>
-<div class="chat-form">
-<form id="chatForm">
-<input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-<button type="submit" class="chat-send">Send</button>
-</form>
-<div class="chat-quick-actions">
-<a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
-<a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
-</div>
-</div>
-</div>
-<button class="chat-button" id="chatButton" aria-label="Open chat">
-<span class="chat-icon">💬</span>
-<span class="close-icon">✕</span>
-</button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div>
+        <h3>Chat with Us</h3>
+        <div class="chat-status">We're online. How can we help?</div>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message bot">
+        <div class="message-bubble">
+          Hello! 👋 Welcome to MyVisa. How can we assist you today?
+        </div>
+      </div>
+    </div>
+    <div class="chat-form">
+      <form id="chatForm">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+        <button type="submit" class="chat-send">Send</button>
+      </form>
+      <div class="chat-quick-actions">
+        <a href="pages/contact.html" class="quick-action-btn" id="chat-contact">📞 Contact Us</a>
+        <a href="tel:+8801818120900" class="quick-action-btn">📱 Call Now</a>
+      </div>
+    </div>
+  </div>
+  <button class="chat-button" id="chatButton" aria-label="Open chat">
+    <span class="chat-icon">💬</span>
+    <span class="close-icon">✕</span>
+  </button>
 </div>
 
 <!-- Scroll to Top Button -->
 <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
-↑
+  ↑
 </button>
 
 <script>
-// Set current year
-const yearSpan = document.getElementById('current-year');
-if (yearSpan) {
-  yearSpan.textContent = new Date().getFullYear();
-}
-
-// Chat Widget Functionality
-const chatWidget = document.getElementById('chatWidget');
-const chatButton = document.getElementById('chatButton');
-const chatWindow = document.getElementById('chatWindow');
-const chatBody = document.getElementById('chatBody');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-
-if (chatButton && chatWidget) {
-  chatButton.addEventListener('click', () => {
-    chatWidget.classList.toggle('active');
-  });
-}
-
-if (chatForm && chatInput) {
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, 'user');
-      chatInput.value = '';
-      
-      // Simulate bot response
-      setTimeout(() => {
-        addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
-      }, 1000);
-    }
-  });
-}
-
-function addMessage(text, type) {
-  if (!chatBody) return;
-  const messageDiv = document.createElement('div');
-  messageDiv.className = `chat-message ${type}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'message-bubble';
-  bubble.textContent = text;
-  messageDiv.appendChild(bubble);
-  chatBody.appendChild(messageDiv);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-// Close chat when clicking outside
-document.addEventListener('click', (e) => {
-  if (chatWidget && chatWidget.classList.contains('active') && 
-      chatWindow && !chatWindow.contains(e.target) &&
-      chatButton && !chatButton.contains(e.target)) {
-    chatWidget.classList.remove('active');
+  // Set current year
+  const yearSpan = document.getElementById('current-year');
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
   }
-});
 
-// Scroll to Top Functionality
-const scrollToTopBtn = document.getElementById('scrollToTop');
+  // Chat Widget Functionality
+  const chatWidget = document.getElementById('chatWidget');
+  const chatButton = document.getElementById('chatButton');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatBody = document.getElementById('chatBody');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
 
-if (scrollToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      scrollToTopBtn.classList.add('show');
-    } else {
-      scrollToTopBtn.classList.remove('show');
+  if (chatButton && chatWidget) {
+    chatButton.addEventListener('click', () => {
+      chatWidget.classList.toggle('active');
+    });
+  }
+
+  if (chatForm && chatInput) {
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (message) {
+        addMessage(message, 'user');
+        chatInput.value = '';
+
+        // Simulate bot response
+        setTimeout(() => {
+          addMessage('Thank you for your message! Our team will get back to you shortly. For immediate assistance, please call us at +880 1818-120900 or email contact.myvisabd@gmail.com', 'bot');
+        }, 1000);
+      }
+    });
+  }
+
+  function addMessage(text, type) {
+    if (!chatBody) return;
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${type}`;
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.textContent = text;
+    messageDiv.appendChild(bubble);
+    chatBody.appendChild(messageDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  // Close chat when clicking outside
+  document.addEventListener('click', (e) => {
+    if (chatWidget && chatWidget.classList.contains('active') &&
+        chatWindow && !chatWindow.contains(e.target) &&
+        chatButton && !chatButton.contains(e.target)) {
+      chatWidget.classList.remove('active');
     }
   });
 
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  // Scroll to Top Functionality
+  const scrollToTopBtn = document.getElementById('scrollToTop');
+
+  if (scrollToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+      } else {
+        scrollToTopBtn.classList.remove('show');
+      }
     });
-  });
-}
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 </script>
 
 <script src="../includes/update-links.js"></script>
+
+<script>
+  (function() {
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzRlVOJr2KkJcmjE_F6B2XAadiDeF2WoIQaIyrxcAOWrIrHzf51qd-iqhfd97Udp4HPGg/exec";
+    const container = document.getElementById('successStories');
+    const loader = document.getElementById('loader');
+
+    async function fetchSuccessStories() {
+      try {
+        // Use GET request for loading data
+        const response = await fetch(SCRIPT_URL);
+        if (!response.ok) throw new Error('Network response was not ok');
+        let data = await response.json();
+
+        // Handle cases where data is wrapped in an object (common with GAS)
+        if (data && !Array.isArray(data)) {
+          data = data.data || data.records || data.items || [];
+        }
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="error-message">No success stories found at the moment.</div>';
+          return;
+        }
+
+        container.innerHTML = ''; // Clear loader
+        data.forEach((item, index) => {
+          // Mapping spreadsheet columns
+          const name = item.Name || item.name || item['Client Name'] || 'Successful Client';
+          const country = item.Country || item.country || '';
+          const story = item.Story || item.story || item.Description || item.description || '';
+          const visaType = item.VisaType || item.visaType || item.Type || item.type || 'Visa';
+          const image = item.Image || item.image || item.Photo || item.photo || 'data:image/jpeg;base64,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';
+
+          const card = document.createElement('div');
+          card.className = 'success-card fade-in-up';
+          card.style.animationDelay = (index * 0.1) + 's';
+
+         card.innerHTML = `
+    <div class="success-card-inner">
+      <div class="success-image-wrapper">
+        <img
+          src="${image}"
+          alt="${name}"
+          class="success-img"
+          loading="lazy"
+          onerror="this.src='../assets/assets/images/mahbub.png'"
+        >
+        <div class="success-badge">
+          ${country}${visaType ? ' • ' + visaType : ''}
+        </div>
+      </div>
+
+      <div class="success-info">
+        <h3 class="success-name">${name}</h3>
+
+        <p class="success-text">
+          ${story}
+        </p>
+
+        <div class="success-footer">
+          <span class="success-status" style="color: #059669; font-weight: 600; font-size: 0.875rem; display: block; margin-top: 1rem;">
+            ✓ Visa Approved
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Fetch error:', error);
+        container.innerHTML = `
+          <div class="error-message">
+            <p>Unable to load success stories. Please try again later.</p>
+            <button class="retry-btn" onclick="location.reload()">Retry</button>
+          </div>
+        `;
+      }
+    }
+
+    fetchSuccessStories();
+  })();
+</script>
 <!-- FOOTER_END -->
 </body>
 
