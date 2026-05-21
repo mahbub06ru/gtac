@@ -3055,3 +3055,251 @@ h1, h2, h3 {
 .scroll-to-top:active {
   transform: translateY(-2px);
 }
+
+/* =========================================================
+   MEGA MENU STYLES
+   Add these rules to your existing stylesheet.
+   They override / extend the previous .dropdown-menu rules
+   only for elements marked with .nav-mega / .mega-menu.
+   ========================================================= */
+
+/* Mega menu panel - desktop */
+.nav-mega .mega-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: #fff;
+  min-width: 820px;
+  max-width: 1040px;
+  width: max-content;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  z-index: 1000;
+  border: none;
+}
+
+/* Hover-open on real pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  .nav-mega:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .nav-mega:hover .dropdown-arrow {
+    transform: rotate(180deg);
+    opacity: 0.85;
+  }
+}
+
+/* Three-column grid inside the mega menu */
+.mega-menu-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.75rem;
+}
+
+/* Column container */
+.mega-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Column heading */
+.mega-column-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--primary);
+  margin: 0 0 0.85rem;
+  padding: 0 0 0.65rem 0.25rem;
+  border-bottom: 1px solid var(--border);
+  cursor: default;
+  user-select: none;
+}
+
+.mega-column-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 0.95rem;
+  background: rgba(37, 99, 235, 0.1);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+/* Link group inside a column */
+.mega-column-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* Reset the inherited .dropdown-menu a rules for mega menu items */
+.mega-menu .mega-column-links a {
+  display: flex;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  color: #374151;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: background 0.15s, color 0.15s, padding 0.15s;
+  white-space: nowrap;
+}
+
+.mega-menu .mega-column-links a:hover {
+  background: rgba(37, 99, 235, 0.07);
+  color: var(--primary);
+  padding-left: 1rem;
+}
+
+/* Hide chevron indicator on column title (not clickable on desktop) */
+.mega-column-title .dropdown-arrow {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE: stack columns, accordion per column
+   ========================================================= */
+@media (max-width: 768px) {
+  /* Force the mega menu to behave like the existing mobile accordion */
+  .nav-mega .mega-menu {
+    display: none !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: rgba(37, 99, 235, 0.04) !important;
+    padding: 0.5rem !important;
+    margin-top: 0.25rem;
+    z-index: auto !important;
+    transition: none !important;
+  }
+
+  .nav-dropdown.active .mega-menu {
+    display: block !important;
+  }
+
+  .mega-menu-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mega-column {
+    background: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Column title becomes a tappable accordion header on mobile */
+  .mega-column-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.72rem;
+    border-bottom: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.6);
+    transition: background 0.2s;
+  }
+
+  .mega-column-title:hover,
+  .mega-column-title:active {
+    background: rgba(37, 99, 235, 0.08);
+  }
+
+  /* Show a chevron on mobile column titles */
+  .mega-column-title::after {
+    content: '\25BE';
+    font-size: 0.85rem;
+    opacity: 0.55;
+    transition: transform 0.25s ease;
+    margin-left: auto;
+  }
+
+  .mega-column.active .mega-column-title::after {
+    transform: rotate(180deg);
+    opacity: 0.9;
+  }
+
+  /* Collapse link list by default on mobile */
+  .mega-column-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 0.25rem;
+  }
+
+  .mega-column.active .mega-column-links {
+    max-height: 600px;
+    padding: 0.35rem 0.25rem 0.5rem;
+  }
+
+  .mega-menu .mega-column-links a {
+    padding: 0.6rem 0.75rem !important;
+    font-size: 0.9rem !important;
+    width: 100% !important;
+    white-space: normal;
+    background: none !important;
+    color: var(--text-dark) !important;
+  }
+
+  .mega-menu .mega-column-links a:hover,
+  .mega-menu .mega-column-links a:active {
+    background: rgba(37, 99, 235, 0.09) !important;
+    color: var(--primary) !important;
+    padding-left: 0.75rem !important;
+  }
+}
+
+/* Narrow desktop / tablet — drop to 2 columns then tighten spacing */
+@media (max-width: 1100px) and (min-width: 769px) {
+  .nav-mega .mega-menu {
+    min-width: 560px;
+    max-width: 720px;
+    padding: 1.25rem;
+    /* Keep panel from overflowing viewport on narrow desktops */
+    left: auto;
+    right: 0;
+    transform: translateY(-8px);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-mega:hover .mega-menu {
+      transform: translateY(0);
+    }
+  }
+
+  .mega-menu-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
