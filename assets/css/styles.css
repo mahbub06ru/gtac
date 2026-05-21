@@ -1999,17 +1999,18 @@ body.nav-open::before {
 
 /* Responsive */
 @media (max-width: 900px) {
+  .hero {
+    min-height: 520px;
+  }
+
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 3rem 1.5rem;
   }
 
   .hero-content h1 {
     font-size: 2.5rem;
-  }
-
-  .hero-image {
-    height: 300px;
   }
 
   .tagline {
@@ -2260,12 +2261,24 @@ body.nav-open::before {
     transform: translateY(-7px) rotate(-45deg) !important;
   }
 
+  .hero {
+    min-height: 440px;
+  }
+
+  .hero-inner {
+    padding: 2.5rem 1rem;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
   .hero-content h1 {
     font-size: 2rem;
   }
 
-  .hero {
-    padding: 2.5rem 0;
+  .hero-carousel-dots {
+    bottom: 15px;
   }
 
   @media (max-width: 500px) {
@@ -2519,14 +2532,37 @@ body.nav-open::before {
     text-align: center;
   }
 
-  /* Hero image */
-  .hero-image {
-    height: 220px;
+  /* Hero - small mobile */
+  .hero {
+    min-height: 360px;
   }
 
-  /* Hero */
-  .hero {
-    padding: 2.5rem 0;
+  .hero-inner {
+    padding: 1.75rem 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+    letter-spacing: -0.3px;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .hero-buttons {
+    margin-top: 1rem;
+  }
+
+  .hero-carousel-dots {
+    bottom: 10px;
+    gap: 7px;
+  }
+
+  .hero-carousel-dots .dot {
+    width: 9px;
+    height: 9px;
   }
 
   /* Service list page */
